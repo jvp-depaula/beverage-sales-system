@@ -1,0 +1,122 @@
+CREATE DATABASE SistemaDB;
+
+CREATE TABLE tbPaises (
+	idPais INT NOT NULL IDENTITY(1,1),
+	nmPais VARCHAR(60) NOT NULL,
+	DDI VARCHAR(5) NOT NULL,
+	sigla VARCHAR(3) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Paises PRIMARY KEY (idPais)
+);
+
+CREATE TABLE tbEstados (
+	idEstado INT NOT NULL IDENTITY(1,1),
+	idPais INT NOT NULL,
+	nmEstado VARCHAR(60) NOT NULL,
+	flUF VARCHAR(2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Estados PRIMARY KEY (idEstado),
+	CONSTRAINT FK_Estados_Paises FOREIGN KEY (idPais) REFERENCES tbPaises(idPais),
+);
+	  
+CREATE TABLE tbCidades (
+	idCidade INT NOT NULL IDENTITY(1,1),
+	idEstado INT NOT NULL,
+	nmCidade VARCHAR(60) NOT NULL,	
+	DDD VARCHAR(2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Cidades PRIMARY KEY (idCidade),
+	CONSTRAINT FK_Cidades_Estados FOREIGN KEY (idEstado) REFERENCES tbEstados(idEstado),
+);
+
+CREATE TABLE tbCategorias (
+	idCategoria INT NOT NULL IDENTITY(1,1),
+	nmCategoria VARCHAR(55) NOT NULL,	
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Categorias PRIMARY KEY (idCategoria)	
+);
+
+CREATE TABLE tbProdutos (
+	idProduto INT NOT NULL IDENTITY(1,1),
+	dsProduto VARCHAR(255) NOT NULL,
+	idCategoria INT NOT NULL,
+	flUnidade VARCHAR(2) NOT NULL,
+	cdNCM VARCHAR(8) NOT NULL,
+	cdCFOP VARCHAR(4) NOT NULL,
+	qtdEstoque INT NOT NULL,
+	vlCusto DECIMAL(9,2) NOT NULL,
+	vlVenda DECIMAL(9,2) NOT NULL,
+	observacao VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Produtos PRIMARY KEY (idProduto),
+	CONSTRAINT FK_Produtos_Categorias FOREIGN KEY (idCategoria) REFERENCES tbCategorias(idCategoria)
+);
+
+CREATE TABLE tbClientes (
+	idCliente INT NOT NULL IDENTITY(1,1),
+	nmCliente VARCHAR(255) NOT NULL,
+	nmFantasia VARCHAR(255) NOT NULL,
+	nrCPFCNPJ VARCHAR(14) NOT NULL,
+	nrRG_IE VARCHAR(10) NOT NULL,
+	nrTelefoneCelular VARCHAR(15),
+	nrTelefoneFixo VARCHAR(10),
+	dsEmail VARCHAR(50) NOT NULL,
+	nrCEP VARCHAR(8) NOT NULL,
+	dsLogradouro VARCHAR(60) NOT NULL,
+	nrEndereco VARCHAR(4) NOT NULL,
+	dsBairro VARCHAR(60) NOT NULL,
+	dsComplemento VARCHAR(60),
+	idCidade INT NOT NULL,	
+	dtNasc DATETIME,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Clientes PRIMARY KEY (idCliente),
+	CONSTRAINT FK_Clientes_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
+);
+
+CREATE TABLE tbFornecedores (
+	idFornecedor INT NOT NULL IDENTITY(1,1),
+	nmFornecedor VARCHAR(255) NOT NULL,
+	nmFantasia VARCHAR(255) NOT NULL,
+	nrCNPJ VARCHAR(14) NOT NULL,
+	nrIE VARCHAR(9) NOT NULL,
+	nrTelefoneCelular VARCHAR(15),
+	nrTelefoneFixo VARCHAR(10),
+	dsEmail VARCHAR(50) NOT NULL,
+	nrCEP VARCHAR(8) NOT NULL,
+	dsLogradouro VARCHAR(60) NOT NULL,
+	nrEndereco VARCHAR(4) NOT NULL,
+	dsBairro VARCHAR(60) NOT NULL,
+	dsComplemento VARCHAR(60),
+	idCidade INT NOT NULL,	
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Fornecedores PRIMARY KEY (idFornecedor),
+	CONSTRAINT FK_Fornecedores_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
+);
+
+CREATE TABLE tbFuncionarios (
+	idFuncionario INT NOT NULL IDENTITY(1,1),
+	nmFuncionario VARCHAR(255) NOT NULL,
+	nrCPF VARCHAR(11) NOT NULL,
+	nrRG VARCHAR(10) NOT NULL,
+	nrTelefoneCelular VARCHAR(15),
+	nrTelefoneFixo VARCHAR(10),
+	dsEmail VARCHAR(50) NOT NULL,
+	nrCEP VARCHAR(8) NOT NULL,
+	dsLogradouro VARCHAR(60) NOT NULL,
+	nrEndereco VARCHAR(4) NOT NULL,
+	dsBairro VARCHAR(60) NOT NULL,
+	dsComplemento VARCHAR(60),
+	idCidade INT NOT NULL,	
+	dtNasc DATETIME NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+);
+
+
