@@ -53,7 +53,7 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Funcionarios func)
+        public void Insert(Models.Funcionarios func)
         {
             try
             {
@@ -62,35 +62,26 @@ namespace Sistema.DAO
                                                                     "dtNasc" + "dtCadastro, dtUltAlteracao) " +
                                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
                                                                     "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
-                    this.FormatString(func.nmFuncionario),
-                    this.FormatString(func.dsApelido),
-                    this.FormatString(func.nrCPF),
-                    this.FormatString(func.nrRG),
-                    this.FormatString(func.nrTelefoneCelular),
-                    this.FormatString(func.nrTelefoneFixo),
-                    this.FormatString(func.dsEmail),
-                    this.FormatString(func.nrCEP),
-                    this.FormatString(func.dsLogradouro),
+                    func.nmFuncionario,
+                    func.dsApelido,
+                    func.nrCPF,
+                    func.nrRG,
+                    func.nrTelefoneCelular,
+                    func.nrTelefoneFixo,
+                    func.dsEmail,
+                    func.nrCEP,
+                    func.dsLogradouro,
                     Convert.ToInt32(func.nrEndereco),
-                    this.FormatString(func.dsBairro),
-                    this.FormatString(func.dsComplemento),
+                    func.dsBairro,
+                    func.dsComplemento,
                     Convert.ToInt32(func.idCidade),
                     Convert.ToDateTime(func.dtNasc),
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    DateTime.Now.ToString("dd/MM/yyyy")
                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -102,40 +93,30 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Models.Funcionarios func)
+        public void Update(Models.Funcionarios func)
         {
             try
             {
                 string sql = "UPDATE tbFuncionarios SET nmFuncionario = '" +
-                    this.FormatString(func.nmFuncionario) + "'," +
-                    this.FormatString(func.dsApelido) + "'," +
-                    " nrCPF = '" + this.FormatString(func.nrCPF) + "'," +
-                    " nrRG = '" + this.FormatString(func.nrRG) + "'," +
-                    " nrTelefoneCelular = '" + this.FormatString(func.nrTelefoneCelular) + "'," +
-                    " nrTelefoneFixo = '" + this.FormatString(func.nrTelefoneFixo) + "'," +
-                    " dsEmail = '" + this.FormatString(func.dsEmail) + "'," +
-                    " nrCEP = '" + this.FormatString(func.nrCEP) + "'," +
-                    " dsLogradouro = '" + this.FormatString(func.dsLogradouro) + "'," +
+                    func.nmFuncionario + "'," +
+                    func.dsApelido + "'," +
+                    " nrCPF = '" + func.nrCPF + "'," +
+                    " nrRG = '" + func.nrRG + "'," +
+                    " nrTelefoneCelular = '" + func.nrTelefoneCelular+ "'," +
+                    " nrTelefoneFixo = '" + func.nrTelefoneFixo + "'," +
+                    " dsEmail = '" + func.dsEmail + "'," +
+                    " nrCEP = '" + func.nrCEP + "'," +
+                    " dsLogradouro = '" + func.dsLogradouro + "'," +
                     " nrEndereco = '" + Convert.ToInt32(func.nrEndereco) + "'," +
-                    " dsBairro = '" + this.FormatString(func.dsBairro) + "'," +
-                    " dsComplemento = '" + this.FormatString(func.dsComplemento) + "'," +
+                    " dsBairro = '" + func.dsBairro + "'," +
+                    " dsComplemento = '" + func.dsComplemento + "'," +
                     " idCidade = '" + Convert.ToInt32(func.idCidade) + "'," +
                     " dtNasc = '" + Convert.ToDateTime(func.dtNasc) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idFuncionario = " + func.id;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -191,24 +172,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idFuncionario)
+        public void Delete(int? idFuncionario)
         {
             try
             {
                 string sql = "DELETE FROM tbClientes WHERE idFuncionario = " + idFuncionario;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {

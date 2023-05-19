@@ -41,29 +41,20 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Cidades cidade)
+        public void Insert(Cidades cidade)
         {
             try
             {
                 var sql = string.Format("INSERT INTO tbCidades ( nmCidade, DDD, idEstado, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', {3}, '{4}')",
-                    this.FormatString(cidade.nmCidade),
-                    this.FormatString(cidade.DDD),
+                    cidade.nmCidade,
+                    cidade.DDD,
                     cidade.idEstado,
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    DateTime.Now.ToString("dd/MM/yyyy")
                     );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -75,28 +66,18 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Cidades cidade)
+        public void Update(Cidades cidade)
         {
             try
             {
-                string sql = "UPDATE tbCidades SET nmCidade = '" + this.FormatString(cidade.nmCidade) + "'," +
-                    " DDD = '" + this.FormatString(cidade.DDD) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                string sql = "UPDATE tbCidades SET nmCidade = '" + cidade.nmCidade + "'," +
+                    " DDD = '" + cidade.DDD + "'," +
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'," +
                     " idEstado = " + cidade.idEstado +
                     " WHERE idCidade = " + cidade.idCidade;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -141,24 +122,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idCidade)
+        public void Delete(int? idCidade)
         {
             try
             {
                 string sql = "DELETE FROM tbCidades WHERE idCidade = " + idCidade;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -200,7 +171,5 @@ namespace Sistema.DAO
                 INNER JOIN tbEstados on tbCidades.idEstado = tbEstados.idEstado " + swhere;
             return sql;
         }
-
-
     }
 }

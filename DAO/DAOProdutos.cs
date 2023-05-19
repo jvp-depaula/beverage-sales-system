@@ -48,35 +48,26 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Produtos produto)
+        public void Insert(Models.Produtos produto)
         {
             try
             {
                 var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idCategoria, flUnidade, cdNCM, cdCFOP, qtdEstoque, vlCusto, vlVenda, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')",
-                                        this.FormatString(produto.dsProduto),
+                                        produto.dsProduto,
                                         Convert.ToInt32(produto.idCategoria),
-                                        this.FormatString(produto.flUnidade),
-                                        this.FormatString(produto.cdNCM),
-                                        this.FormatString(produto.cdCFOP),
+                                        produto.flUnidade,
+                                        produto.cdNCM,
+                                        produto.cdCFOP,
                                         Convert.ToInt32(produto.qtdEstoque),
                                         Convert.ToDecimal(produto.vlCusto),
                                         Convert.ToDecimal(produto.vlVenda),
-                                        this.FormatString(produto.observacao),
-                                        DateTime.Now.ToString("yyyy-MM-dd"),
-                                        DateTime.Now.ToString("yyyy-MM-dd")
+                                        produto.observacao,
+                                        DateTime.Now.ToString("dd/MM/yyyy"),
+                                        DateTime.Now.ToString("dd/MM/yyyy")
                                     );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -88,34 +79,24 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Models.Produtos produto)
+        public void Update(Models.Produtos produto)
         {
             try
             {
                 string sql = "UPDATE tbProdutos SET dsProduto = '"
-                    + this.FormatString(produto.dsProduto) + "'," +
+                    + produto.dsProduto + "'," +
                     " idCategoria = '" + Convert.ToInt32(produto.idCategoria) + "'," +
-                    " flUnidade = '" + this.FormatString(produto.dsProduto) + "'," +
-                    " cdNCM = '" + this.FormatString(produto.cdNCM) + "'," +
+                    " flUnidade = '" + produto.dsProduto + "'," +
+                    " cdNCM = '" + produto.cdNCM + "'," +
                     " qtdEstoque = '" + Convert.ToInt32(produto.qtdEstoque) + "'," +
                     " vlCusto = '" + Convert.ToDecimal(produto.vlCusto) + "'," +
                     " vlVenda = '" + Convert.ToDecimal(produto.vlVenda) + "'," +
-                    " observacao = '" + FormatString(produto.observacao) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
+                    " observacao = '" + produto.observacao + "'," +
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idProduto = " + produto.idProduto;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -166,24 +147,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idProduto)
+        public void Delete(int? idProduto)
         {
             try
             {
                 string sql = "DELETE FROM tbProdutos WHERE idProduto = " + idProduto;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {

@@ -43,29 +43,19 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Paises pais)
+        public void Insert(Models.Paises pais)
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbPaises ( nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')",
-                    this.FormatString(pais.nmPais),
-                    this.FormatString(pais.DDI),
-                    this.FormatString(pais.sigla),
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
-                    );
+                var sql = string.Format("INSERT INTO tbPaises (nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES (@nmPais, @DDI, @sigla, @dtCadastro, @dtUltAlteracao)");
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.Parameters.Add(new SqlParameter("@nmPais", pais.nmPais));
+                SqlQuery.Parameters.Add(new SqlParameter("@DDI", pais.DDI));
+                SqlQuery.Parameters.Add(new SqlParameter("@sigla", pais.sigla));
+                SqlQuery.Parameters.Add(new SqlParameter("@dtCadastro", DateTime.Now));
+                SqlQuery.Parameters.Add(new SqlParameter("@dtUltAlteracao", DateTime.Now));
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -82,9 +72,9 @@ namespace Sistema.DAO
             try
             {
                 string sql = "UPDATE tbPaises SET nmPais = '"
-                    + this.FormatString(pais.nmPais) + "'," +
-                    " DDI = '" + this.FormatString(pais.DDI) + "'," +
-                    " sigla = '" + this.FormatString(pais.sigla) + "'," +
+                    + pais.nmPais + "'," +
+                    " DDI = '" + pais.DDI + "'," +
+                    " sigla = '" + pais.sigla + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
                     + "' WHERE idPais = " + pais.idPais;
                 OpenConnection();

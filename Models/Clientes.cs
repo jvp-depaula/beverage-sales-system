@@ -8,13 +8,9 @@ namespace Sistema.Models
     {
         [Display(Name = "Nome")]
         public string nmCliente { get; set; }
-        [Display(Name = "Apelido")]
-        public string dsApelido { get; set; }
-        [Display(Name = "CPF/CNPJ")]
-        public string nrCPFCNPJ { get; set; }
-        [Display(Name = "RG/IE")]
+        public string nmFantasia { get; set; }
+        public string nrCPFCNPJ{ get; set; }
         public string nrRG_IE { get; set; }
-        [Display(Name = "Nasc. / Fundação")]
         public DateTime dtNasc { get; set; }
     }
 }

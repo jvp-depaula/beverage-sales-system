@@ -51,7 +51,7 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Fornecedores fornecedor)
+        public void Insert(Models.Fornecedores fornecedor)
         {
             try
             {
@@ -60,34 +60,25 @@ namespace Sistema.DAO
                                                                     "dtCadastro, dtUltAlteracao) " +
                                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
                                                                     "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}')",
-                    this.FormatString(fornecedor.nmFornecedor),
-                    this.FormatString(fornecedor.nmFantasia),
-                    this.FormatString(fornecedor.nrCNPJ),
-                    this.FormatString(fornecedor.nrIE),
-                    this.FormatString(fornecedor.nrTelefoneCelular),
-                    this.FormatString(fornecedor.nrTelefoneFixo),
-                    this.FormatString(fornecedor.dsEmail),
-                    this.FormatString(fornecedor.nrCEP),
-                    this.FormatString(fornecedor.dsLogradouro),
+                    fornecedor.nmFornecedor,
+                    fornecedor.nmFantasia,
+                    fornecedor.nrCNPJ,
+                    fornecedor.nrIE,
+                    fornecedor.nrTelefoneCelular,
+                    fornecedor.nrTelefoneFixo,
+                    fornecedor.dsEmail,
+                    fornecedor.nrCEP,
+                    fornecedor.dsLogradouro,
                     Convert.ToInt32(fornecedor.nrEndereco),
-                    this.FormatString(fornecedor.dsBairro),
-                    this.FormatString(fornecedor.dsComplemento),
+                    fornecedor.dsBairro,
+                    fornecedor.dsComplemento,
                     Convert.ToInt32(fornecedor.idCidade),
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    DateTime.Now.ToString("dd/MM/yyyy")
                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -99,39 +90,29 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Models.Fornecedores fornecedor)
+        public void Update(Models.Fornecedores fornecedor)
         {
             try
             {
                 string sql = "UPDATE tbFornecedores SET nmFornecedor = '" +
-                    this.FormatString(fornecedor.nmFornecedor) + "'," +
-                    " nmFantasia = '" + this.FormatString(fornecedor.nmFantasia) + "'," +
-                    " nrCNPJ = '" + this.FormatString(fornecedor.nrCNPJ) + "'," +
-                    " nrIE = '" + this.FormatString(fornecedor.nrIE) + "'," +
-                    " nrTelefoneCelular = '" + this.FormatString(fornecedor.nrTelefoneCelular) + "'," +
-                    " nrTelefoneFixo = '" + this.FormatString(fornecedor.nrTelefoneFixo) + "'," +
-                    " dsEmail = '" + this.FormatString(fornecedor.dsEmail) + "'," +
-                    " nrCEP = '" + this.FormatString(fornecedor.nrCEP) + "'," +
-                    " dsLogradouro = '" + this.FormatString(fornecedor.dsLogradouro) + "'," +
+                    fornecedor.nmFornecedor + "'," +
+                    " nmFantasia = '" + fornecedor.nmFantasia + "'," +
+                    " nrCNPJ = '" + fornecedor.nrCNPJ + "'," +
+                    " nrIE = '" + fornecedor.nrIE + "'," +
+                    " nrTelefoneCelular = '" + fornecedor.nrTelefoneCelular + "'," +
+                    " nrTelefoneFixo = '" + fornecedor.nrTelefoneFixo + "'," +
+                    " dsEmail = '" + fornecedor.dsEmail + "'," +
+                    " nrCEP = '" + fornecedor.nrCEP + "'," +
+                    " dsLogradouro = '" + fornecedor.dsLogradouro + "'," +
                     " nrEndereco = '" + Convert.ToInt32(fornecedor.nrEndereco) + "'," +
-                    " dsBairro = '" + this.FormatString(fornecedor.dsBairro) + "'," +
-                    " dsComplemento = '" + this.FormatString(fornecedor.dsComplemento) + "'," +
+                    " dsBairro = '" + fornecedor.dsBairro + "'," +
+                    " dsComplemento = '" + fornecedor.dsComplemento + "'," +
                     " idCidade = '" + Convert.ToInt32(fornecedor.idCidade) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idFornecedor = " + fornecedor.id;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -186,24 +167,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idFornecedor)
+        public void Delete(int? idFornecedor)
         {
             try
             {
                 string sql = "DELETE FROM tbFornecedores WHERE idFornecedor = " + idFornecedor;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {

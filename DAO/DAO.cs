@@ -43,15 +43,6 @@ namespace Sistema.DAO
             {
                 throw new Exception("Erro ao fechar a conexão: " + error.Message);
             }
-        }
-
-        protected string FormatString(string text)
-        {
-            if (!string.IsNullOrEmpty(text))
-            {
-                text = text.ToUpper().Trim();
-            }
-            return text;
-        }
+        }        
     }
 }

@@ -10,7 +10,7 @@ namespace Sistema.Models
         public string nmFantasia { get; set; }
         [Display(Name = "CNPJ")]
         public string nrCNPJ { get; set; }
-        [Display(Name = "Inscr. Estadual")]
+        [Display(Name = "Inscrição Estadual")]
         public string nrIE { get; set; }
     }
 }

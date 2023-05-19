@@ -1,13 +1,13 @@
 ﻿@model Sistema.Models.Paises
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Países";
 }
 
-<h1>Create</h1>
+<h1>Adicionar <small>Países</small></h1>
 
-<h4>Paises</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -18,24 +18,24 @@
                 <span asp-validation-for="nmPais" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DDI" class="control-label"></label>
-                <input asp-for="DDI" class="form-control" />
-                <span asp-validation-for="DDI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="sigla" class="control-label"></label>
                 <input asp-for="sigla" class="form-control" />
                 <span asp-validation-for="sigla" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="DDI" class="control-label"></label>
+                <input asp-for="DDI" class="form-control" />
+                <span asp-validation-for="DDI" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <input type="submit" value="Salvar" class="btn btn-success" />
+                    <button type="button" asp-action="Index" class="btn btn-danger">Cancelar</button>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -11,15 +11,15 @@ namespace Sistema.Models
         public int id { get; set; }
 
         // CONTATO
-        [Display(Name = "Nr. Celular")]
+        [Display(Name = "Número Celular")]
         public string nrTelefoneCelular { get; set; }
-        [Display(Name = "Nr. Telefone")]
+        [Display(Name = "Número Telefone")]
         public string nrTelefoneFixo { get; set; }
         [Display(Name = "Email")]
         public string dsEmail { get; set; }
 
         // TIPO
-        [Display(Name = "Tipo")]
+        [Display(Name = "Pessoa")]
         public string flTipo { get; set; }
 
         // ENDERECO

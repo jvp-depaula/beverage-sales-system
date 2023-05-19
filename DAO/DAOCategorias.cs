@@ -40,28 +40,19 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Categorias categoria)
+        public void Insert(Models.Categorias categoria)
         {
             try
             {
                 var sql = string.Format("INSERT INTO tbCategorias (nmCategoria, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
-                    this.FormatString(categoria.nmCategoria),
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
+                    categoria.nmCategoria,
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    DateTime.Now.ToString("dd/MM/yyyy")
                 );
 
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -73,27 +64,18 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Models.Categorias categoria)
+        public void Update(Models.Categorias categoria)
         {
             try
             {
                 string sql = "UPDATE tbCategorias SET nmCategoria = '"
-                             + this.FormatString(categoria.nmCategoria) + "'," 
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
+                             + categoria.nmCategoria + "'," 
+                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                              + "' WHERE idCategoria = " + categoria.idCategoria;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
+                SqlQuery.ExecuteNonQuery();
 
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception error)
             {
@@ -138,24 +120,15 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idCategoria)
+        public void Delete(int? idCategoria)
         {
             try
             {
                 string sql = "DELETE FROM tbCategorias WHERE idCategoria = " + idCategoria;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
+                SqlQuery.ExecuteNonQuery();
 
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception error)
             {

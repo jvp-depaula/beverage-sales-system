@@ -21,8 +21,8 @@ namespace Sistema.DAO
                     {
                         id = Convert.ToInt32(reader["idCliente"]),
                         nmCliente = Convert.ToString(reader["nmCliente"]),
-                        dsApelido = Convert.ToString(reader["dsApelido"]),
-                        nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]),
+                        nmFantasia = Convert.ToString(reader["dsApelido"]),
+                        nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]),                        
                         nrRG_IE = Convert.ToString(reader["nrRG_IE"]),
                         nrTelefoneCelular = Convert.ToString(reader["nrTelefoneCelular"]),
                         nrTelefoneFixo = Convert.ToString(reader["nrTelefoneFixo"]),
@@ -53,44 +53,35 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Clientes cliente)
+        public void Insert(Models.Clientes cliente)
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbClientes (nmCliente, dsApelido, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
-                                                                "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade," +
+                var sql = string.Format("INSERT INTO tbClientes (nmCliente, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
+                                                                "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade, dtNasc" +
                                                                 "dtCadastro, dtUltAlteracao) " +
                                                                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
                                                                 "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
-                    this.FormatString(cliente.nmCliente),
-                    this.FormatString(cliente.dsApelido),
-                    this.FormatString(cliente.nrCPFCNPJ),
-                    this.FormatString(cliente.nrRG_IE),
-                    this.FormatString(cliente.nrTelefoneCelular),
-                    this.FormatString(cliente.nrTelefoneFixo),
-                    this.FormatString(cliente.dsEmail),
-                    this.FormatString(cliente.nrCEP),
-                    this.FormatString(cliente.dsLogradouro),
+                    cliente.nmCliente,
+                    cliente.nmFantasia,
+                    cliente.nrCPFCNPJ,
+                    cliente.nrRG_IE,
+                    cliente.nrTelefoneCelular,
+                    cliente.nrTelefoneFixo,
+                    cliente.dsEmail,
+                    cliente.nrCEP,
+                    cliente.dsLogradouro,
                     Convert.ToInt32(cliente.nrEndereco),
-                    this.FormatString(cliente.dsBairro),
-                    this.FormatString(cliente.dsComplemento),
+                    cliente.dsBairro,
+                    cliente.dsComplemento,
                     Convert.ToInt32(cliente.idCidade),
                     Convert.ToDateTime(cliente.dtNasc),
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    DateTime.Now.ToString("dd/MM/yyyy")
                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -102,40 +93,30 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Models.Clientes cliente)
+        public void Update(Models.Clientes cliente)
         {
             try
             {
                 string sql = "UPDATE tbClientes SET nmCliente = '" +
-                    this.FormatString(cliente.nmCliente) + "'," +
-                    this.FormatString(cliente.dsApelido) + "'," +
-                    " nrCPF = '" + this.FormatString(cliente.nrCPFCNPJ) + "'," +
-                    " nrRG = '" + this.FormatString(cliente.nrRG_IE) + "'," +
-                    " nrTelefoneCelular = '" + this.FormatString(cliente.nrTelefoneCelular) + "'," +
-                    " nrTelefoneFixo = '" + this.FormatString(cliente.nrTelefoneFixo) + "'," +
-                    " dsEmail = '" + this.FormatString(cliente.dsEmail) + "'," +
-                    " nrCEP = '" + this.FormatString(cliente.nrCEP) + "'," +
-                    " dsLogradouro = '" + this.FormatString(cliente.dsLogradouro) + "'," +
+                    cliente.nmCliente + "'," +
+                    cliente.nmFantasia + "'," +
+                    " nrCPF = '" + cliente.nrCPFCNPJ + "'," +
+                    " nrRG = '" + cliente.nrRG_IE + "'," +
+                    " nrTelefoneCelular = '" + cliente.nrTelefoneCelular + "'," +
+                    " nrTelefoneFixo = '" + cliente.nrTelefoneFixo + "'," +
+                    " dsEmail = '" + cliente.dsEmail + "'," +
+                    " nrCEP = '" + cliente.nrCEP + "'," +
+                    " dsLogradouro = '" + cliente.dsLogradouro + "'," +
                     " nrEndereco = '" + Convert.ToInt32(cliente.nrEndereco) + "'," +
-                    " dsBairro = '" + this.FormatString(cliente.dsBairro) + "'," +
-                    " dsComplemento = '" + this.FormatString(cliente.dsComplemento) + "'," +
+                    " dsBairro = '" + cliente.dsBairro + "'," +
+                    " dsComplemento = '" + cliente.dsComplemento + "'," +
                     " idCidade = '" + Convert.ToInt32(cliente.idCidade) + "'," +
                     " dtNasc = '" + Convert.ToDateTime(cliente.dtNasc) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idCliente = " + cliente.id;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -162,7 +143,7 @@ namespace Sistema.DAO
                     {
                         model.id = Convert.ToInt32(reader["idCliente"]);
                         model.nmCliente = Convert.ToString(reader["nmCliente"]);
-                        model.dsApelido = Convert.ToString(reader["dsApelido"]);
+                        model.nmFantasia = Convert.ToString(reader["nmFantasia"]);
                         model.nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]);
                         model.nrRG_IE = Convert.ToString(reader["nrRG_IE"]);
                         model.nrTelefoneCelular = Convert.ToString(reader["nrTelefoneCelular"]);
@@ -191,24 +172,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idCliente)
+        public void Delete(int? idCliente)
         {
             try
             {
                 string sql = "DELETE FROM tbClientes WHERE idCliente = " + idCliente;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {

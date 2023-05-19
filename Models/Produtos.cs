@@ -25,7 +25,7 @@ namespace Sistema.Models
         [Display(Name = "CFOP")]
         public string cdCFOP { get; set; }
 
-        [Display(Name = "Qtd. Estoque")]
+        [Display(Name = "Quantidade de Estoque")]
         public decimal? qtdEstoque { get; set; }
 
         [Display(Name = "Valor do custo")]

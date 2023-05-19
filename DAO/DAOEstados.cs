@@ -45,29 +45,20 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Insert(Models.Estados estado)
+        public void Insert(Models.Estados estado)
         {
             try
             {
                 var sql = string.Format("INSERT INTO tbEstados ( nmEstado, flUF, idPais, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', {2}, '{3}', '{4}')",
-                    this.FormatString(estado.nmEstado),
-                    this.FormatString(estado.flUF),
+                    estado.nmEstado,
+                    estado.flUF,
                     Convert.ToInt32(estado.idPais),
-                    DateTime.Now.ToString("yyyy-MM-dd"),
-                    DateTime.Now.ToString("yyyy-MM-dd")
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    DateTime.Now.ToString("dd/MM/yyyy")
                     );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -79,29 +70,19 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Update(Models.Estados estado)
+        public void Update(Models.Estados estado)
         {
             try
             {
                 string sql = "UPDATE tbEstados SET nmEstado = '"
-                    + this.FormatString(estado.nmEstado) + "'," +
-                    " flUF = '" + this.FormatString(estado.flUF) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd") + "',"+
+                    + estado.nmEstado + "'," +
+                    " flUF = '" + estado.flUF + "'," +
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "',"+
                     " idPais = " + estado.idPais +
                     " WHERE idEstado = " + estado.idEstado;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -146,24 +127,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idEstado)
+        public void Delete(int? idEstado)
         {
             try
             {
                 string sql = "DELETE FROM tbEstados WHERE idEstado = " + idEstado;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
