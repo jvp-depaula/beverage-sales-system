@@ -19,6 +19,8 @@
   <ItemGroup>
     <Content Remove="wwwroot\js\Scripts\Categorias\Index.js" />
     <Content Remove="wwwroot\js\Scripts\Clientes\Form.js" />
+    <Content Remove="wwwroot\js\Scripts\Fornecedores\Form.js" />
+    <Content Remove="wwwroot\js\Scripts\Funcionarios\Form.js" />
   </ItemGroup>  
 
   <ItemGroup>
@@ -31,8 +33,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\js\Scripts\Cidades\" />
     <Folder Include="wwwroot\js\Scripts\Estados\" />
-    <Folder Include="wwwroot\js\Scripts\Fornecedores\" />
-    <Folder Include="wwwroot\js\Scripts\Funcionarios\" />
     <Folder Include="wwwroot\js\Scripts\Paises\" />
     <Folder Include="wwwroot\js\Scripts\Produtos\" />
   </ItemGroup>  
@@ -40,6 +40,8 @@
   <ItemGroup>
     <None Include="wwwroot\js\Scripts\Categorias\Index.js" />
     <None Include="wwwroot\js\Scripts\Clientes\Form.js" />
+    <None Include="wwwroot\js\Scripts\Fornecedores\Form.js" />
+    <None Include="wwwroot\js\Scripts\Funcionarios\Form.js" />
   </ItemGroup>
 
 </Project>

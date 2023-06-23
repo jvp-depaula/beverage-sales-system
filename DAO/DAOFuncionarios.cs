@@ -64,12 +64,12 @@ namespace Sistema.DAO
                                                                     "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
                     func.nmFuncionario,
                     func.dsApelido,
-                    func.nrCPF,
-                    func.nrRG,
-                    func.nrTelefoneCelular,
-                    func.nrTelefoneFixo,
+                    Util.Util.Unmask(func.nrCPF),
+                    Util.Util.Unmask(func.nrRG),
+                    Util.Util.Unmask(func.nrTelefoneCelular),
+                    Util.Util.Unmask(func.nrTelefoneFixo),
                     func.dsEmail,
-                    func.nrCEP,
+                    Util.Util.Unmask(func.nrCEP),
                     func.dsLogradouro,
                     Convert.ToInt32(func.nrEndereco),
                     func.dsBairro,
@@ -100,18 +100,18 @@ namespace Sistema.DAO
                 string sql = "UPDATE tbFuncionarios SET " +
                     " nmFuncionario = '" + func.nmFuncionario + "'," +
                     " dsApelido = '" + func.dsApelido + "'," +
-                    " nrCPF = '" + func.nrCPF + "'," +
-                    " nrRG = '" + func.nrRG + "'," +
-                    " nrTelefoneCelular = '" + func.nrTelefoneCelular+ "'," +
-                    " nrTelefoneFixo = '" + func.nrTelefoneFixo + "'," +
+                    " nrCPF = '" + Util.Util.Unmask(func.nrCPF) + "'," +
+                    " nrRG = '" + Util.Util.Unmask(func.nrRG) + "'," +
+                    " nrTelefoneCelular = '" + Util.Util.Unmask(func.nrTelefoneCelular) + "'," +
+                    " nrTelefoneFixo = '" + Util.Util.Unmask(func.nrTelefoneFixo) + "'," +
                     " dsEmail = '" + func.dsEmail + "'," +
-                    " nrCEP = '" + func.nrCEP + "'," +
+                    " nrCEP = '" + Util.Util.Unmask(func.nrCEP) + "'," +
                     " dsLogradouro = '" + func.dsLogradouro + "'," +
                     " nrEndereco = '" + Convert.ToInt32(func.nrEndereco) + "'," +
                     " dsBairro = '" + func.dsBairro + "'," +
                     " dsComplemento = '" + func.dsComplemento + "'," +
                     " idCidade = '" + Convert.ToInt32(func.idCidade) + "'," +
-                    " dtNasc = '" + Convert.ToDateTime(func.dtNasc) + "'," +
+                    " dtNasc = '" + Convert.ToDateTime(func.dtNasc).ToString("dd/MM/yyyy") + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idFuncionario = " + func.id;
                 OpenConnection();

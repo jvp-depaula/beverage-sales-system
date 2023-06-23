@@ -9,7 +9,7 @@
 
         public static string Unmask(string str)
         {
-            return str.Replace(".", "").Replace("-", "").Replace("/", "").Replace("(", "").Replace(")", "");
+            return str.Replace(".", "").Replace("-", "").Replace("/", "").Replace("(", "").Replace(")", "").Replace(" ", "");
         }
     }
 }

@@ -62,12 +62,12 @@ namespace Sistema.DAO
                                                                     "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}')",
                     fornecedor.nmFornecedor,
                     fornecedor.nmFantasia,
-                    fornecedor.nrCNPJ,
-                    fornecedor.nrIE,
-                    fornecedor.nrTelefoneCelular,
-                    fornecedor.nrTelefoneFixo,
+                    Util.Util.Unmask(fornecedor.nrCNPJ),
+                    Util.Util.Unmask(fornecedor.nrIE),
+                    Util.Util.Unmask(fornecedor.nrTelefoneCelular),
+                    Util.Util.Unmask(fornecedor.nrTelefoneFixo),
                     fornecedor.dsEmail,
-                    fornecedor.nrCEP,
+                    Util.Util.Unmask(fornecedor.nrCEP),
                     fornecedor.dsLogradouro,
                     Convert.ToInt32(fornecedor.nrEndereco),
                     fornecedor.dsBairro,
@@ -97,12 +97,12 @@ namespace Sistema.DAO
                 string sql = "UPDATE tbFornecedores SET nmFornecedor = '" +
                     fornecedor.nmFornecedor + "'," +
                     " nmFantasia = '" + fornecedor.nmFantasia + "'," +
-                    " nrCNPJ = '" + fornecedor.nrCNPJ + "'," +
-                    " nrIE = '" + fornecedor.nrIE + "'," +
-                    " nrTelefoneCelular = '" + fornecedor.nrTelefoneCelular + "'," +
-                    " nrTelefoneFixo = '" + fornecedor.nrTelefoneFixo + "'," +
+                    " nrCNPJ = '" + Util.Util.Unmask(fornecedor.nrCNPJ) + "'," +
+                    " nrIE = '" + Util.Util.Unmask(fornecedor.nrIE) + "'," +
+                    " nrTelefoneCelular = '" + Util.Util.Unmask(fornecedor.nrTelefoneCelular) + "'," +
+                    " nrTelefoneFixo = '" + Util.Util.Unmask(fornecedor.nrTelefoneFixo) + "'," +
                     " dsEmail = '" + fornecedor.dsEmail + "'," +
-                    " nrCEP = '" + fornecedor.nrCEP + "'," +
+                    " nrCEP = '" + Util.Util.Unmask(fornecedor.nrCEP) + "'," +
                     " dsLogradouro = '" + fornecedor.dsLogradouro + "'," +
                     " nrEndereco = '" + Convert.ToInt32(fornecedor.nrEndereco) + "'," +
                     " dsBairro = '" + fornecedor.dsBairro + "'," +
