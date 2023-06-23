@@ -1,99 +1,102 @@
 ﻿@model Sistema.Models.Clientes
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Clientes";
 }
 
-<h1>Edit</h1>
-
-<h4>Clientes</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="nmCliente" class="control-label"></label>
-                <input asp-for="nmCliente" class="form-control" />
-                <span asp-validation-for="nmCliente" class="text-danger"></span>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Clientes <small>Editar</small></h1>
             </div>
-            <div class="form-group">
-                <label asp-for="nrCPFCNPJ" class="control-label"></label>
-                <input asp-for="nrCPFCNPJ" class="form-control" />
-                <span asp-validation-for="nrCPFCNPJ" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrRG_IE" class="control-label"></label>
-                <input asp-for="nrRG_IE" class="form-control" />
-                <span asp-validation-for="nrRG_IE" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dtNasc" class="control-label"></label>
-                <input asp-for="dtNasc" class="form-control" />
-                <span asp-validation-for="dtNasc" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="id" />
-            <div class="form-group">
-                <label asp-for="nrTelefoneCelular" class="control-label"></label>
-                <input asp-for="nrTelefoneCelular" class="form-control" />
-                <span asp-validation-for="nrTelefoneCelular" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrTelefoneFixo" class="control-label"></label>
-                <input asp-for="nrTelefoneFixo" class="form-control" />
-                <span asp-validation-for="nrTelefoneFixo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsEmail" class="control-label"></label>
-                <input asp-for="dsEmail" class="form-control" />
-                <span asp-validation-for="dsEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="flTipo" class="control-label"></label>
-                <input asp-for="flTipo" class="form-control" />
-                <span asp-validation-for="flTipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrCEP" class="control-label"></label>
-                <input asp-for="nrCEP" class="form-control" />
-                <span asp-validation-for="nrCEP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsLogradouro" class="control-label"></label>
-                <input asp-for="dsLogradouro" class="form-control" />
-                <span asp-validation-for="dsLogradouro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrEndereco" class="control-label"></label>
-                <input asp-for="nrEndereco" class="form-control" />
-                <span asp-validation-for="nrEndereco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsBairro" class="control-label"></label>
-                <input asp-for="dsBairro" class="form-control" />
-                <span asp-validation-for="dsBairro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsComplemento" class="control-label"></label>
-                <input asp-for="dsComplemento" class="form-control" />
-                <span asp-validation-for="dsComplemento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="idCidade" class="control-label"></label>
-                <input asp-for="idCidade" class="form-control" />
-                <span asp-validation-for="idCidade" class="text-danger"></span>
-            </div>            
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
 
+                    @{
+                        ViewBag.pageType = "Edit";
+                    }
+
+                    @using (Html.BeginForm("Edit", "Clientes", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Clientes")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#flTipo").on('change', function () {
+                if ($(this).val() == "F") {
+                    $(".labelCPFCNPJ").text("CPF");
+                    $(".labelNmFantasia").text("Apelido");
+                    $(".labelRG_IE").text("RG");
+                    $(".labelDtNasc").text("Data de Nascimento");
+                    $("#nrCPFCNPJ").attr("placeholder", "___.___.___-__");
+                    $("#nrRG_IE").attr("placeholder", "__.___.___-_");
+                }
+                else {
+                    $(".labelCPFCNPJ").text("CNPJ");
+                    $(".labelNmFantasia").text("Nome Fantasia");
+                    $(".labelRG_IE").text("Inscr. Estadual");
+                    $(".labelDtNasc").text("Data de Fundação");
+                    $("#nrCPFCNPJ").attr("placeholder", "__.___.___/____-__");
+                }
+            });
+
+            $("#nrCPFCNPJ").on('keyup change', function () {
+                if ($("#flTipo").val() == "F") {
+                    $("#nrCPFCNPJ").mask("999.999.999-99");
+                    $("#nrRG_IE").mask("99.999.999-9");
+                }
+                else {
+                    $("#nrCPFCNPJ").mask("99.999.999/9999-99");
+                }
+            });
+
+            $("#nrRG_IE").on('keyup change', function () {
+                if (("#flTipo").val() == "F")
+                    $("#nrRG_IE").mask("99.999.999-9");
+                else
+                    $("#nrRG_IE").mask("");
+            });
+
+            $("#nrCEP").on('keyup change', function () {
+                $(this).mask("99999-999");
+            });
+
+            $("#nrTelefoneCelular").on('keyup change', function () {
+                $(this).mask("(99) 99999-9999");
+            });
+
+            $("#nrTelefoneFixo").on('keyup change', function () {
+                $(this).mask("(99) 9999-9999");
+            });
+
+            $("#flTipo").change();
+            $("#nrCPFCNPJ").change();
+            $("nrRG_IE").change();
+            $("#nrCEP").change();
+            $("#nrTelefoneCelular").change();
+            $("#nrTelefoneFixo").change();
+        });
+    </script>
 }

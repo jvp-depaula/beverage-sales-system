@@ -1,0 +1,33 @@
+﻿@model Sistema.Models.Contatos
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrTelefoneCelular, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrTelefoneCelular, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrTelefoneFixo, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrTelefoneFixo, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.dsEmail, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsEmail, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsEmail, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsEmail, null, new { @class = "help-block" })
+</div>

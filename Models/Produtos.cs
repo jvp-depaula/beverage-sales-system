@@ -13,6 +13,9 @@ namespace Sistema.Models
         [Display(Name = "Produto")]
         public string dsProduto { get; set; }
 
+        [Display(Name = "Fornecedor")]
+        public int idFornecedor { get; set; }
+
         [Display(Name = "Categoria")]
         public int idCategoria { get; set; }
 
@@ -22,19 +25,10 @@ namespace Sistema.Models
         [Display(Name = "NCM")]
         public string cdNCM { get; set; }
 
-        [Display(Name = "CFOP")]
-        public string cdCFOP { get; set; }
-
-        [Display(Name = "Quantidade de Estoque")]
-        public decimal? qtdEstoque { get; set; }
-
-        [Display(Name = "Valor do custo")]
-        public decimal? vlCusto { get; set; }
-
         [Display(Name = "Valor de venda")]
         public decimal? vlVenda { get; set; }
 
-        [Display(Name = "Observacao")]
+        [Display(Name = "Observação")]
         public string observacao { get; set; }
 
         [Display(Name = "Data de cadastro")]

@@ -4,128 +4,40 @@
     ViewData["Title"] = "Funcionários";
 }
 
-<h1>Adicionar <small>Funcionários</small></h1>
-
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="nmFuncionario" class="control-label"></label>
-                        <input asp-for="nmFuncionario" class="form-control" />
-                        <span asp-validation-for="nmFuncionario" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="dsApelido" class="control-label labelNmFantasia"></label>
-                        <input asp-for="dsApelido" class="form-control" />
-                        <span asp-validation-for="dsApelido" class="text-danger"></span>
-                    </div>
-                </div>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Funcionários <small>Inserir</small></h1>
             </div>
-
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="nrCPF" class="control-label"></label>
-                        <input asp-for="nrCPF" class="form-control" type="number" />
-                        <span asp-validation-for="nrCPF" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="nrRG" class="control-label"></label>
-                        <input asp-for="nrRG" class="form-control" type="number" />
-                        <span asp-validation-for="nrRG" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label asp-for="dtNasc" class="control-label"></label>
-                    <input asp-for="dtNasc" class="form-control" type="date" placeholder="__/__/____" />
-                    <span asp-validation-for="dtNasc" class="text-danger"></span>
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="nrTelefoneCelular" class="control-label"></label>
-                        <input asp-for="nrTelefoneCelular" class="form-control" type="number" placeholder="(__) _____-____" />
-                        <span asp-validation-for="nrTelefoneCelular" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="nrTelefoneFixo" class="control-label"></label>
-                        <input asp-for="nrTelefoneFixo" class="form-control" type="number" placeholder="(__) ____-____" />
-                        <span asp-validation-for="nrTelefoneFixo" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="dsEmail" class="control-label"></label>
-                <input asp-for="dsEmail" class="form-control" />
-                <span asp-validation-for="dsEmail" class="text-danger"></span>
-            </div>
-
-            <hr />
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label asp-for="nrCEP" class="control-label"></label>
-                    <input asp-for="nrCEP" class="form-control" type="number" />
-                    <span asp-validation-for="nrCEP" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="dsLogradouro" class="control-label"></label>
-                        <input asp-for="dsLogradouro" class="form-control" />
-                        <span asp-validation-for="dsLogradouro" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-1">
-                        <label asp-for="nrEndereco" class="control-label"></label>
-                        <input asp-for="nrEndereco" class="form-control" type="number" />
-                        <span asp-validation-for="nrEndereco" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="dsBairro" class="control-label"></label>
-                        <input asp-for="dsBairro" class="form-control" />
-                        <span asp-validation-for="dsBairro" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="dsComplemento" class="control-label"></label>
-                        <input asp-for="dsComplemento" class="form-control" />
-                        <span asp-validation-for="dsComplemento" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="idCidade" class="control-label"></label>
-                <input asp-for="idCidade" class="form-control" />
-                <span asp-validation-for="idCidade" class="text-danger"></span>
-            </div>
-
-            <br />
-            <div class="col-md-12">
-                <div class="col-md-2">
-                    <input type="submit" value="Salvar" class="btn btn-success" />
-                    <button type="button" asp-action="Index" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Create";
+                    }
+
+                    @using (Html.BeginForm("Create", "Funcionarios", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,53 +1,43 @@
 ﻿@model Sistema.Models.Estados
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Estados";
 }
 
-<h1>Edit</h1>
-
-<h4>Estados</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="idEstado" />
-            <div class="form-group">
-                <label asp-for="nmEstado" class="control-label"></label>
-                <input asp-for="nmEstado" class="form-control" />
-                <span asp-validation-for="nmEstado" class="text-danger"></span>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Estados <small>Editar</small></h1>
             </div>
-            <div class="form-group">
-                <label asp-for="idPais" class="control-label"></label>
-                <input asp-for="idPais" class="form-control" />
-                <span asp-validation-for="idPais" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="flUF" class="control-label"></label>
-                <input asp-for="flUF" class="form-control" />
-                <span asp-validation-for="flUF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dtCadastro" class="control-label"></label>
-                <input asp-for="dtCadastro" class="form-control" />
-                <span asp-validation-for="dtCadastro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dtUltAlteracao" class="control-label"></label>
-                <input asp-for="dtUltAlteracao" class="form-control" />
-                <span asp-validation-for="dtUltAlteracao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Edit";
+                    }
+
+                    @using (Html.BeginForm("Edit", "Estados", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Estados")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -4,91 +4,40 @@
     ViewData["Title"] = "Produtos";
 }
 
-<h1>Adicionar <small>Produtos</small></h1>
-
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-12">
-                <div class="col-md-6">
-
-                    <div class="form-group">
-                        <label asp-for="dsProduto" class="control-label"></label>
-                        <input asp-for="dsProduto" class="form-control" />
-                        <span asp-validation-for="dsProduto" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label asp-for="idCategoria" class="control-label"></label>
-                        <input asp-for="idCategoria" class="form-control" />
-                        <span asp-validation-for="idCategoria" class="text-danger"></span>
-                    </div>
-                </div>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Produtos <small>Inserir</small></h1>
             </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label asp-for="flUnidade" class="control-label"></label>
-                            @Html.DropDownListFor(model => model.flUnidade, (IEnumerable<SelectListItem>)Produtos.Unidade, new { @class = "form-control" })
-                            <span asp-validation-for="flUnidade" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="cdNCM" class="control-label"></label>
-                        <input asp-for="cdNCM" class="form-control" />
-                        <span asp-validation-for="cdNCM" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="cdCFOP" class="control-label"></label>
-                        <input asp-for="cdCFOP" class="form-control" />
-                        <span asp-validation-for="cdCFOP" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label asp-for="qtdEstoque" class="control-label"></label>
-                            <input asp-for="qtdEstoque" class="form-control" />
-                            <span asp-validation-for="qtdEstoque" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label asp-for="vlCusto" class="control-label"></label>
-                            <input asp-for="vlCusto" class="form-control" />
-                            <span asp-validation-for="vlCusto" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label asp-for="vlVenda" class="control-label"></label>
-                            <input asp-for="vlVenda" class="form-control" />
-                            <span asp-validation-for="vlVenda" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="observacao" class="control-label"></label>
-                <input asp-for="observacao" class="form-control" />
-                <span asp-validation-for="observacao" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="col-md-12">
-                <div class="col-md-2">
-                    <input type="submit" value="Salvar" class="btn btn-success" />
-                    <button type="button" asp-action="Index" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Create";
+                    }
+
+                    @using (Html.BeginForm("Create", "Produtos", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Produtos")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{

@@ -20,8 +20,9 @@ namespace Sistema.DAO
                     var cliente = new Clientes
                     {
                         id = Convert.ToInt32(reader["idCliente"]),
+                        flTipo = Convert.ToString(reader["flTipo"]),
                         nmCliente = Convert.ToString(reader["nmCliente"]),
-                        nmFantasia = Convert.ToString(reader["dsApelido"]),
+                        nmFantasia = Convert.ToString(reader["nmFantasia"]),
                         nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]),                        
                         nrRG_IE = Convert.ToString(reader["nrRG_IE"]),
                         nrTelefoneCelular = Convert.ToString(reader["nrTelefoneCelular"]),
@@ -35,7 +36,7 @@ namespace Sistema.DAO
                         idCidade = Convert.ToInt32(reader["idCidade"]),
                         dtNasc = Convert.ToDateTime(reader["dtNasc"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
-                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
+                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]),                        
                     };
 
                     list.Add(cliente);
@@ -57,19 +58,20 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbClientes (nmCliente, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
-                                                                "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade, dtNasc" +
+                var sql = string.Format("INSERT INTO tbClientes (nmCliente, flTipo, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
+                                                                "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade, dtNasc," +
                                                                 "dtCadastro, dtUltAlteracao) " +
                                                                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
-                                                                "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
+                                                                "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}', '{16}')",
                     cliente.nmCliente,
+                    cliente.flTipo,
                     cliente.nmFantasia,
-                    cliente.nrCPFCNPJ,
-                    cliente.nrRG_IE,
-                    cliente.nrTelefoneCelular,
-                    cliente.nrTelefoneFixo,
+                    Util.Util.Unmask(cliente.nrCPFCNPJ),
+                    Util.Util.Unmask(cliente.nrRG_IE),
+                    Util.Util.Unmask(cliente.nrTelefoneCelular),
+                    Util.Util.Unmask(cliente.nrTelefoneFixo),
                     cliente.dsEmail,
-                    cliente.nrCEP,
+                    Util.Util.Unmask(cliente.nrCEP),
                     cliente.dsLogradouro,
                     Convert.ToInt32(cliente.nrEndereco),
                     cliente.dsBairro,
@@ -97,21 +99,22 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbClientes SET nmCliente = '" +
-                    cliente.nmCliente + "'," +
-                    cliente.nmFantasia + "'," +
-                    " nrCPF = '" + cliente.nrCPFCNPJ + "'," +
-                    " nrRG = '" + cliente.nrRG_IE + "'," +
-                    " nrTelefoneCelular = '" + cliente.nrTelefoneCelular + "'," +
-                    " nrTelefoneFixo = '" + cliente.nrTelefoneFixo + "'," +
+                string sql = "UPDATE tbClientes SET" +
+                    " nmCliente = '" + cliente.nmCliente + "'," +
+                    " flTipo = '" + cliente.flTipo + "'," +
+                    " nmFantasia = '" + cliente.nmFantasia + "'," +                    
+                    " nrCPFCNPJ = '" + Util.Util.Unmask(cliente.nrCPFCNPJ) + "'," +
+                    " nrRG_IE = '" + Util.Util.Unmask(cliente.nrRG_IE) + "'," +
+                    " nrTelefoneCelular = '" + Util.Util.Unmask(cliente.nrTelefoneCelular) + "'," +
+                    " nrTelefoneFixo = '" + Util.Util.Unmask(cliente.nrTelefoneFixo) + "'," +
                     " dsEmail = '" + cliente.dsEmail + "'," +
-                    " nrCEP = '" + cliente.nrCEP + "'," +
+                    " nrCEP = '" + Util.Util.Unmask(cliente.nrCEP) + "'," +
                     " dsLogradouro = '" + cliente.dsLogradouro + "'," +
                     " nrEndereco = '" + Convert.ToInt32(cliente.nrEndereco) + "'," +
                     " dsBairro = '" + cliente.dsBairro + "'," +
                     " dsComplemento = '" + cliente.dsComplemento + "'," +
                     " idCidade = '" + Convert.ToInt32(cliente.idCidade) + "'," +
-                    " dtNasc = '" + Convert.ToDateTime(cliente.dtNasc) + "'," +
+                    " dtNasc = '" + Util.Util.FormatDate(cliente.dtNasc) + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idCliente = " + cliente.id;
                 OpenConnection();
@@ -142,6 +145,7 @@ namespace Sistema.DAO
                     while (reader.Read())
                     {
                         model.id = Convert.ToInt32(reader["idCliente"]);
+                        model.flTipo = Convert.ToString(reader["flTipo"]);
                         model.nmCliente = Convert.ToString(reader["nmCliente"]);
                         model.nmFantasia = Convert.ToString(reader["nmFantasia"]);
                         model.nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]);
@@ -211,8 +215,9 @@ namespace Sistema.DAO
             sql = @"
                     SELECT
                         idCliente AS idCliente,
+                        flTipo AS flTipo,
                         nmCliente AS nmCliente,
-                        dsApelido AS dsApelido,
+                        nmFantasia AS nmFantasia,
                         nrCPFCNPJ AS nrCPFCNPJ,
                         nrRG_IE AS nrRG_IE,
                         nrTelefoneCelular AS nrTelefoneCelular,

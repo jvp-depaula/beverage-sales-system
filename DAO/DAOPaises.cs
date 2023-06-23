@@ -75,7 +75,7 @@ namespace Sistema.DAO
                     + pais.nmPais + "'," +
                     " DDI = '" + pais.DDI + "'," +
                     " sigla = '" + pais.sigla + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("yyyy-MM-dd")
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idPais = " + pais.idPais;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);

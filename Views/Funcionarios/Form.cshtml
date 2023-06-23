@@ -1,0 +1,138 @@
+﻿@model Sistema.Models.Funcionarios
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.id)
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nmFuncionario, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nmFuncionario, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nmFuncionario, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nmFuncionario, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsApelido, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsApelido, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsApelido, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsApelido, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrCPF, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrCPF, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrRG, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control number", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrRG, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-3">
+    @Html.LabelFor(e => e.dtNasc, new { @class = "form-label labelDtNasc" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dtNasc, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dtNasc, new { @class = "form-control date-picker", @type = "date", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dtNasc, null, new { @class = "help-block" })
+</div>
+
+<hr />
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrTelefoneCelular, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrTelefoneCelular, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrTelefoneFixo, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrTelefoneFixo, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.dsEmail, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsEmail, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsEmail, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsEmail, null, new { @class = "help-block" })
+</div>
+
+<hr />
+
+<div class="col-md-3">
+    @Html.LabelFor(e => e.nrCEP, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrCEP, null, new { @class = "help-block" })
+</div>
+<div class="col-md-9"></div>
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsLogradouro, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsLogradouro, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsLogradouro, new { @class = "form-control", maxlength = "150" })
+        )
+    @Html.ValidationMessageFor(model => model.dsLogradouro, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrEndereco, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control number", maxlength = "150" })
+        )
+    @Html.ValidationMessageFor(model => model.nrEndereco, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsBairro, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsBairro, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsBairro, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsBairro, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsComplemento, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsComplemento, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsComplemento, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsComplemento, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.idCidade, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.idCidade, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.idCidade, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.idCidade, null, new { @class = "help-block" })
+</div>

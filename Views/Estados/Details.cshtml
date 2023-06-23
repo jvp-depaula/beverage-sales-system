@@ -1,48 +1,40 @@
 ﻿@model Sistema.Models.Estados
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Estados";
 }
 
-<h1>Details</h1>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Estados <small>Visualizar</small></h1>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <h4>Estados</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.nmEstado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.nmEstado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.idPais)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.idPais)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.flUF)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.flUF)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dtCadastro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dtCadastro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dtUltAlteracao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dtUltAlteracao)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.idEstado">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Details";
+                        ViewBag.disabledForm = true;
+                    }
+
+                    @using (Html.BeginForm("Details", "Estados", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <a href="@Url.Action("Index", "Estados")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

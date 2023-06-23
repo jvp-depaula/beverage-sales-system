@@ -1,0 +1,20 @@
+﻿@model Sistema.Models.Categorias
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.idCategoria)
+
+<div class="form-group">
+    @Html.LabelFor(e => e.nmCategoria, new { @class = "control-label col-lg-2 col-md-2 col-sm-3" })
+    <div class="col-lg-6 col-md-8 col-sm-5 required-field">
+        @(disabled ?
+            @Html.TextBoxFor(model => model.nmCategoria, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.TextBoxFor(model => model.nmCategoria, new { @class = "form-control", maxlength = "150", @placeholder = "Informe o nome da categoria" })
+            )
+        @Html.ValidationMessageFor(model => model.nmCategoria, null, new { @class = "help-block" })
+    </div>
+</div>
+<br />

@@ -23,7 +23,9 @@ namespace Sistema.DAO
                         idCidade = Convert.ToInt32(reader["idCidade"]),
                         nmCidade = Convert.ToString(reader["nmCidade"]),
                         DDD = Convert.ToString(reader["DDD"]),
-                        idEstado = Convert.ToInt32(reader["idEstado"])
+                        idEstado = Convert.ToInt32(reader["idEstado"]),
+                        dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
+                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
 
                     list.Add(cidade);

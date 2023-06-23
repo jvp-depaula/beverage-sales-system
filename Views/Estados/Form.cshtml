@@ -1,0 +1,35 @@
+﻿@model Sistema.Models.Estados
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.idEstado)
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nmEstado, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nmEstado, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nmEstado, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nmEstado, null, new { @class = "help-block" })
+</div>
+
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.idPais, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.idPais, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.idPais, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.idPais, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.flUF, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.flUF, new { @class = "form-control", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.flUF, new { @class = "form-control", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.flUF, null, new { @class = "help-block" })
+</div>

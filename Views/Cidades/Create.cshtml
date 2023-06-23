@@ -4,47 +4,41 @@
     ViewData["Title"] = "Cidades";
 }
 
-<h1>Adicionar <small>Cidades</small></h1>
 
-<hr />
-
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="md-col-md-6">
-                        <label asp-for="nmCidade" class="control-label"></label>
-                        <input asp-for="nmCidade" class="form-control" />
-                        <span asp-validation-for="nmCidade" class="text-danger"></span>
-                    </div>
-                    <div class="md-col-md-6">
-                        <label asp-for="idEstado" class="control-label"></label>
-                        <input asp-for="idEstado" class="form-control" />
-                        <span asp-validation-for="idEstado" class="text-danger"></span>
-                    </div>
-                </div>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Cidades <small>Inserir</small></h1>
             </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label asp-for="DDD" class="control-label"></label>
-                    <input asp-for="DDD" class="form-control" />
-                    <span asp-validation-for="DDD" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-
-            <div class="col-md-12">
-                <div class="col-md-2">
-                    <input type="submit" value="Salvar" class="btn btn-success" />
-                    <button type="button" asp-action="Index" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Create";
+                    }
+
+                    @using (Html.BeginForm("Create", "Cidades", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Cidades")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{

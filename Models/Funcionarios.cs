@@ -10,7 +10,7 @@ namespace Sistema.Models
         public string dsApelido { get; set; }
         [Display(Name = "CPF")]
         public string nrCPF { get; set; }
-        [Display(Name = "CPF")]
+        [Display(Name = "RG")]
         public string nrRG { get; set; }
         [Display(Name = "Data de Nascimento")]
         public DateTime dtNasc { get; set; }

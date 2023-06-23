@@ -21,12 +21,10 @@ namespace Sistema.DAO
                     {
                         idProduto = Convert.ToInt32(reader["idProduto"]),
                         dsProduto = Convert.ToString(reader["dsProduto"]),
+                        idFornecedor = Convert.ToInt32(reader["idFornecedor"]),
                         idCategoria = Convert.ToInt32(reader["idCategoria"]),
                         flUnidade = Convert.ToString(reader["flUnidade"]),
                         cdNCM = Convert.ToString(reader["cdNCM"]),
-                        cdCFOP = Convert.ToString(reader["cdCFOP"]),
-                        qtdEstoque = Convert.ToInt32(reader["qtdEstoque"]),
-                        vlCusto = Convert.ToDecimal(reader["vlCusto"]),
                         vlVenda = Convert.ToDecimal(reader["vlVenda"]),
                         observacao = Convert.ToString(reader["observacao"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
@@ -52,14 +50,12 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idCategoria, flUnidade, cdNCM, cdCFOP, qtdEstoque, vlCusto, vlVenda, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')",
+                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, flUnidade, cdNCM, vlVenda, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')",
                                         produto.dsProduto,
+                                        produto.idFornecedor,
                                         Convert.ToInt32(produto.idCategoria),
                                         produto.flUnidade,
                                         produto.cdNCM,
-                                        produto.cdCFOP,
-                                        Convert.ToInt32(produto.qtdEstoque),
-                                        Convert.ToDecimal(produto.vlCusto),
                                         Convert.ToDecimal(produto.vlVenda),
                                         produto.observacao,
                                         DateTime.Now.ToString("dd/MM/yyyy"),
@@ -85,11 +81,10 @@ namespace Sistema.DAO
             {
                 string sql = "UPDATE tbProdutos SET dsProduto = '"
                     + produto.dsProduto + "'," +
+                    " idFornecedor = '" + Convert.ToInt32(produto.idFornecedor) + "'," +
                     " idCategoria = '" + Convert.ToInt32(produto.idCategoria) + "'," +
                     " flUnidade = '" + produto.dsProduto + "'," +
                     " cdNCM = '" + produto.cdNCM + "'," +
-                    " qtdEstoque = '" + Convert.ToInt32(produto.qtdEstoque) + "'," +
-                    " vlCusto = '" + Convert.ToDecimal(produto.vlCusto) + "'," +
                     " vlVenda = '" + Convert.ToDecimal(produto.vlVenda) + "'," +
                     " observacao = '" + produto.observacao + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
@@ -123,12 +118,10 @@ namespace Sistema.DAO
                     {
                         model.idProduto = Convert.ToInt32(reader["idProduto"]);
                         model.dsProduto = Convert.ToString(reader["dsProduto"]);
+                        model.idFornecedor = Convert.ToInt32(reader["idFornecedor"]);
                         model.idCategoria = Convert.ToInt32(reader["idCategoria"]);
                         model.flUnidade = Convert.ToString(reader["flUnidade"]);
                         model.cdNCM = Convert.ToString(reader["cdNCM"]);
-                        model.cdCFOP = Convert.ToString(reader["cdCFOP"]);
-                        model.qtdEstoque = Convert.ToInt32(reader["qtdEstoque"]);
-                        model.vlCusto = Convert.ToDecimal(reader["vlCusto"]);
                         model.vlVenda = Convert.ToDecimal(reader["vlVenda"]);
                         model.observacao = Convert.ToString(reader["observacao"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
@@ -187,12 +180,10 @@ namespace Sistema.DAO
                     SELECT
                         idProduto AS idProduto,
                         dsProduto AS dsProduto,
+                        idFornecedor AS idFornecedor,
                         idCategoria AS idCategoria,
                         flUnidade AS flUnidade,
                         cdNCM AS cdNCM,
-                        cdCFOP AS cdCFOP,
-                        qtdEstoque AS qtdEstoque,
-                        vlCusto AS vlCusto,
                         vlVenda AS vlVenda,
                         observacao AS observacao,
                         dtCadastro AS dtCadastro,

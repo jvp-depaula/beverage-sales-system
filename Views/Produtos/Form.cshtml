@@ -1,0 +1,71 @@
+﻿@model Sistema.Models.Produtos
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.idProduto)
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsProduto, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsProduto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsProduto, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsProduto, null, new { @class = "help-block" })
+</div>
+
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.idCategoria, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.idCategoria, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.idCategoria, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.idCategoria, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.idFornecedor, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.idFornecedor, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.idFornecedor, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.idFornecedor, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.flUnidade, new { @class = "form-label" })
+    @(disabled ?
+        @Html.DropDownListFor(model => model.flUnidade, (IEnumerable<SelectListItem>)Produtos.Unidade, new { @class = "form-control", @disabled = "disabled" }) :
+        @Html.DropDownListFor(model => model.flUnidade, (IEnumerable<SelectListItem>)Produtos.Unidade, new { @class = "form-control", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.flUnidade, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.cdNCM, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.cdNCM, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.cdNCM, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.cdNCM, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.vlVenda, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.vlVenda, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.vlVenda, new { @class = "form-control", maxlength = "150", @placeholder = "0,00" })
+        )
+    @Html.ValidationMessageFor(model => model.vlVenda, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.observacao, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.observacao, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.observacao, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.observacao, null, new { @class = "help-block" })
+</div>

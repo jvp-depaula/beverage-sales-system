@@ -1,36 +1,44 @@
 ﻿@model Sistema.Models.Categorias
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Visualizar";
+    ViewBag.pageType = "Details";
+    ViewBag.disabledForm = true;
 }
 
-<h1>Details</h1>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Categorias <small>Visualizar</small></h1>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <h4>Categorias</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.nmCategoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.nmCategoria)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dtCadastro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dtCadastro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dtUltAlteracao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dtUltAlteracao)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.idCategoria">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Details";
+                        ViewBag.disabledForm = true;
+                    }
+
+                    @using (Html.BeginForm("Details", "Categorias", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Categorias")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

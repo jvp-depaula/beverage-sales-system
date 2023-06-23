@@ -27,7 +27,9 @@ namespace Sistema.DAO
                         idEstado = Convert.ToInt32(reader["idEstado"]),
                         nmEstado = Convert.ToString(reader["nmEstado"]),
                         flUF = Convert.ToString(reader["flUF"]),
-                        idPais = Convert.ToInt32(reader["idPais"]),                        
+                        idPais = Convert.ToInt32(reader["idPais"]),
+                        dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
+                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
 
                     list.Add(estado);

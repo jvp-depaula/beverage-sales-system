@@ -59,7 +59,7 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("INSERT INTO tbFuncionarios (nmFuncionario, dsApelido, nrCPF, nrRG, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
                                                                     "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade," +
-                                                                    "dtNasc" + "dtCadastro, dtUltAlteracao) " +
+                                                                    "dtNasc," + "dtCadastro, dtUltAlteracao) " +
                                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
                                                                     "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
                     func.nmFuncionario,
@@ -97,9 +97,9 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbFuncionarios SET nmFuncionario = '" +
-                    func.nmFuncionario + "'," +
-                    func.dsApelido + "'," +
+                string sql = "UPDATE tbFuncionarios SET " +
+                    " nmFuncionario = '" + func.nmFuncionario + "'," +
+                    " dsApelido = '" + func.dsApelido + "'," +
                     " nrCPF = '" + func.nrCPF + "'," +
                     " nrRG = '" + func.nrRG + "'," +
                     " nrTelefoneCelular = '" + func.nrTelefoneCelular+ "'," +
@@ -176,7 +176,7 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "DELETE FROM tbClientes WHERE idFuncionario = " + idFuncionario;
+                string sql = "DELETE FROM tbFuncionarios WHERE idFuncionario = " + idFuncionario;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

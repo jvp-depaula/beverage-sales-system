@@ -1,109 +1,74 @@
 ﻿@model Sistema.Models.Fornecedores
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Fornecedores";
 }
 
-<h1>Edit</h1>
-
-<h4>Fornecedores</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="nmFornecedor" class="control-label"></label>
-                <input asp-for="nmFornecedor" class="form-control" />
-                <span asp-validation-for="nmFornecedor" class="text-danger"></span>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Fornecedores <small>Editar</small></h1>
             </div>
-            <div class="form-group">
-                <label asp-for="nmFantasia" class="control-label"></label>
-                <input asp-for="nmFantasia" class="form-control" />
-                <span asp-validation-for="nmFantasia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrCNPJ" class="control-label"></label>
-                <input asp-for="nrCNPJ" class="form-control" />
-                <span asp-validation-for="nrCNPJ" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrIE" class="control-label"></label>
-                <input asp-for="nrIE" class="form-control" />
-                <span asp-validation-for="nrIE" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="id" />
-            <div class="form-group">
-                <label asp-for="nrTelefoneCelular" class="control-label"></label>
-                <input asp-for="nrTelefoneCelular" class="form-control" />
-                <span asp-validation-for="nrTelefoneCelular" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrTelefoneFixo" class="control-label"></label>
-                <input asp-for="nrTelefoneFixo" class="form-control" />
-                <span asp-validation-for="nrTelefoneFixo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsEmail" class="control-label"></label>
-                <input asp-for="dsEmail" class="form-control" />
-                <span asp-validation-for="dsEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="flTipo" class="control-label"></label>
-                <input asp-for="flTipo" class="form-control" />
-                <span asp-validation-for="flTipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrCEP" class="control-label"></label>
-                <input asp-for="nrCEP" class="form-control" />
-                <span asp-validation-for="nrCEP" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsLogradouro" class="control-label"></label>
-                <input asp-for="dsLogradouro" class="form-control" />
-                <span asp-validation-for="dsLogradouro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nrEndereco" class="control-label"></label>
-                <input asp-for="nrEndereco" class="form-control" />
-                <span asp-validation-for="nrEndereco" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsBairro" class="control-label"></label>
-                <input asp-for="dsBairro" class="form-control" />
-                <span asp-validation-for="dsBairro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dsComplemento" class="control-label"></label>
-                <input asp-for="dsComplemento" class="form-control" />
-                <span asp-validation-for="dsComplemento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="idCidade" class="control-label"></label>
-                <input asp-for="idCidade" class="form-control" />
-                <span asp-validation-for="idCidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dtCadastro" class="control-label"></label>
-                <input asp-for="dtCadastro" class="form-control" />
-                <span asp-validation-for="dtCadastro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dtUltAlteracao" class="control-label"></label>
-                <input asp-for="dtUltAlteracao" class="form-control" />
-                <span asp-validation-for="dtUltAlteracao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Edit";
+                    }
+
+                    @using (Html.BeginForm("Edit", "Fornecedores", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Fornecedores")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#nrCNPJ").on('keyup change', function () {
+                $(this).attr("placeholder", "__.___.___/____-__");
+                $(this).mask("99.999.999/9999-99");
+            });
+
+            $("#nrTelefoneCelular").on('keyup change', function () {
+                $(this).attr("placeholder", "(__) _____-____");
+                $(this).mask("(99) 99999-9999");
+            });
+
+            $("#nrTelefoneFixo").on('keyup change', function () {
+                $(this).attr("placeholder", "(__) ____-____");
+                $(this).mask("(99) 9999-9999");
+            });
+
+            $("#nrCEP").on('keyup change', function () {
+                $(this).attr("placeholder", "_____-___");
+                $(this).mask("99999-999");
+            });
+
+            $("#nrCNPJ").change();
+            $("#nrTelefoneCelular").change();
+            $("#nrTelefoneFixo").change();
+            $("#nrCEP").change();
+        });
+    </script>
 }

@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Adicionar</a>
 </p>
 <table class="table">
     <thead>
@@ -22,47 +22,8 @@
                 @Html.DisplayNameFor(model => model.nrCPF)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nrRG)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dtNasc)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.nrTelefoneCelular)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nrTelefoneFixo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dsEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.flTipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nrCEP)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dsLogradouro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nrEndereco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dsBairro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dsComplemento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.idCidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dtCadastro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.dtUltAlteracao)
-            </th>
+            </th>           
             <th></th>
         </tr>
     </thead>
@@ -79,51 +40,12 @@
                 @Html.DisplayFor(modelItem => item.nrCPF)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nrRG)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dtNasc)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.nrTelefoneCelular)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nrTelefoneFixo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dsEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.flTipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nrCEP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dsLogradouro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nrEndereco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dsBairro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dsComplemento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.idCidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dtCadastro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dtUltAlteracao)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Visualizar</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Excluir</a>
             </td>
         </tr>
 }

@@ -4,39 +4,40 @@
     ViewData["Title"] = "Países";
 }
 
-<h1>Adicionar <small>Países</small></h1>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Paises <small>Inserir</small></h1>
+            </div>
+        </div>
+    </div>
 
-<hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="nmPais" class="control-label"></label>
-                <input asp-for="nmPais" class="form-control" />
-                <span asp-validation-for="nmPais" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="sigla" class="control-label"></label>
-                <input asp-for="sigla" class="form-control" />
-                <span asp-validation-for="sigla" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DDI" class="control-label"></label>
-                <input asp-for="DDI" class="form-control" />
-                <span asp-validation-for="DDI" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <input type="submit" value="Salvar" class="btn btn-success" />
-                    <button type="button" asp-action="Index" class="btn btn-danger">Cancelar</button>
+                    @{
+                        ViewBag.pageType = "Create";
+                    }
+
+                    @using (Html.BeginForm("Create", "Paises", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Paises")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

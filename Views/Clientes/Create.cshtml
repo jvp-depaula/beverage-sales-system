@@ -4,159 +4,44 @@
     ViewData["Title"] = "Clientes";
 }
 
-<h1>Adicionar <small>Clientes</small></h1>
-
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="col-md-3">
-                <label asp-for="flTipo" class="control-label"></label>
-                @Html.DropDownListFor(model => model.flTipo, (IEnumerable<SelectListItem>)Pessoas.Tipo, new { @class = "form-control" })
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Clientes <small>Inserir</small></h1>
             </div>
-
-            <hr />
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="nmCliente" class="control-label"></label>
-                        <input asp-for="nmCliente" class="form-control" />
-                        <span asp-validation-for="nmCliente" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="nmFantasia" class="control-label labelNmFantasia"></label>
-                        <input asp-for="nmFantasia" class="form-control" />
-                        <span asp-validation-for="nmFantasia" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="nrCPFCNPJ" class="control-label labelCPFCNPJ"></label>
-                        <input asp-for="nrCPFCNPJ" class="form-control" type="number" />
-                        <span asp-validation-for="nrCPFCNPJ" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="nrRG_IE" class="control-label labelRG_IE"></label>
-                        <input asp-for="nrRG_IE" class="form-control" type="number" />
-                        <span asp-validation-for="nrRG_IE" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label asp-for="dtNasc" class="control-label labelDtNasc"></label>
-                    <input asp-for="dtNasc" class="form-control" type="date" placeholder="__/__/____" />
-                    <span asp-validation-for="dtNasc" class="text-danger"></span>
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="nrTelefoneCelular" class="control-label"></label>
-                        <input asp-for="nrTelefoneCelular" class="form-control" type="number" placeholder="(__) _____-____" />
-                        <span asp-validation-for="nrTelefoneCelular" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="nrTelefoneFixo" class="control-label"></label>
-                        <input asp-for="nrTelefoneFixo" class="form-control" type="number" placeholder="(__) ____-____" />
-                        <span asp-validation-for="nrTelefoneFixo" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="dsEmail" class="control-label"></label>
-                <input asp-for="dsEmail" class="form-control" />
-                <span asp-validation-for="dsEmail" class="text-danger"></span>
-            </div>
-
-            <hr />
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label asp-for="nrCEP" class="control-label"></label>
-                    <input asp-for="nrCEP" class="form-control" type="number" />
-                    <span asp-validation-for="nrCEP" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="dsLogradouro" class="control-label"></label>
-                        <input asp-for="dsLogradouro" class="form-control" />
-                        <span asp-validation-for="dsLogradouro" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-1">
-                        <label asp-for="nrEndereco" class="control-label"></label>
-                        <input asp-for="nrEndereco" class="form-control" type="number" />
-                        <span asp-validation-for="nrEndereco" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="dsBairro" class="control-label"></label>
-                        <input asp-for="dsBairro" class="form-control" />
-                        <span asp-validation-for="dsBairro" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="dsComplemento" class="control-label"></label>
-                        <input asp-for="dsComplemento" class="form-control" />
-                        <span asp-validation-for="dsComplemento" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="idCidade" class="control-label"></label>
-                <input asp-for="idCidade" class="form-control" />
-                <span asp-validation-for="idCidade" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="col-md-12">
-                <div class="col-md-2">
-                    <input type="submit" value="Salvar" class="btn btn-success" />
-                    <button type="button" asp-action="Index" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Create";
+                    }
+
+                    @using (Html.BeginForm("Create", "Clientes", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Clientes")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#flTipo").on('change', function () {
-                if ($(this).val() == "F") {
-                    $(".labelCPFCNPJ").text("CPF");
-                    $(".labelCPFCNPJ").attr("placeholder", "___.___.___-__");
-                    $(".labelNmFantasia").text("Apelido");
-                    $(".labelRG_IE").text("RG");
-                    $(".labelDtNasc").text("Data de Nascimento");
-                }
-                else {
-                    $(".labelCPFCNPJ").text("CNPJ");
-                    $(".labelCPFCNPJ").attr("placeholder", "_.___.___-_");
-                    $(".labelNmFantasia").text("Nome Fantasia");
-                    $(".labelRG_IE").text("Inscr. Estadual");
-                    $(".labelDtNasc").text("Data de Fundação");
-                }
-
-            });
-
-            $("#flTipo").change();
-        });
-    </script>
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Clientes/Form.js")"></script>
 }

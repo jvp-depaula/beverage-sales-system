@@ -1,84 +1,41 @@
 ﻿@model Sistema.Models.Produtos
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Visualizar";
 }
 
-<h1>Details</h1>
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Produtos <small>Visualizar</small></h1>
+            </div>
+        </div>
+    </div>
 
-<div>
-    <h4>Produtos</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dsProduto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dsProduto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.idCategoria)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.idCategoria)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.flUnidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.flUnidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.cdNCM)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.cdNCM)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.cdCFOP)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.cdCFOP)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.qtdEstoque)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.qtdEstoque)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.vlCusto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.vlCusto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.vlVenda)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.vlVenda)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.observacao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.observacao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dtCadastro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dtCadastro)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.dtUltAlteracao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.dtUltAlteracao)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.idProduto">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Details";
+                        ViewBag.disabledForm = true;
+                    }
+
+                    @using (Html.BeginForm("Details", "Produtos", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        @Html.Partial("Form", Model)
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Produtos")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
