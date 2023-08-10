@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace Sistema.DAO
@@ -43,6 +44,47 @@ namespace Sistema.DAO
             {
                 throw new Exception("Erro ao fechar a conexão: " + error.Message);
             }
+        }
+
+        public string Insert(System.Type type, string tableName)
+        {
+            string insertSQL = "insert into " + tableName + " ( ";
+            string values = " values (";
+
+            foreach (PropertyInfo property in type.GetProperties())
+            {
+                insertSQL += property.Name.ToLower() + ",";
+                values += "@" + property.Name.ToLower() + ",";
+            }
+            insertSQL = insertSQL.Remove((insertSQL.Length - 1), 1);
+            insertSQL += ")";
+            values = values.Remove((values.Length - 1), 1);
+            values += ")";
+
+            return insertSQL + values;
+        }
+
+        public string Edit(System.Type type, string tableName)
+        {
+            string editSQL = "alter table " + tableName + " ( ";
+            string values = " values (";
+
+            foreach (PropertyInfo property in type.GetProperties())
+            {
+                editSQL += property.Name.ToLower() + ",";
+                values += "@" + property.Name.ToLower() + ",";
+            }
+            editSQL = editSQL.Remove((editSQL.Length - 1), 1);
+            editSQL += ")";
+            values = values.Remove((values.Length - 1), 1);
+            values += ")";
+
+            return editSQL + values;
+        }
+
+        public string SelectAll(string tableName)
+        {
+            return "select * from " + tableName;
         }        
     }
 }

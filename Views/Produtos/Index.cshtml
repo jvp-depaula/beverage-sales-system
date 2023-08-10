@@ -19,16 +19,13 @@
                 @Html.DisplayNameFor(model => model.idCategoria)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.flUnidade)
+                @Html.DisplayNameFor(model => model.idUnidade)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.cdNCM)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.vlVenda)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.observacao)
             </th>
             <th></th>
         </tr>
@@ -43,16 +40,10 @@
                 @Html.DisplayFor(modelItem => item.idCategoria)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.flUnidade)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.cdNCM)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.vlVenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.observacao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.idProduto">Editar</a> |

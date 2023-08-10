@@ -42,7 +42,6 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-
         public void Insert(Models.Paises pais)
         {
             try
@@ -66,7 +65,7 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-
+        
         public bool Update(Models.Paises pais)
         {
             try
@@ -191,5 +190,14 @@ namespace Sistema.DAO
                     FROM tbPaises" + swhere;
             return sql;
         }
+        /*    
+        public void InsertTeste(Models.Paises pais)
+        {
+            var sql = this.Insert(pais.GetType(), "tbPaises");
+            OpenConnection();
+            SqlQuery = new SqlCommand(sql, con);
+            SqlQuery.ExecuteNonQuery();
+        }
+        */
     }
 }

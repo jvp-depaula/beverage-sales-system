@@ -6,17 +6,6 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <Compile Remove="NovaPasta\**" />
-    <Compile Remove="Scripts\**" />
-    <Content Remove="NovaPasta\**" />
-    <Content Remove="Scripts\**" />
-    <EmbeddedResource Remove="NovaPasta\**" />
-    <EmbeddedResource Remove="Scripts\**" />
-    <None Remove="NovaPasta\**" />
-    <None Remove="Scripts\**" />
-  </ItemGroup>
-	
-  <ItemGroup>
     <Content Remove="wwwroot\js\Scripts\Categorias\Index.js" />
     <Content Remove="wwwroot\js\Scripts\Clientes\Form.js" />
     <Content Remove="wwwroot\js\Scripts\Fornecedores\Form.js" />
@@ -26,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.7.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>  

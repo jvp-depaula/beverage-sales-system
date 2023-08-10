@@ -35,12 +35,12 @@
 </div>
 
 <div class="col-md-4">
-    @Html.LabelFor(e => e.flUnidade, new { @class = "form-label" })
+    @Html.LabelFor(e => e.idUnidade, new { @class = "form-label" })
     @(disabled ?
-        @Html.DropDownListFor(model => model.flUnidade, (IEnumerable<SelectListItem>)Produtos.Unidade, new { @class = "form-control", @disabled = "disabled" }) :
-        @Html.DropDownListFor(model => model.flUnidade, (IEnumerable<SelectListItem>)Produtos.Unidade, new { @class = "form-control", @placeholder = "" })
+        @Html.TextBoxFor(model => model.idUnidade, new { @class = "form-control", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.idUnidade, new { @class = "form-control", @placeholder = "" })
         )
-    @Html.ValidationMessageFor(model => model.flUnidade, null, new { @class = "help-block" })
+    @Html.ValidationMessageFor(model => model.idUnidade, null, new { @class = "help-block" })
 </div>
 
 <div class="col-md-4">
@@ -59,13 +59,4 @@
         @Html.TextBoxFor(model => model.vlVenda, new { @class = "form-control", maxlength = "150", @placeholder = "0,00" })
         )
     @Html.ValidationMessageFor(model => model.vlVenda, null, new { @class = "help-block" })
-</div>
-
-<div class="col-md-12">
-    @Html.LabelFor(e => e.observacao, new { @class = "form-label" })
-    @(disabled ?
-        @Html.TextBoxFor(model => model.observacao, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.observacao, new { @class = "form-control", maxlength = "150", @placeholder = "" })
-        )
-    @Html.ValidationMessageFor(model => model.observacao, null, new { @class = "help-block" })
 </div>

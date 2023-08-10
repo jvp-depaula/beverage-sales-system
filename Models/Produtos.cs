@@ -18,40 +18,28 @@ namespace Sistema.Models
 
         [Display(Name = "Categoria")]
         public int idCategoria { get; set; }
-
         [Display(Name = "Unidade")]
-        public string flUnidade { get; set; }
+        public int idUnidade { get; set; }
+        [Display(Name = "Marca")]
+        public int idMarca { get; set; }
 
         [Display(Name = "NCM")]
         public string cdNCM { get; set; }
 
         [Display(Name = "Valor de venda")]
         public decimal? vlVenda { get; set; }
+        [Display(Name = "Custo")]
+        public decimal? vlCusto { get; set; }
 
-        [Display(Name = "Observação")]
-        public string observacao { get; set; }
+        [Display(Name = "Valor Custo Ult. Compra")]
+        public decimal? vlCustoUltCompra { get; set; }
+        [Display(Name = "Estoque")]
+        public int qtdEstoque { get; set; }
 
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 
         [Display(Name = "Data da últ. alteração")]
         public DateTime? dtUltAlteracao { get; set; }
-
-        #region FLAGS
-
-        #region UNIDADE
-        public static SelectListItem[] Unidade
-        {
-            get
-            {
-                return new[]
-                {
-                    new SelectListItem { Value = "U", Text = "UNIDADE" },
-                    // verificar L, ML
-                };
-            }
-        }
-        #endregion
-        #endregion
     }
 }

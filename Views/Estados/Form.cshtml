@@ -3,6 +3,7 @@
 @{
     var disabled = Convert.ToBoolean(ViewBag.disabledForm);
     var pageType = Convert.ToString(ViewBag.pageType);
+    var modelPais = new Sistema.Models.Paises();
 }
 
 @Html.HiddenFor(e => e.idEstado)
@@ -32,4 +33,46 @@
         @Html.TextBoxFor(model => model.flUF, new { @class = "form-control", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.flUF, null, new { @class = "help-block" })
+</div>
+
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar País</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Paises", FormMethod.Post, new { @class = "row g-3" }))
+                {
+                    @Html.Partial("Form", modelPais)                    
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCloseModalAdd" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnAddPais" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar País</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ListaPaises", "Paises", new { @class = "row g-3" }))
+                {
+                    @Html.Partial("Form")
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCloseModalAdd" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnAddPais" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
 </div>

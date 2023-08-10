@@ -23,10 +23,10 @@ namespace Sistema.DAO
                         dsProduto = Convert.ToString(reader["dsProduto"]),
                         idFornecedor = Convert.ToInt32(reader["idFornecedor"]),
                         idCategoria = Convert.ToInt32(reader["idCategoria"]),
-                        flUnidade = Convert.ToString(reader["flUnidade"]),
+                        idUnidade = Convert.ToInt32(reader["idUnidade"]),
                         cdNCM = Convert.ToString(reader["cdNCM"]),
                         vlVenda = Convert.ToDecimal(reader["vlVenda"]),
-                        observacao = Convert.ToString(reader["observacao"]),
+                        vlCusto = Convert.ToDecimal(reader["vlCusto"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -54,10 +54,10 @@ namespace Sistema.DAO
                                         produto.dsProduto,
                                         produto.idFornecedor,
                                         Convert.ToInt32(produto.idCategoria),
-                                        produto.flUnidade,
+                                        // produto.flUnidade,
                                         produto.cdNCM,
                                         Convert.ToDecimal(produto.vlVenda),
-                                        produto.observacao,
+                                        // produto.observacao,
                                         DateTime.Now.ToString("dd/MM/yyyy"),
                                         DateTime.Now.ToString("dd/MM/yyyy")
                                     );
@@ -83,10 +83,10 @@ namespace Sistema.DAO
                     + produto.dsProduto + "'," +
                     " idFornecedor = '" + Convert.ToInt32(produto.idFornecedor) + "'," +
                     " idCategoria = '" + Convert.ToInt32(produto.idCategoria) + "'," +
-                    " flUnidade = '" + produto.dsProduto + "'," +
+                    // " flUnidade = '" + produto.dsProduto + "'," +
                     " cdNCM = '" + produto.cdNCM + "'," +
                     " vlVenda = '" + Convert.ToDecimal(produto.vlVenda) + "'," +
-                    " observacao = '" + produto.observacao + "'," +
+                    //" observacao = '" + produto.observacao + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idProduto = " + produto.idProduto;
                 OpenConnection();
@@ -120,10 +120,10 @@ namespace Sistema.DAO
                         model.dsProduto = Convert.ToString(reader["dsProduto"]);
                         model.idFornecedor = Convert.ToInt32(reader["idFornecedor"]);
                         model.idCategoria = Convert.ToInt32(reader["idCategoria"]);
-                        model.flUnidade = Convert.ToString(reader["flUnidade"]);
+                        // model.flUnidade = Convert.ToString(reader["flUnidade"]);
                         model.cdNCM = Convert.ToString(reader["cdNCM"]);
                         model.vlVenda = Convert.ToDecimal(reader["vlVenda"]);
-                        model.observacao = Convert.ToString(reader["observacao"]);
+                        // model.observacao = Convert.ToString(reader["observacao"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }

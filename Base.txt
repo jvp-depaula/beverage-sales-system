@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Reflection;
+
+namespace MB.Migracao.Core
+{
+    public class Base
+    {
+        public ConexaoBD origem;
+        public ConexaoBD destino;
+
+        public Base(ConexaoBD _origem, ConexaoBD _destino)
+        {
+            origem = _origem;
+            destino = _destino;
+        }
+
+        public long GetSeq(string seqName)
+        {
+            var itemGen = destino.Database.SqlQuery<long>(string.Format($"SELECT NEXT VALUE FOR {seqName} AS RESULT")).FirstOrDefault();
+            return itemGen;
+        }
+
+        public List<T> ConsultaListaOrigem<T>(string consulta)
+        {
+            return origem.Database.SqlQuery<T>(consulta).ToList();
+        }
+
+        public List<T> ConsultaListaDestino<T>(string consulta)
+        {
+            return destino.Database.SqlQuery<T>(consulta).ToList();
+        }
+
+        public T GetOrigem<T>(string consulta)
+        {
+            return origem.Database.SqlQuery<T>(consulta).FirstOrDefault();
+        }
+
+        public T GetDestino<T>(string consulta)
+        {
+            return destino.Database.SqlQuery<T>(consulta).FirstOrDefault();
+        }
+
+        public string GetInsert(System.Type type, string tableName)
+        {
+            string insertSQL = "insert into "+ tableName + " ( ";
+            string values = " values (";
+
+            foreach (PropertyInfo property in type.GetProperties())
+            {
+                insertSQL += property.Name.ToLower() + ",";
+                values += "@" + property.Name.ToLower() + ",";
+            }
+            insertSQL = insertSQL.Remove((insertSQL.Length - 1),1);
+            insertSQL += ")";
+            values = values.Remove((values.Length - 1),1);
+            values += ")";
+
+            return insertSQL + values;
+        }
+
+        public List<SqlParameter> GetValueList(object obj, List<string> listIgnore)
+        {
+            var listRet = new List<SqlParameter>();
+            foreach (PropertyInfo property in obj.GetType().GetProperties())
+            {
+                if (!listIgnore.Contains(property.Name.ToLower(), StringComparer.OrdinalIgnoreCase))
+                {
+                    object value = property.GetValue(obj, null);
+                    listRet.Add(new SqlParameter
+                    {
+                        ParameterName = "@" + property.Name,
+                        Value = value == null ? (object)DBNull.Value : value
+
+                    });
+                }
+            }
+            return listRet;
+        }
+
+    }
+}
