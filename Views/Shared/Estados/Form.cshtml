@@ -1,0 +1,79 @@
+﻿@model Sistema.Models.Estados
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+    var modelPais = new Sistema.Models.Paises();    
+}
+
+@Html.HiddenFor(e => e.idEstado)
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nmEstado, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nmEstado, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nmEstado, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nmEstado, null, new { @class = "help-block" })
+</div>
+
+
+<div class="col-md-6">
+    @Html.Label("nmPais", "Pais", new { @class = "form-label" })
+    <div class="input-group mb-3">
+    @(disabled ?
+        @Html.DropDownListFor(model => model.idPais, ViewBag.selectListPaises as SelectList, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.DropDownListFor(model => model.idPais, ViewBag.selectListPaises as SelectList, new { @class = "form-control" })
+        )
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal_ListaPaises"><i class="fas fa-search"></i></button>
+    </div>
+    @Html.ValidationMessageFor(model => model.idPais, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.flUF, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.flUF, new { @class = "form-control", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.flUF, new { @class = "form-control", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.flUF, null, new { @class = "help-block" })
+</div>
+
+<div class="modal" tabindex="-1" id="modal_ListaPaises">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lista Países</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table border text-nowrap text-md-nowrap mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">País</th>
+                                <th scope="col" style="width: 200px"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Estados/Form.js")"></script>
+}

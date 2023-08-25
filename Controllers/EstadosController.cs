@@ -19,6 +19,15 @@ namespace Sistema.Controllers
 
         public ActionResult Create()
         {
+            var daoPaises = new DAOPaises();
+            List<Models.Paises> listPaises = daoPaises.GetPaises();
+            List<SelectListItem> selectListPaises = listPaises.Select(u => new SelectListItem
+            {
+                Value = u.idPais.ToString(),
+                Text = u.nmPais.ToString(),
+            }).ToList();
+
+            ViewBag.selectListPaises = new SelectList(selectListPaises, "Value", "Text");
             return View();
         }
 

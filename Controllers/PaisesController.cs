@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sistema.DAO;
 using Sistema.Models;
+using System.Reflection;
 
 namespace Sistema.Controllers
 {
     public class PaisesController : Controller
     {
-        DAOPaises daoPaises = new DAOPaises();
+        DAOPaises daoPaises = new();
 
         public ActionResult Index()
         {
-            var daoPaises = new DAOPaises();
+            DAOPaises daoPaises = new();
             List<Models.Paises> list = daoPaises.GetPaises();
             return View(list);
         }
@@ -65,6 +66,21 @@ namespace Sistema.Controllers
             var daoPaises = new DAOPaises();
             var model = daoPaises.GetPais(codPais);
             return View(model);
+        }
+
+        public List<Models.Paises> ListaPaises()
+        {
+            var daoPaises = new DAOPaises();
+            var list = daoPaises.GetPaises();
+            return list;
+        }
+
+        public JsonResult JsSearch(string str)
+        {
+            DAOPaises daoPaises = new();
+            List<Models.Paises> list = daoPaises.GetPaises();
+
+            return Json(list);
         }
     }
 }

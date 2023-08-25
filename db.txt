@@ -122,4 +122,16 @@ CREATE TABLE tbFuncionarios (
 	dtUltAlteracao DATETIME NOT NULL,
 );
 
+CREATE TABLE tbMarcas (
+	idMarca INT NOT NULL IDENTITY(1,1),
+	nmMarca VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL
+);
 
+CREATE TABLE tbUnidades (
+	idUnidade INT NOT NULL IDENTITY(1,1),
+	dsUnidade VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL
+);
