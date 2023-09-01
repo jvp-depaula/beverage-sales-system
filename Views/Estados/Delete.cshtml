@@ -26,7 +26,7 @@
 
                     @using (Html.BeginForm("Delete", "Estados", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        @Html.Partial("Estados/Form", Model)
+                        <partial name="~/Views/Shared/Estados/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
                             <button type="submit" class="btn btn-danger">Excluir</button>

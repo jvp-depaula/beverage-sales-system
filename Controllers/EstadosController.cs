@@ -8,7 +8,7 @@ namespace Sistema.Controllers
     public class EstadosController : Controller
     {
 
-        DAOEstados daoEstados = new DAOEstados();
+        DAOEstados daoEstados = new();
 
         public ActionResult Index()
         {
@@ -21,14 +21,16 @@ namespace Sistema.Controllers
         {
             var daoPaises = new DAOPaises();
             List<Models.Paises> listPaises = daoPaises.GetPaises();
-            List<SelectListItem> selectListPaises = listPaises.Select(u => new SelectListItem
+            var listaPaises = new Estados
             {
-                Value = u.idPais.ToString(),
-                Text = u.nmPais.ToString(),
-            }).ToList();
+                ListaPaises = listPaises.Select(u => new SelectListItem
+                {
+                    Value = u.idPais.ToString(),
+                    Text = u.nmPais.ToString()
+                })
+            };
 
-            ViewBag.selectListPaises = new SelectList(selectListPaises, "Value", "Text");
-            return View();
+            return View(listaPaises);
         }
 
         [HttpPost]
@@ -73,9 +75,39 @@ namespace Sistema.Controllers
 
         private ActionResult GetView(int? codEstado)
         {
+            var daoPaises = new DAOPaises();
+            List<Models.Paises> listPaises = daoPaises.GetPaises();
             var daoEstados = new DAOEstados();
             var model = daoEstados.GetEstado(codEstado);
+            model.ListaPaises = listPaises.Where(u => u.idPais == model.idPais).Select(u => new SelectListItem
+            {
+                Value = u.idPais.ToString(),
+                Text = u.nmPais.ToString(),
+            });
             return View(model);
+        }
+
+        public JsonResult JsSearch(string str)
+        {
+            DAOEstados daoEstados = new();
+            List<Models.Estados> list = daoEstados.GetEstados();
+
+            return Json(list);
+        }
+
+        public JsonResult JsAddEstado(string nmEstado, string flUF, int idPais)
+        {
+            DAOEstados dao = new();
+            var obj = new Models.Estados()
+            {
+                nmEstado = nmEstado,
+                flUF = flUF,
+                idPais = idPais
+            };
+            dao.Insert(obj);
+
+            List<Models.Estados> list = dao.GetEstados();
+            return Json(new { success = true, novaListaEstados = list });
         }
     }
 }

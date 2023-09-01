@@ -23,7 +23,7 @@
 
                     @using (Html.BeginForm("Edit", "Categorias", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        @Html.Partial("Form", Model)
+                        <partial name="~/Views/Shared/Categorias/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
                             <button type="submit" class="btn btn-success">Salvar</button>
@@ -39,5 +39,6 @@
 </section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

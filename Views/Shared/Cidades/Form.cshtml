@@ -17,11 +17,17 @@
 
 
 <div class="col-md-6">
-    @Html.LabelFor(e => e.idEstado, new { @class = "form-label" })
-    @(disabled ?
-        @Html.TextBoxFor(model => model.idEstado, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.idEstado, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
-        )
+    @Html.Label("nmEstado", "Estado", new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idEstado, Model.ListaEstados, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idEstado, Model.ListaEstados, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalListaEstados" data-bs-toggle="modal" data-bs-target="#modal_SelecionaEstados"><i class="fas fa-search"></i></button>
+        }
+    </div>
     @Html.ValidationMessageFor(model => model.idEstado, null, new { @class = "help-block" })
 </div>
 
@@ -33,3 +39,45 @@
         )
     @Html.ValidationMessageFor(model => model.DDD, null, new { @class = "help-block" })
 </div>
+
+<div class="modal fade" tabindex="-1" id="modal_SelecionaEstados">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Lista Estados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <partial name="~/Views/Shared/Estados/SelecionaEstado.cshtml"></partial>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modal_AddEstados" id="btnAbrirModalAddEstado">Adicionar Estado</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalSelecionarEstado">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modal_AddEstados">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar Estado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <partial name="~/Views/Shared/Estados/AddEstados.cshtml"></partial>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalAddPais">Fechar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnSalvarAddPais">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

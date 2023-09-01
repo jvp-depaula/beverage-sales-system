@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Sistema.Models
 {
@@ -13,6 +15,7 @@ namespace Sistema.Models
 
         [Display(Name = "País")]
         public int idPais { get; set; }
+        public string nmPais { get; set; }
 
         [Display(Name = "UF")]
         public string flUF { get; set; }
@@ -22,5 +25,6 @@ namespace Sistema.Models
 
         [Display(Name = "Data da últ. alteração")]
         public DateTime? dtUltAlteracao { get; set; }
+        public IEnumerable<SelectListItem> ListaPaises { get; set; }
     }
 }

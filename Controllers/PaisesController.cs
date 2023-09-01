@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using Sistema.DAO;
 using Sistema.Models;
 using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Sistema.Controllers
 {
@@ -81,6 +84,23 @@ namespace Sistema.Controllers
             List<Models.Paises> list = daoPaises.GetPaises();
 
             return Json(list);
+        }
+
+        public JsonResult JsAddPais(string nmPais, string sigla, string DDI)
+        {
+            DAOPaises dao = new();
+            var obj = new Models.Paises()
+            {
+                nmPais = nmPais,
+                sigla = sigla,
+                DDI = DDI
+            };
+            dao.Insert(obj);
+
+            List<Models.Paises> list = daoPaises.GetPaises();
+
+
+            return Json(new { success = true, novaListaPaises = list });
         }
     }
 }

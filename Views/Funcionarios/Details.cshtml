@@ -8,7 +8,7 @@
     <div class="toolbar row">
         <div class="col-sm-6 hidden-xs">
             <div class="page-header">
-                <h1>Funcionários <small>Editar</small></h1>
+                <h1>Funcionários <small>Visualizar</small></h1>
             </div>
         </div>
     </div>
@@ -19,15 +19,15 @@
                 <div class="panel-body">
 
                     @{
-                        ViewBag.pageType = "Edit";
+                        ViewBag.pageType = "Details";
+                        ViewBag.disabledForm = true;
                     }
 
-                    @using (Html.BeginForm("Edit", "Funcionarios", FormMethod.Post, new { @class = "row g-3" }))
+                    @using (Html.BeginForm("Details", "Funcionarios", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        @Html.Partial("Form", Model)
+                        <partial name="~/Views/Shared/Funcionarios/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-success">Salvar</button>
                             <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-primary">
                                 Cancelar
                             </a>

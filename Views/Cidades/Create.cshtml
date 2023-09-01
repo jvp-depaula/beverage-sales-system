@@ -25,7 +25,7 @@
 
                     @using (Html.BeginForm("Create", "Cidades", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        @Html.Partial("Form", Model)
+                        <partial name="~/Views/Shared/Cidades/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
                             <button type="submit" class="btn btn-success">Salvar</button>
@@ -44,4 +44,8 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Estados/AddEstados.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Estados/SelecionaEstado.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/AddPaises.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/SelecionaPais.js")"></script>
 }

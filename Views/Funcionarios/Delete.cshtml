@@ -4,11 +4,12 @@
     ViewData["Title"] = "Funcionários";
 }
 
+
 <section>
     <div class="toolbar row">
         <div class="col-sm-6 hidden-xs">
             <div class="page-header">
-                <h1>Funcionários <small>Inserir</small></h1>
+                <h1>Funcionários <small>Excluir</small></h1>
             </div>
         </div>
     </div>
@@ -19,15 +20,16 @@
                 <div class="panel-body">
 
                     @{
-                        ViewBag.pageType = "Create";
+                        ViewBag.pageType = "Delete";
+                        ViewBag.disabledForm = true;
                     }
 
-                    @using (Html.BeginForm("Create", "Funcionarios", FormMethod.Post, new { @class = "row g-3" }))
+                    @using (Html.BeginForm("Delete", "Funcionarios", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        @Html.Partial("Form", Model)
+                        <partial name="~/Views/Shared/Funcionarios/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <button type="submit" class="btn btn-danger">Excluir</button>
                             <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-primary">
                                 Cancelar
                             </a>

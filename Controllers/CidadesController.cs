@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
 
@@ -6,7 +7,7 @@ namespace Sistema.Controllers
 {
     public class CidadesController : Controller
     {
-        DAOCidades daoCidades = new DAOCidades();
+        DAOCidades daoCidades = new();
 
         public ActionResult Index()
         {
@@ -17,7 +18,18 @@ namespace Sistema.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            DAOEstados daoEstados = new ();
+            List<Models.Estados> listEstados = daoEstados.GetEstados();
+            var listaEstados = new Cidades
+            {
+                ListaEstados = listEstados.Select(u => new SelectListItem
+                {
+                    Value = u.idEstado.ToString(),
+                    Text = u.nmEstado.ToString()
+                })
+            };
+
+            return View(listaEstados);
         }
 
         [HttpPost]
@@ -62,8 +74,17 @@ namespace Sistema.Controllers
 
         private ActionResult GetView(int? codCidade)
         {
-            var daoCidades = new DAOCidades();
+            DAOEstados daoEstados = new ();
+            DAOCidades daoCidades = new ();
+
+            List<Models.Estados> listEstados = daoEstados.GetEstados();
+
             var model = daoCidades.GetCidade(codCidade);
+            model.ListaEstados = listEstados.Where(u => u.idEstado == model.idEstado).Select(u => new SelectListItem
+            {
+                Value = u.idEstado.ToString(),
+                Text = u.nmEstado.ToString(),
+            });
             return View(model);
         }
     }

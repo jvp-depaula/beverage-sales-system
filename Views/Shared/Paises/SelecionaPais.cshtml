@@ -1,0 +1,21 @@
+﻿<div class="table-responsive">
+    <table class="table border text-nowrap text-md-nowrap mb-0">
+        <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Estado</th>
+                <th scope="col" style="width: 200px"></th>
+            </tr>
+        </thead>
+        <tbody id="modal-body">
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/SelecionaPais.js")"></script>
+}

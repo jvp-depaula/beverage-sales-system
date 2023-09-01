@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace Sistema.Models
@@ -14,7 +15,7 @@ namespace Sistema.Models
 
         [Display(Name = "Estado")]
         public int idEstado { get; set; }
-
+        public string nmEstado { get; set; }
         [Display(Name = "DDD")]
         public string DDD { get; set; }
 
@@ -23,5 +24,6 @@ namespace Sistema.Models
 
         [Display(Name = "Data da últ. alteração")]
         public DateTime? dtUltAlteracao { get; set; }
+        public IEnumerable<SelectListItem> ListaEstados { get; set; }
     }
 }

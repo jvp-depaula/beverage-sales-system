@@ -110,6 +110,7 @@ namespace Sistema.DAO
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                         model.idEstado = Convert.ToInt32(reader["idEstado"]);
+                        model.nmEstado = Convert.ToString(reader["nmEstado"]);
                     }
                 }
                 return model;

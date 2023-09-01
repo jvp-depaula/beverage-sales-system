@@ -1,9 +1,5 @@
 ﻿using Sistema.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace Sistema.DAO
 {
@@ -13,7 +9,7 @@ namespace Sistema.DAO
         public List<Estados> GetEstados()
         {
             try
-            {             
+            {
                 var sql = this.Search(null, null);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -79,7 +75,7 @@ namespace Sistema.DAO
                 string sql = "UPDATE tbEstados SET nmEstado = '"
                     + estado.nmEstado + "'," +
                     " flUF = '" + estado.flUF + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "',"+
+                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'," +
                     " idPais = " + estado.idPais +
                     " WHERE idEstado = " + estado.idEstado;
                 OpenConnection();
@@ -115,6 +111,7 @@ namespace Sistema.DAO
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                         model.idPais = Convert.ToInt32(reader["idPais"]);
+                        model.nmPais = Convert.ToString(reader["nmPais"]);
                     }
                 }
                 return model;
