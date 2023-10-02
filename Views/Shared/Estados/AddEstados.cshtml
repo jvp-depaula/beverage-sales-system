@@ -1,54 +1,20 @@
-﻿<div class="col-md-8">
-    @Html.Label("nmEstado", "Estado", new { @class = "form-label" })
-    <input id="nmEstado" class="form-control" maxlenght="150" />
-</div>
-
-<div class="col-md-8">
-    @Html.Label("UF", "UF", new { @class = "form-label" })
-    <input id="UF" class="form-control" maxlenght="150" />
-</div>
-
-<div class="col-md-8">
-    @Html.Label("nmPais", "Pais", new { @class = "form-label" })
-    <div class="input-group mb-3">
-        @Html.DropDownList("idPais", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
-        <button class="btn btn-outline-secondary" type="button" id="btnAbreModalListaPaises" data-bs-toggle="modal" data-bs-target="#modal_SelecionaPaises"><i class="fas fa-search"></i></button>
+﻿
+<div>
+    <div class="col-md-8">
+        @Html.Label("nmEstado", "Estado", new { @class = "form-label" })
+        <input id="nmEstado" class="form-control" maxlenght="150" />
     </div>
-</div>
 
-
-<div class="modal fade" tabindex="-1" id="modal_SelecionaPaises">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Lista Países</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <partial name="~/Views/Shared/Paises/SelecionaPais.cshtml"></partial>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modal_AddPaises" id="btnAbrirModalAddPais">Adicionar País</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalSelecionarPais">Fechar</button>
-            </div>
-        </div>
+    <div class="col-md-8">
+        @Html.Label("UF", "UF", new { @class = "form-label" })
+        <input id="UF" class="form-control" maxlenght="150" />
     </div>
-</div>
 
-<div class="modal fade" tabindex="-1" id="modal_AddPaises">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Adicionar País</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <partial name="~/Views/Shared/Paises/AddPaises.cshtml"></partial>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalAddPais">Fechar</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnSalvarAddPais">Salvar</button>
-            </div>
+    <div class="col-md-8">
+        @Html.Label("nmPais", "Pais", new { @class = "form-label" })
+        <div class="input-group mb-3">
+            @Html.DropDownList("idPais", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
+            <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarPaises" ><i class="fas fa-search"></i></button>
         </div>
     </div>
 </div>

@@ -182,7 +182,7 @@ namespace Sistema.DAO
                         dsProduto AS dsProduto,
                         idFornecedor AS idFornecedor,
                         idCategoria AS idCategoria,
-                        flUnidade AS flUnidade,
+                        idUnidade AS idUnidade,
                         cdNCM AS cdNCM,
                         vlVenda AS vlVenda,
                         observacao AS observacao,

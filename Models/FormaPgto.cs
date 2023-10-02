@@ -10,7 +10,10 @@ namespace Sistema.Models
         [Display(Name = "Forma de pagamento")]
         public string nomeForma { get; set; }
 
-        [Display(Name = "Situação")]
-        public string situacao { get; set; }
+        [Display(Name = "Data de cadastro")]
+        public DateTime? dtCadastro { get; set; }
+
+        [Display(Name = "Data da últ. alteração")]
+        public DateTime? dtUltAlteracao { get; set; }
     }
 }

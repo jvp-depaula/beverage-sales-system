@@ -86,12 +86,29 @@ CREATE TABLE tbFornecedores (
 	CONSTRAINT FK_Fornecedores_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
 );
 
+CREATE TABLE tbUnidades(
+	idUnidade INT NOT NULL IDENTITY(1,1),
+	dsUnidade VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Unidades PRIMARY KEY (idUnidade),
+);
+
+CREATE TABLE tbMarcas (
+	idMarca INT NOT NULL IDENTITY(1,1),
+	nmMarca VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Marcas PRIMARY KEY (idMarca),
+);
+
 CREATE TABLE tbProdutos (
 	idProduto INT NOT NULL IDENTITY(1,1),
 	dsProduto VARCHAR(255) NOT NULL,
-	idCategoria INT NOT NULL,
 	idFornecedor INT NOT NULL,
-	flUnidade VARCHAR(2) NOT NULL,
+	idCategoria INT NOT NULL,
+	idUnidade INT NOT NULL,
+	idMarca INT NOT NULL,
 	cdNCM VARCHAR(8) NOT NULL,
 	vlVenda DECIMAL(9,2) NOT NULL,
 	observacao VARCHAR(255) NOT NULL,
@@ -99,7 +116,9 @@ CREATE TABLE tbProdutos (
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_Produtos PRIMARY KEY (idProduto),
 	CONSTRAINT FK_Produtos_Categorias FOREIGN KEY (idCategoria) REFERENCES tbCategorias(idCategoria),
-	CONSTRAINT FK_Produtos_Fornecedores FOREIGN KEY (idFornecedor) REFERENCES tbFornecedores(idFornecedor)
+	CONSTRAINT FK_Produtos_Fornecedores FOREIGN KEY (idFornecedor) REFERENCES tbFornecedores(idFornecedor),
+	CONSTRAINT FK_Produtos_Unidades FOREIGN KEY (idUnidade) REFERENCES tbUnidades(idUnidade),
+	CONSTRAINT FK_Produtos_Marcas FOREIGN KEY (idMarca) REFERENCES tbMarcas(idMarca)
 );
 
 CREATE TABLE tbFuncionarios (
@@ -122,16 +141,25 @@ CREATE TABLE tbFuncionarios (
 	dtUltAlteracao DATETIME NOT NULL,
 );
 
-CREATE TABLE tbMarcas (
-	idMarca INT NOT NULL IDENTITY(1,1),
-	nmMarca VARCHAR(255) NOT NULL,
+CREATE TABLE tbFormaPgto (
+	idFormaPgto INT NOT NULL IDENTITY(1,1),
+	nomeForma VARCHAR(255) NOT NULL,
 	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_FormaPgto PRIMARY KEY (idFormaPgto),
 );
 
-CREATE TABLE tbUnidades (
-	idUnidade INT NOT NULL IDENTITY(1,1),
-	dsUnidade VARCHAR(255) NOT NULL,
+CREATE TABLE tbCondicaoPgto (
+	idCondicaoPgto INT NOT NULL IDENTITY(1,1),
+	nomeCondicao VARCHAR(255) NOT NULL,
+	idFormaPgto INT NOT NULL,
+	txJuros DECIMAL(9,2),
+	txPorcentual DECIMAL(9,2),
+	qtdDias INT,
+	multa DECIMAL(9,2),
+	desconto DECIMAL(9,2),
 	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_CondicaoPgto PRIMARY KEY (idCondicaoPgto),
+	CONSTRAINT FK_CondicaoPgto_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto)
 );

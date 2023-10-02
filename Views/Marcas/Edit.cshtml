@@ -1,14 +1,14 @@
-﻿@model Sistema.Models.Estados
+﻿@model Sistema.Models.Marcas
 
 @{
-    ViewData["Title"] = "Estados";
+    ViewData["Title"] = "Marcas";
 }
 
 <section>
     <div class="toolbar row">
         <div class="col-sm-6 hidden-xs">
             <div class="page-header">
-                <h1>Estados <small>Editar</small></h1>
+                <h1>Marcas <small>Editar</small></h1>
             </div>
         </div>
     </div>
@@ -22,13 +22,13 @@
                         ViewBag.pageType = "Edit";
                     }
 
-                    @using (Html.BeginForm("Edit", "Estados", FormMethod.Post, new { @class = "row g-3" }))
+                    @using (Html.BeginForm("Edit", "Marcas", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        <partial name="~/Views/Shared/Estados/Form.cshtml" model="Model"></partial>
+                        <partial name="~/Views/Shared/Marcas/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
                             <button type="submit" class="btn btn-success">Salvar</button>
-                            <a href="@Url.Action("Index", "Estados")" class="btn btn-primary">
+                            <a href="@Url.Action("Index", "Marcas")" class="btn btn-primary">
                                 Cancelar
                             </a>
                         </div>
@@ -43,5 +43,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Estados/form.js")"></script>
 }

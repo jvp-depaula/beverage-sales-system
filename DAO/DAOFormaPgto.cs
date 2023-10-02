@@ -3,9 +3,9 @@ using System.Data.SqlClient;
 
 namespace Sistema.DAO
 {
-    public class DAOPaises : Sistema.DAO.DAO
+    public class DAOFormaPgto : DAO
     {
-        public List<Paises> GetPaises()
+        public List<FormaPgto> GetFormaPgtos()
         {
             try
             {
@@ -13,21 +13,19 @@ namespace Sistema.DAO
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 reader = SqlQuery.ExecuteReader();
-                var list = new List<Paises>();
+                var list = new List<FormaPgto>();
 
                 while (reader.Read())
                 {
-                    var pais = new Paises
+                    var FormaPgto = new FormaPgto
                     {
-                        idPais = Convert.ToInt32(reader["idPais"]),
-                        nmPais = Convert.ToString(reader["nmPais"]),
-                        sigla = Convert.ToString(reader["sigla"]),
-                        DDI = Convert.ToString(reader["DDI"]),       
+                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
+                        nomeForma = Convert.ToString(reader["nomeForma"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
 
-                    list.Add(pais);
+                    list.Add(FormaPgto);
                 }
 
                 return list;
@@ -41,17 +39,17 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-        public void Insert(Models.Paises pais)
+
+        public void Insert(Models.FormaPgto FormaPgto)
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbPaises (nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', {2}, '{3}', '{4}')", 
-                    pais.nmPais,
-                    pais.DDI,
-                    pais.sigla,
+                var sql = string.Format("INSERT INTO tbFormaPgto (nomeForma, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
+                    FormaPgto.nomeForma,
                     DateTime.Now.ToString("dd/MM/yyyy"),
                     DateTime.Now.ToString("dd/MM/yyyy")
-                    );
+                );
+
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -65,30 +63,19 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-        
-        public bool Update(Models.Paises pais)
+
+        public void Update(Models.FormaPgto FormaPgto)
         {
             try
             {
-                string sql = "UPDATE tbPaises SET nmPais = '"
-                    + pais.nmPais + "'," +
-                    " DDI = '" + pais.DDI + "'," +
-                    " sigla = '" + pais.sigla + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                    + "' WHERE idPais = " + pais.idPais;
+                string sql = "UPDATE tbFormaPgto SET nomeForma = '"
+                             + FormaPgto.nomeForma + "',"
+                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
+                             + "' WHERE idFormaPgto = " + FormaPgto.idFormaPgto;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
+                SqlQuery.ExecuteNonQuery();
 
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception error)
             {
@@ -100,23 +87,23 @@ namespace Sistema.DAO
             }
         }
 
-        public Paises GetPais(int? idPais)
+        public FormaPgto GetFormaPgto(int? idFormaPgto)
         {
             try
             {
-                var model = new Models.Paises();
-                if (idPais != null)
+                var model = new Models.FormaPgto();
+
+                if (idFormaPgto != null)
                 {
                     OpenConnection();
-                    var sql = this.Search(idPais, null);
+                    var sql = this.Search(idFormaPgto, null);
                     SqlQuery = new SqlCommand(sql, con);
                     reader = SqlQuery.ExecuteReader();
+
                     while (reader.Read())
                     {
-                        model.idPais = Convert.ToInt32(reader["idPais"]);
-                        model.nmPais = Convert.ToString(reader["nmPais"]);
-                        model.DDI = Convert.ToString(reader["DDI"]);
-                        model.sigla = Convert.ToString(reader["sigla"]);
+                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
+                        model.nomeForma = Convert.ToString(reader["nomeForma"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -133,24 +120,15 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idPais)
+        public void Delete(int? idFormaPgto)
         {
             try
             {
-                string sql = "DELETE FROM tbPaises WHERE idPais = " + idPais;
+                string sql = "DELETE FROM tbFormaPgto WHERE idFormaPgto = " + idFormaPgto;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
+                SqlQuery.ExecuteNonQuery();
 
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
             catch (Exception error)
             {
@@ -168,26 +146,24 @@ namespace Sistema.DAO
             var swhere = string.Empty;
             if (id != null)
             {
-                swhere = " WHERE idPais = " + id;
+                swhere = " WHERE idFormaPgto = " + id;
             }
             if (!string.IsNullOrEmpty(filter))
             {
                 var filterQ = filter.Split(' ');
                 foreach (var word in filterQ)
                 {
-                    swhere += " OR tbPaises.nmPais LIKE'%" + word + "%'";
+                    swhere += " OR tbFormaPgto.nomeForma LIKE'%" + word + "%'";
                 }
                 swhere = " WHERE " + swhere.Remove(0, 3);
             }
             sql = @"
                     SELECT
-                        idPais AS idPais,
-                        nmPais AS nmPais,
-                        DDI AS DDI,
-                        sigla AS sigla,
+                        idFormaPgto AS idFormaPgto,
+                        nomeForma AS nomeForma,
                         dtCadastro AS dtCadastro,
                         dtUltAlteracao AS dtUltAlteracao
-                    FROM tbPaises" + swhere;
+                    FROM tbFormaPgto" + swhere;
             return sql;
         }
     }

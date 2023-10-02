@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Sistema.Models.Paises>
+
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -7,21 +9,40 @@
 <p>
     <a asp-action="Create">Adicionar</a>
 </p>
-
-<table id="tablePaises" class="table table-striped" style="width:100%">
+<table class="table">
     <thead>
         <tr>
-            <th>Pais</th>
-            <th>DDI</th>
-            <th>Sigla</th>
+            <th>
+                @Html.DisplayNameFor(model => model.nmPais)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sigla)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DDI)
+            </th>
             <th></th>
         </tr>
-    </thead>    
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nmPais)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sigla)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DDI)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.idPais">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.idPais">Visualizar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.idPais">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/Lista.js")"></script>
-}

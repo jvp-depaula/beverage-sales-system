@@ -1,3 +1,260 @@
 $(document).ready(function () {
+    // --------------------- ESTADOS ------------------------
+    // SELECIONAR
+    $('#modal').on('show.bs.modal', function (e) {
+        Estados.SelecionarEstados(true);
+        Estados.CarregaLista();
+    });
+
+    $(".selectEstado-btn").on('click', function () {
+        var id = $(this).data('value');
+        $("#idEstado").val(id);
+        Estados.SelecionarEstados(false);
+        Estados.AddEstados(false);
+        Paises.SelecionarPaises(false);
+    });
+
+    // ADICIONAR
+    $("#btnMostrarAddEstado").on('click', function () {
+        $.ajax({
+            url: "/Paises/JsSearch",
+            success: function (result) {
+                if (result.length > 0) {
+
+                    var options = result.map(function (el, i) {
+                        return $("<option></option>").val(el.idPais).text(el.nmPais)
+                    });
+                    $('#idPais').html(options);
+                }
+            }
+        });
+        Estados.SelecionarEstados(false);
+        Estados.AddEstados(true);
+    });
+
+    $("#btnSalvarAddEstado").on('click', function () {
+        if (Estados.validaForm()) {
+            $.ajax({
+                url: "/Estados/JsAddEstado",
+                data: {
+                    nmEstado: $("#nmEstado").val(),
+                    UF: $("#UF").val(),
+                    idPais: $("#idPais").val()
+                },
+                success: function (result) {
+                    if (result.success) {
+                        var options = result.novaListaEstados.map(function (el, i) {
+                            return $("<option></option>").val(el.idEstado).text(el.nmEstado)
+                        });
+                        $('#idEstado').html(options);
+                        
+                    }
+                }
+            });
+        };
+        Estados.limpaForm();
+        Estados.AddEstados(false);
+        Estados.SelecionarEstados(true);
+    });
+
+    // --------------------- PAISES ------------------------
+    $("#btnMostraSelecionarPaises").on('click', function () {
+        Estados.SelecionarEstados(false);
+        Estados.AddEstados(false);
+        Paises.AddPaises(false);
+        Paises.SelecionarPaises(true);
+        Paises.CarregaLista();
+        });
     
+    // SELECIONAR   
+    $(document).on('click', '.selectPais-btn', function () {
+        var id = $(this).data('value');
+        $("#idPais").val(id);
+        Estados.AddEstados(true);
+        Paises.SelecionarPaises(false);
+    });
+    // ADICIONAR
+    $("#btnSalvarAddPais").on('click', function () {
+        if (Paises.validaForm()) {
+            $.ajax({
+                url: "/Paises/JsAddPais",
+                data: {
+                    nmPais: $("#nmPais").val(),
+                    sigla: $("#sigla").val(),
+                    DDI: $("#DDI").val(),
+                },
+                success: function (result) {
+                    if (result.success) {
+
+                        var options = result.novaListaPaises.map(function (el, i) {
+                            return $("<option></option>").val(el.idPais).text(el.nmPais)
+                        });
+                        $('#idPais').html(options);
+                    }
+                }
+            });
+        };
+        Paises.limpaForm();
+        Paises.AddPaises(false);
+    });
+    $("#btnAddPais").on('click', function () {
+        Paises.SelecionarPaises(false);
+        Paises.AddPaises(true);
+    });
+    $("#btnFecharModalAddPais").on('click', function () {
+        Paises.AddPaises(false);
+        Paises.SelecionarPaises(true);
+    });
+    $("#btnEscondeAddPais").on('click', function () {
+        Paises.limpaForm();
+        Paises.AddPaises(false);
+        Paises.SelecionarPaises(true);
+    });
+    $("#bntEscondeSelecionaPais").on('click', function () {
+        Paises.SelecionarPaises(false);
+        Estados.AddEstados(true);
+    });
+    $("#btnEscondeAddEstado").on('click', function () {
+        Estados.limpaForm();
+        Estados.AddEstados(false);
+        Estados.SelecionarEstados(true);
+    });
+    $('#modal').on('hide.bs.modal', function (e) {
+        Paises.limpaForm();
+        Paises.AddPaises(false);
+        Paises.SelecionarPaises(false);
+        Estados.limpaForm();
+        Estados.AddEstados(false);
+        Estados.SelecionarEstados(false);
+    });
 });
+
+var Estados = {
+    SelecionarEstados(mostra) {
+        if (mostra)
+            $(".SelecionaEstado").css("display", "");
+        else
+            $(".SelecionaEstado").css("display", "none");
+    },
+
+    AddEstados(mostra) {
+        if (mostra)
+            $(".AddEstados").css("display", "");
+        else {
+            $(".AddEstados").css("display", "none");
+            this.limpaForm();
+        }
+    },
+
+    validaForm() {
+        if (!$("#nmEstado").val()) {
+            alert("Digite o nome do Estado!");
+            return false;
+        } else if ($("#flUF").val()) {
+            alert("Digite o UF do Estado!");
+            return false;
+        } else if (!$("#idPais").val()) {
+            alert("Digite o Pais do Estado!");
+            return false;
+        } else
+            return true;
+    },
+
+    limpaForm() {
+        $("#nmEstado").val("");
+        $("#UF").val("");
+        $("#idPais").val("");
+    },
+
+    CarregaLista() {
+        let modal = $("#modal");
+        let url = "/Estados/JsSearch";
+        $.ajax({
+            url: url,
+            success: function (result) {
+                var tbody = modal.find('#bodyEstados');
+                tbody.empty();
+                result.forEach(function (estados) {
+                    tbody.append(
+                        `
+                        <tr>
+                            <td scope="row">${estados.idEstado}</td>
+                            <td>${estados.nmEstado}</td>
+                            <td>
+                            <button type="button" class="btn btn-sm btn-primary selectEstado-btn" data-value="${estados.idEstado}" data-name="${estados.nmEstado}">
+                                Selecionar
+                            </button>
+                            </td>
+                        </tr>
+                        `
+                    );
+                });
+            }
+        });
+    }
+};
+
+var Paises = {
+    SelecionarPaises(mostra) {
+        if (mostra)
+            $(".SelecionaPais").css("display", "");
+        else
+            $(".SelecionaPais").css("display", "none");
+    },
+
+    AddPaises(mostra) {
+        if (mostra)
+            $(".AddPais").css("display", "");
+        else {
+            $(".AddPais").css("display", "none");
+            this.limpaForm();
+        }
+    },
+
+    validaForm() {
+        if (!$("#nmPais").val()) {
+            alert("Digite o nome do Pais!");
+            return false;
+        } else if (!$("#sigla").val()) {
+            alert("Digite a sigla do País!");
+            return false;
+        } else if (!$("#ddi").val()) {
+            alert("Digite o DDI do País!");
+            return false;
+        } else
+            return true;
+    },
+
+    limpaForm() {
+        $("#nmPais").val("");
+        $("#sigla").val("");
+        $("#ddi").val("");
+    },
+
+    CarregaLista() {
+        let modal = $("#modal");
+        let url = "/Paises/JsSearch";
+        $.ajax({
+            url: url,
+            success: function (result) {
+                var tbody = modal.find('#bodyPaises');
+                tbody.empty();
+                result.forEach(function (paises) {
+                    tbody.append(
+                        `
+                        <tr>
+                            <td scope="row">${paises.idPais}</td>
+                            <td>${paises.nmPais}</td>
+                            <td>
+                            <button type="button" class="btn btn-sm btn-primary selectPais-btn" data-value="${paises.idPais}" data-name="${paises.nmPais}">
+                                Selecionar
+                            </button>
+                            </td>
+                        </tr>
+                        `
+                    );
+                });
+            }
+        });
+    },
+};

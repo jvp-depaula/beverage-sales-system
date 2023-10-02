@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Adicionar</a>
+</p>
+
+<table id="tablePaises" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Pais</th>
+            <th>DDI</th>
+            <th>Sigla</th>
+            <th></th>
+        </tr>
+    </thead>    
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/Lista.js")"></script>
+}

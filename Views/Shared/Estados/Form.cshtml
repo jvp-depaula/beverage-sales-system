@@ -25,7 +25,7 @@
             )
         @if (pageType == "Create" || pageType == "Edit")
         {
-            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalListaPaises" data-bs-toggle="modal" data-bs-target="#modal_SelecionaPaises"><i class="fas fa-search"></i></button>
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalListaPaises" data-bs-toggle="modal" data-bs-target="#modal"><i class="fas fa-search"></i></button>
         }
     </div>
     @Html.ValidationMessageFor(model => model.idPais, null, new { @class = "help-block" })
@@ -40,40 +40,29 @@
     @Html.ValidationMessageFor(model => model.flUF, null, new { @class = "help-block" })
 </div>
 
-<div class="modal fade" tabindex="-1" id="modal_SelecionaPaises">
+<div class="modal fade" tabindex="-1" id="modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Lista Países</h5>
+                <h5 class="modal-title" id="txtTituloModal">Lista Países</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body SelecionaPais" style="display: none">
                 <partial name="~/Views/Shared/Paises/SelecionaPais.cshtml"></partial>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modal_AddPaises" id="btnAbrirModalAddPais">Adicionar País</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalSelecionarPais">Fechar</button>
+            <div class="modal-footer SelecionaPais" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModal">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnAddPais">Adicionar País</button>
             </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" tabindex="-1" id="modal_AddPaises">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Adicionar País</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+
+            <div class="modal-body AddPais" style="display: none">
                 <partial name="~/Views/Shared/Paises/AddPaises.cshtml"></partial>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalAddPais">Fechar</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnSalvarAddPais">Salvar</button>
+            <div class="modal-footer AddPais" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharModalAddPais">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddPais">Salvar</button>
             </div>
         </div>
     </div>
 </div>
-
-<!--<select asp-for="idPais" asp-items="@Model.ListaPaises"></select>-->

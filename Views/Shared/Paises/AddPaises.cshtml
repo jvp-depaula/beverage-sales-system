@@ -12,10 +12,3 @@
     @Html.Label("DDI", "DDI", new { @class = "form-label" })
     <input id="DDI" class="form-control" maxlenght="150" />
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/AddPaises.js")"></script>
-}
