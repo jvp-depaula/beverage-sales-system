@@ -16,6 +16,8 @@ namespace Sistema.Models
         [Display(Name = "Estado")]
         public int idEstado { get; set; }
         public string nmEstado { get; set; }
+        public string nmPais { get; set; }
+
         [Display(Name = "DDD")]
         public string DDD { get; set; }
 

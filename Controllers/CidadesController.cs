@@ -76,16 +76,46 @@ namespace Sistema.Controllers
         {
             DAOEstados daoEstados = new ();
             DAOCidades daoCidades = new ();
+            var model = daoCidades.GetCidade(codCidade, "");
 
             List<Models.Estados> listEstados = daoEstados.GetEstados();
 
-            var model = daoCidades.GetCidade(codCidade);
             model.ListaEstados = listEstados.Where(u => u.idEstado == model.idEstado).Select(u => new SelectListItem
             {
                 Value = u.idEstado.ToString(),
                 Text = u.nmEstado.ToString(),
             });
             return View(model);
+        }
+
+        public JsonResult JsSearch()
+        {
+            DAOCidades daoCidades = new();
+            List<Models.Cidades> list = daoCidades.GetCidades();
+
+            return Json(list);
+        }
+
+        public JsonResult JsAddCidade(string nmCidade, int idEstado, string DDD)
+        {
+            DAOCidades dao = new();
+            var obj = new Models.Cidades()
+            {
+                nmCidade = nmCidade,
+                idEstado = idEstado,
+                DDD = DDD
+            };
+            dao.Insert(obj);
+
+            List<Models.Cidades> list = dao.GetCidades();
+            return Json(new { success = true, novaListaCidades = list });
+        }
+
+        public JsonResult JsConsultaCidade(string nmCidade)
+        {
+            DAOCidades daoCidades = new();
+            var cidade = daoCidades.GetCidade(null, nmCidade);
+            return Json(cidade);
         }
     }
 }

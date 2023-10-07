@@ -1,27 +1,35 @@
-﻿@{
+﻿@model IEnumerable<Sistema.Models.Marcas>
+
+@{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
-<p>
+<p style="text-align: right">
     <a asp-action="Create">Adicionar</a>
 </p>
-
-<table id="tablePaises" class="table table-striped" style="width:100%">
+<table class="table">
     <thead>
         <tr>
-            <th>Pais</th>
-            <th>DDI</th>
-            <th>Sigla</th>
+            <th>
+                @Html.DisplayNameFor(model => model.nmMarca)
+            </th>
             <th></th>
         </tr>
-    </thead>    
-</table>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Paises/Lista.js")"></script>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nmMarca)
+            </td>
+            <td style="text-align: right; width: 200px">
+                <a asp-action="Edit" asp-route-id="@item.idMarca">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.idMarca">Visualizar</a> |
+                <a asp-action="Delete" asp-route-id="@item.idMarca">Excluir</a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

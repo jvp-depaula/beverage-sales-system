@@ -95,13 +95,13 @@ namespace Sistema.Controllers
             return Json(list);
         }
 
-        public JsonResult JsAddEstado(string nmEstado, string flUF, int idPais)
+        public JsonResult JsAddEstado(string nmEstado, string UF, int idPais)
         {
             DAOEstados dao = new();
             var obj = new Models.Estados()
             {
                 nmEstado = nmEstado,
-                flUF = flUF,
+                flUF = UF,
                 idPais = idPais
             };
             dao.Insert(obj);

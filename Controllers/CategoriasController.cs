@@ -66,5 +66,26 @@ namespace Sistema.Controllers
             var model = DAOCategorias.GetCategoria(codCategoria);
             return View(model);
         }
+
+        public JsonResult JsSearch()
+        {
+            DAOCategorias daoCategorias = new();
+            List<Models.Categorias> list = daoCategorias.GetCategorias();
+
+            return Json(list);
+        }
+
+        public JsonResult JsAddCategoria(string nmCategoria)
+        {
+            DAOCategorias dao = new();
+            var obj = new Models.Categorias()
+            {
+                nmCategoria = nmCategoria,
+            };
+            dao.Insert(obj);
+
+            List<Models.Categorias> list = dao.GetCategorias();
+            return Json(new { success = true, novaListaCategorias = list });
+        }
     }
 }

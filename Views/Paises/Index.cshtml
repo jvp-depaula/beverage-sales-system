@@ -6,7 +6,7 @@
 
 <h1>Index</h1>
 
-<p>
+<p style="text-align: right">
     <a asp-action="Create">Adicionar</a>
 </p>
 <table class="table">
@@ -37,7 +37,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DDI)
                 </td>
-                <td>
+                <td style="text-align: right; width: 200px">
                     <a asp-action="Edit" asp-route-id="@item.idPais">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.idPais">Visualizar</a> |
                     <a asp-action="Delete" asp-route-id="@item.idPais">Excluir</a>

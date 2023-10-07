@@ -6,7 +6,7 @@
 
 <h1>Index</h1>
 
-<p>
+<p style="text-align: right">
     <a asp-action="Create">Adicionar</a>
 </p>
 <table class="table">
@@ -16,44 +16,39 @@
                 @Html.DisplayNameFor(model => model.nmCliente)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nmFantasia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.nrCPFCNPJ)
+                @Html.DisplayName("CPF/CNPJ")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.nrTelefoneCelular)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.flTipo)
-            </th>            
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nmCliente)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.nmFantasia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nrCPFCNPJ)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nrTelefoneCelular)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.flTipo)
-            </td>                        
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Visualizar</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Excluir</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nmCliente ?? item.nmFantasia)
+                </td>                
+                <td>
+                    @Html.DisplayFor(modelItem => item.nrCPFCNPJ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nrTelefoneCelular)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.flTipo)
+                </td>
+                <td style="text-align: right; width: 200px">
+                    <a asp-action="Edit" asp-route-id="@item.id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.id">Visualizar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Excluir</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

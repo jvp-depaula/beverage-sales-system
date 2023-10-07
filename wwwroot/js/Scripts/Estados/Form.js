@@ -3,30 +3,7 @@ $(document).ready(function () {
     // SELECIONAR
     $('#modal').on('show.bs.modal', function (e) {
         Paises.mostraSelecionarPaises();
-        let modal = $(this);
-        let url = "/Paises/JsSearch";
-        $.ajax({
-            url: url,
-            success: function (result) {
-                var tbody = modal.find('#modal-body');
-                tbody.empty();
-                result.forEach(function (paises) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${paises.idPais}</td>
-                            <td>${paises.nmPais}</td>
-                            <td>
-                            <button type="button" class="btn btn-sm btn-primary selectPais-btn" data-value="${paises.idPais}" data-name="${paises.nmPais}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
-            }
-        });
+        Paises.MontaTabelaPaises($(this));
     });
 
     $(document).on('click', '.selectPais-btn', function () {
@@ -46,21 +23,23 @@ $(document).ready(function () {
                     DDI: $("#DDI").val(),
                 },
                 success: function (result) {
-                    if (result.success) {          
-                        
+                    if (result.success) {
+
                         var options = result.novaListaPaises.map(function (el, i) {
                             return $("<option></option>").val(el.idPais).text(el.nmPais)
                         });
-                        $('#idPais').html(options);        
+
+                        $('#idPais').html(options);
+                        Paises.MontaTabelaPaises($("#modal"));
                     }
                 }
             });
-        };         
+        };
         Paises.fechaAddPaises();
     });
     $("#btnAddPais").on('click', function () {
         Paises.mostraAddPaises();
-    });    
+    });
     $("#btnFecharModalAddPais").on('click', function () {
         Paises.fechaAddPaises();
     });
@@ -94,7 +73,7 @@ var Paises = {
         } else if (!$("#sigla").val()) {
             alert("Digite a sigla do País!");
             return false;
-        } else if (!$("#ddi").val()) {
+        } else if (!$("#DDI").val()) {
             alert("Digite o DDI do País!");
             return false;
         } else
@@ -104,6 +83,31 @@ var Paises = {
     limpaForm() {
         $("#nmPais").val("");
         $("#sigla").val("");
-        $("#ddi").val("");
+        $("#DDI").val("");
+    },
+
+    MontaTabelaPaises(modal) {
+        $.ajax({
+            url: "/Paises/JsSearch",
+            success: function (result) {
+                var tbody = modal.find('#bodyPaises');
+                tbody.empty();
+                result.forEach(function (paises) {
+                    tbody.append(
+                        `
+                        <tr>
+                            <td scope="row">${paises.idPais}</td>
+                            <td>${paises.nmPais}</td>
+                            <td style="text-align: right">
+                            <button type="button" class="btn btn-sm btn-primary selectPais-btn" data-value="${paises.idPais}" data-name="${paises.nmPais}">
+                                Selecionar
+                            </button>
+                            </td>
+                        </tr>
+                        `
+                    );
+                });
+            }
+        });
     }
 };

@@ -15,27 +15,30 @@ namespace Sistema.Models
 
         [Display(Name = "Fornecedor")]
         public int idFornecedor { get; set; }
+        public string nmFornecedor { get; set; }
+        public IEnumerable<SelectListItem> ListaFornecedores { get; set; }
 
         [Display(Name = "Categoria")]
         public int idCategoria { get; set; }
+        public string nmCategoria { get; set; }
+        public IEnumerable<SelectListItem> ListaCategorias { get; set; }
         [Display(Name = "Unidade")]
         public int idUnidade { get; set; }
+        public string dsUnidade { get; set; }
+        public IEnumerable<SelectListItem> ListaUnidades { get; set; }
         [Display(Name = "Marca")]
         public int idMarca { get; set; }
+        public string nmMarca { get; set; }
+        public IEnumerable<SelectListItem> ListaMarcas { get; set; }
 
         [Display(Name = "NCM")]
         public string cdNCM { get; set; }
 
         [Display(Name = "Valor de venda")]
-        public decimal? vlVenda { get; set; }
-        [Display(Name = "Custo")]
-        public decimal? vlCusto { get; set; }
+        public decimal vlVenda { get; set; }
 
-        [Display(Name = "Valor Custo Ult. Compra")]
-        public decimal? vlCustoUltCompra { get; set; }
-        [Display(Name = "Estoque")]
-        public int qtdEstoque { get; set; }
-
+        [Display(Name = "Observação")]
+        public string observacao { get; set; }
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 

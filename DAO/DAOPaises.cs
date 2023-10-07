@@ -45,7 +45,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbPaises (nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', {2}, '{3}', '{4}')", 
+                var sql = string.Format("INSERT INTO tbPaises (nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')", 
                     pais.nmPais,
                     pais.DDI,
                     pais.sigla,

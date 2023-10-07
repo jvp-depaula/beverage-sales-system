@@ -6,12 +6,10 @@ $(document).ready(function () {
         Estados.CarregaLista();
     });
 
-    $(".selectEstado-btn").on('click', function () {
+    $(document).on('click', '.selectEstado-btn', function () {
         var id = $(this).data('value');
         $("#idEstado").val(id);
-        Estados.SelecionarEstados(false);
-        Estados.AddEstados(false);
-        Paises.SelecionarPaises(false);
+        $("#btnFecharModal").click();
     });
 
     // ADICIONAR
@@ -48,13 +46,17 @@ $(document).ready(function () {
                         });
                         $('#idEstado').html(options);
                         
+                        Estados.limpaForm();
+                        Estados.AddEstados(false);
+                        Estados.SelecionarEstados(true);
+
+                        Estados.CarregaLista();
+                    } else {
+                        alert("Ocorreu um erro!");
                     }
                 }
             });
         };
-        Estados.limpaForm();
-        Estados.AddEstados(false);
-        Estados.SelecionarEstados(true);
     });
 
     // --------------------- PAISES ------------------------
@@ -64,7 +66,7 @@ $(document).ready(function () {
         Paises.AddPaises(false);
         Paises.SelecionarPaises(true);
         Paises.CarregaLista();
-        });
+    });
     
     // SELECIONAR   
     $(document).on('click', '.selectPais-btn', function () {
@@ -90,12 +92,19 @@ $(document).ready(function () {
                             return $("<option></option>").val(el.idPais).text(el.nmPais)
                         });
                         $('#idPais').html(options);
+
+                        Paises.limpaForm();
+                        Paises.AddPaises(false);
+                        Paises.SelecionarPaises(true);
+
+                        Paises.CarregaLista();
+
+                    } else {
+                        alert("Ocorreu um erro!");
                     }
                 }
             });
-        };
-        Paises.limpaForm();
-        Paises.AddPaises(false);
+        };        
     });
     $("#btnAddPais").on('click', function () {
         Paises.SelecionarPaises(false);
@@ -141,8 +150,7 @@ var Estados = {
         if (mostra)
             $(".AddEstados").css("display", "");
         else {
-            $(".AddEstados").css("display", "none");
-            this.limpaForm();
+            $(".AddEstados").css("display", "none");            
         }
     },
 
@@ -150,7 +158,7 @@ var Estados = {
         if (!$("#nmEstado").val()) {
             alert("Digite o nome do Estado!");
             return false;
-        } else if ($("#flUF").val()) {
+        } else if (!$("#UF").val()) {
             alert("Digite o UF do Estado!");
             return false;
         } else if (!$("#idPais").val()) {
@@ -180,7 +188,8 @@ var Estados = {
                         <tr>
                             <td scope="row">${estados.idEstado}</td>
                             <td>${estados.nmEstado}</td>
-                            <td>
+                            <td>${estados.nmPais}</td>
+                            <td style="text-align: right">
                             <button type="button" class="btn btn-sm btn-primary selectEstado-btn" data-value="${estados.idEstado}" data-name="${estados.nmEstado}">
                                 Selecionar
                             </button>
@@ -206,8 +215,7 @@ var Paises = {
         if (mostra)
             $(".AddPais").css("display", "");
         else {
-            $(".AddPais").css("display", "none");
-            this.limpaForm();
+            $(".AddPais").css("display", "none");            
         }
     },
 
@@ -218,7 +226,7 @@ var Paises = {
         } else if (!$("#sigla").val()) {
             alert("Digite a sigla do País!");
             return false;
-        } else if (!$("#ddi").val()) {
+        } else if (!$("#DDI").val()) {
             alert("Digite o DDI do País!");
             return false;
         } else
@@ -228,7 +236,7 @@ var Paises = {
     limpaForm() {
         $("#nmPais").val("");
         $("#sigla").val("");
-        $("#ddi").val("");
+        $("#DDI").val("");
     },
 
     CarregaLista() {
@@ -245,7 +253,7 @@ var Paises = {
                         <tr>
                             <td scope="row">${paises.idPais}</td>
                             <td>${paises.nmPais}</td>
-                            <td>
+                            <td style="text-align: right">
                             <button type="button" class="btn btn-sm btn-primary selectPais-btn" data-value="${paises.idPais}" data-name="${paises.nmPais}">
                                 Selecionar
                             </button>

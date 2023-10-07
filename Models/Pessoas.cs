@@ -35,6 +35,7 @@ namespace Sistema.Models
         public string dsComplemento { get; set; }
         [Display(Name = "Cidade")]
         public int idCidade { get; set; }
+        public IEnumerable<SelectListItem> ListaCidades { get; set; }
 
 
         // CONTROLE
@@ -43,7 +44,7 @@ namespace Sistema.Models
 
         [Display(Name = "Data da últ. alteração")]
         public DateTime? dtUltAlteracao { get; set; }
-
+                
         #region FLAGS
         #region TIPO
         public static SelectListItem[] Tipo

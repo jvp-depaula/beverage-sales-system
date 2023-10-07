@@ -23,7 +23,8 @@ namespace Sistema.DAO
                         idEstado = Convert.ToInt32(reader["idEstado"]),
                         nmEstado = Convert.ToString(reader["nmEstado"]),
                         flUF = Convert.ToString(reader["flUF"]),
-                        idPais = Convert.ToInt32(reader["idPais"]),
+                        idPais = Convert.ToInt32(reader["idPais"]),           
+                        nmPais = Convert.ToString(reader["nmPais"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -144,44 +145,7 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-        /*
-        public List<Estados> GetEstadosSelect(int? id, string filter)
-        {
-            try
-            {
-
-                var sql = this.Search(id, filter);
-                OpenConnection();
-                SqlQuery = new SqlCommand(sql, con);
-                reader = SqlQuery.ExecuteReader();
-                var list = new List<Estados>();
-                while (reader.Read())
-                {
-                    var estado = new Estados
-                    {
-                        idEstado = Convert.ToInt32(reader["idEstado"]),
-                        nmEstado = Convert.ToString(reader["nmEstado"]),
-                        flUF = Convert.ToString(reader["flUF"]),
-                        idPais = Convert.ToInt32(reader["idPais"]),
-                        dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
-                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]),
-                    };
-
-                    list.Add(estado);
-                }
-
-                return list;
-            }
-            catch (Exception error)
-            {
-                throw new Exception(error.Message);
-            }
-            finally
-            {
-                CloseConnection();
-            }
-        }
-        */
+        
         private string Search(int? id, string filter)
         {
             var sql = string.Empty;

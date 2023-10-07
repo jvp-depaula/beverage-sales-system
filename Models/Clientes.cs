@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sistema.Models
 {
@@ -9,6 +10,6 @@ namespace Sistema.Models
         public string nmFantasia { get; set; }
         public string nrCPFCNPJ{ get; set; }
         public string nrRG_IE { get; set; }
-        public DateTime dtNasc { get; set; }
+        public DateTime dtNasc { get; set; }        
     }
 }

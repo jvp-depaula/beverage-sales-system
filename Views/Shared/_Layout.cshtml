@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,16 +37,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Funcionarios" asp-action="Index">Funcionarios</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Unidades" asp-action="Index">Unidades</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Marcas" asp-action="Index">Marcas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Produtos" asp-action="Index">Produtos</a>
                         </li>
-                        <!--
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
-                        </li>
-                        -->
                     </ul>
                 </div>
             </div>
@@ -66,7 +67,7 @@
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-3.7.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>       
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

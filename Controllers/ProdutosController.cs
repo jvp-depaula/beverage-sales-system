@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Sistema.Controllers
 {
@@ -17,7 +19,43 @@ namespace Sistema.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            DAOFornecedores daoFornecedores = new();
+            DAOCategorias daoCategorias = new();
+            DAOUnidades daoUnidades = new();
+            DAOMarcas daoMarcas = new();
+
+            List<Models.Fornecedores> listFornecedores = daoFornecedores.GetFornecedores();
+            List<Models.Categorias> listCategorias = daoCategorias.GetCategorias();
+            List<Models.Unidades> listUnidades = daoUnidades.GetUnidades();
+            List<Models.Marcas> listMarcas = daoMarcas.GetMarcas();
+
+            var listas = new Produtos
+            {
+                ListaFornecedores = listFornecedores.Select(u => new SelectListItem
+                {
+                    Value = u.id.ToString(),
+                    Text = u.nmFornecedor.ToString()
+                }),
+
+                ListaCategorias = listCategorias.Select(u => new SelectListItem
+                {
+                    Value = u.idCategoria.ToString(),
+                    Text = u.nmCategoria.ToString()
+                }),
+
+                ListaUnidades = listUnidades.Select(u => new SelectListItem
+                {
+                    Value = u.idUnidade.ToString(),
+                    Text = u.dsUnidade.ToString()
+                }),
+
+                ListaMarcas = listMarcas.Select(u => new SelectListItem
+                {
+                    Value = u.idMarca.ToString(),
+                    Text = u.nmMarca.ToString()
+                })
+            };            
+            return View(listas);
         }
 
         [HttpPost]
@@ -66,5 +104,34 @@ namespace Sistema.Controllers
             var model = daoProdutos.GetProduto(codProduto);
             return View(model);
         }
+
+        public JsonResult JsSearch()
+        {
+            DAOProdutos daoProdutos = new();
+            List<Models.Produtos> list = daoProdutos.GetProdutos();
+
+            return Json(list);
+        }
+        /*
+        public JsonResult JsAddProduto(string dsProduto, int idFornecedor, int idCategoria, int idUnidade, int idMarca, string cdNCM, decimal vlVenda, string observacao)
+        {
+            DAOProdutos dao = new();
+            var obj = new Models.Produtos()
+            {
+                dsProduto = dsProduto,
+                idFornecedor = idFornecedor,
+                idCategoria = idCategoria,
+                idUnidade = idUnidade,
+                idMarca = idMarca,
+                cdNCM = cdNCM,
+                vlVenda = vlVenda,
+                observacao = observacao
+            };
+            dao.Insert(obj);
+
+            List<Models.Produtos> list = dao.GetProdutos();
+            return Json(new { success = true, novaListaProdutos = list });
+        }
+        */
     }
 }

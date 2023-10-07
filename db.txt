@@ -89,6 +89,7 @@ CREATE TABLE tbFornecedores (
 CREATE TABLE tbUnidades(
 	idUnidade INT NOT NULL IDENTITY(1,1),
 	dsUnidade VARCHAR(255) NOT NULL,
+	sigla VARCHAR(255) NOT NULL,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_Unidades PRIMARY KEY (idUnidade),

@@ -24,6 +24,8 @@ namespace Sistema.DAO
                         nmCidade = Convert.ToString(reader["nmCidade"]),
                         DDD = Convert.ToString(reader["DDD"]),
                         idEstado = Convert.ToInt32(reader["idEstado"]),
+                        nmEstado = Convert.ToString(reader["nmEstado"]),     
+                        nmPais = Convert.ToString(reader["nmPais"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -91,15 +93,15 @@ namespace Sistema.DAO
             }
         }
 
-        public Cidades GetCidade(int? idCidade)
+        public Cidades GetCidade(int? idCidade, string nmCidade)
         {
             try
             {
                 var model = new Cidades();
-                if (idCidade != null)
+                if (idCidade != null || nmCidade != null)
                 {
                     OpenConnection();
-                    var sql = this.Search(idCidade, null);
+                    var sql = this.Search(idCidade, nmCidade);
                     SqlQuery = new SqlCommand(sql, con);
                     reader = SqlQuery.ExecuteReader();
                     while (reader.Read())
@@ -148,18 +150,18 @@ namespace Sistema.DAO
         {
             var sql = string.Empty;
             var swhere = string.Empty;
-            if (id != null)
+
+            if (id != null && !string.IsNullOrEmpty(filter))
+            {
+                swhere = " WHERE idCidade = " + id + " OR " + "tbCidades.nmCidade LIKE'%" + filter + "%'";
+            } 
+            else if (id != null)
             {
                 swhere = " WHERE idCidade = " + id;
             }
-            if (!string.IsNullOrEmpty(filter))
+            else if (!string.IsNullOrEmpty(filter))
             {
-                var filterQ = filter.Split(' ');
-                foreach (var word in filterQ)
-                {
-                    swhere += " OR tbCidades.nmCidade LIKE'%" + word + "%'";
-                }
-                swhere = " WHERE " + swhere.Remove(0, 3);
+                swhere += " WHERE tbCidades.nmCidade LIKE'%" + filter + "%'";
             }
             sql = @"
                 SELECT
@@ -169,9 +171,11 @@ namespace Sistema.DAO
                     tbcidades.dtCadastro AS dtCadastro,
                     tbcidades.dtUltAlteracao AS dtUltAlteracao,
                     tbestados.idestado AS idEstado,
-                    tbestados.nmEstado AS nmEstado
+                    tbestados.nmEstado AS nmEstado,
+                    tbpaises.nmPais AS nmPais
                 FROM tbCidades
-                INNER JOIN tbEstados on tbCidades.idEstado = tbEstados.idEstado " + swhere;
+                INNER JOIN tbEstados on tbCidades.idEstado = tbEstados.idEstado 
+                INNER JOIN tbPaises on tbEstados.idPais = tbPaises.idPais" + swhere;
             return sql;
         }
     }

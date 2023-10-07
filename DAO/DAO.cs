@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Data.SqlClient;
 using System.Reflection;
-using System.Web;
 
 namespace Sistema.DAO
 {
@@ -46,6 +42,8 @@ namespace Sistema.DAO
             }
         }
 
+
+        // -- TESTES -- 
         public string Insert(System.Type type, string tableName)
         {
             string insertSQL = "insert into " + tableName + " ( ";

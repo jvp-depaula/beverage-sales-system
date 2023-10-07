@@ -24,9 +24,10 @@ namespace Sistema.DAO
                         idFornecedor = Convert.ToInt32(reader["idFornecedor"]),
                         idCategoria = Convert.ToInt32(reader["idCategoria"]),
                         idUnidade = Convert.ToInt32(reader["idUnidade"]),
+                        idMarca = Convert.ToInt32(reader["idMarca"]),
                         cdNCM = Convert.ToString(reader["cdNCM"]),
                         vlVenda = Convert.ToDecimal(reader["vlVenda"]),
-                        vlCusto = Convert.ToDecimal(reader["vlCusto"]),
+                        observacao = Convert.ToString(reader["observacao"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -50,14 +51,15 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, flUnidade, cdNCM, vlVenda, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')",
+                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, idUnidade, idMarca, cdNCM, vlVenda, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')",
                                         produto.dsProduto,
                                         produto.idFornecedor,
                                         Convert.ToInt32(produto.idCategoria),
-                                        // produto.flUnidade,
+                                        Convert.ToInt32(produto.idUnidade),
+                                        Convert.ToInt32(produto.idMarca),
                                         produto.cdNCM,
                                         Convert.ToDecimal(produto.vlVenda),
-                                        // produto.observacao,
+                                        produto.observacao,
                                         DateTime.Now.ToString("dd/MM/yyyy"),
                                         DateTime.Now.ToString("dd/MM/yyyy")
                                     );
@@ -83,10 +85,11 @@ namespace Sistema.DAO
                     + produto.dsProduto + "'," +
                     " idFornecedor = '" + Convert.ToInt32(produto.idFornecedor) + "'," +
                     " idCategoria = '" + Convert.ToInt32(produto.idCategoria) + "'," +
-                    // " flUnidade = '" + produto.dsProduto + "'," +
+                    " idUnidade = '" + produto.idUnidade + "'," +
+                    " idMarca = '" + produto.idMarca + "'," +
                     " cdNCM = '" + produto.cdNCM + "'," +
                     " vlVenda = '" + Convert.ToDecimal(produto.vlVenda) + "'," +
-                    //" observacao = '" + produto.observacao + "'," +
+                    " observacao = '" + produto.observacao + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idProduto = " + produto.idProduto;
                 OpenConnection();
@@ -120,10 +123,11 @@ namespace Sistema.DAO
                         model.dsProduto = Convert.ToString(reader["dsProduto"]);
                         model.idFornecedor = Convert.ToInt32(reader["idFornecedor"]);
                         model.idCategoria = Convert.ToInt32(reader["idCategoria"]);
-                        // model.flUnidade = Convert.ToString(reader["flUnidade"]);
+                        model.idUnidade = Convert.ToInt32(reader["idUnidade"]);
+                        model.idMarca = Convert.ToInt32(reader["idMarca"]);
                         model.cdNCM = Convert.ToString(reader["cdNCM"]);
                         model.vlVenda = Convert.ToDecimal(reader["vlVenda"]);
-                        // model.observacao = Convert.ToString(reader["observacao"]);
+                        model.observacao = Convert.ToString(reader["observacao"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -178,17 +182,25 @@ namespace Sistema.DAO
             }
             sql = @"
                     SELECT
-                        idProduto AS idProduto,
-                        dsProduto AS dsProduto,
-                        idFornecedor AS idFornecedor,
-                        idCategoria AS idCategoria,
-                        idUnidade AS idUnidade,
-                        cdNCM AS cdNCM,
-                        vlVenda AS vlVenda,
-                        observacao AS observacao,
-                        dtCadastro AS dtCadastro,
-                        dtUltAlteracao AS dtUltAlteracao
-                    FROM tbProdutos" + swhere;
+                        tbProdutos.idProduto AS idProduto,
+                        tbProdutos.dsProduto AS dsProduto,
+                        tbProdutos.idFornecedor AS idFornecedor,
+                        tbFornecedores.nmFornecedor AS nmFornecedor,
+                        tbProdutos.idCategoria AS idCategoria,
+                        tbCategorias.nmCategoria AS nmCategoria,
+                        tbProdutos.idUnidade AS idUnidade,
+                        tbUnidades.dsUnidade AS dsUnidade,
+                        tbProdutos.idMarca AS idMarca,
+                        tbMarcas.nmMarca AS nmMarca,
+                        tbProdutos.cdNCM AS cdNCM,
+                        tbProdutos.vlVenda AS vlVenda,
+                        tbProdutos.observacao AS observacao,
+                        tbProdutos.dtCadastro AS dtCadastro,
+                        tbProdutos.dtUltAlteracao AS dtUltAlteracao
+                    FROM tbProdutos JOIN tbFornecedores ON tbProdutos.idFornecedor = tbFornecedores.idFornecedor
+                                    JOIN tbCategorias ON tbProdutos.idCategoria = tbCategorias.idCategoria
+                                    JOIN tbUnidades ON tbProdutos.idUnidade = tbUnidades.idUnidade
+                                    JOIN tbMarcas ON tbProdutos.idMarca = tbMarcas.idMarca" + swhere;
             return sql;
         }
     }

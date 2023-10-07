@@ -11,6 +11,9 @@ namespace Sistema.Models
         [Display(Name = "Unidade")]
         public string dsUnidade { get; set; }
 
+        [Display(Name = "Sigla")]
+        public string sigla { get; set; }
+
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 

@@ -21,6 +21,7 @@ namespace Sistema.DAO
                     {
                         idUnidade = Convert.ToInt32(reader["idUnidade"]),
                         dsUnidade = Convert.ToString(reader["dsUnidade"]),
+                        sigla = Convert.ToString(reader["sigla"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -44,8 +45,9 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbUnidades (dsUnidade, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
+                var sql = string.Format("INSERT INTO tbUnidades (dsUnidade, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}')",
                     unidade.dsUnidade,
+                    unidade.sigla,
                     DateTime.Now.ToString("dd/MM/yyyy"),
                     DateTime.Now.ToString("dd/MM/yyyy")
                 );
@@ -68,10 +70,10 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbUnidades SET dsUnidade = '"
-                             + unidade.dsUnidade + "',"
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                             + "' WHERE idUnidade = " + unidade.idUnidade;
+                string sql = "UPDATE tbUnidades SET dsUnidade = '" + unidade.dsUnidade + "'," +
+                             " sigla = '" + unidade.sigla + "'," +
+                             " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'" +
+                             " WHERE idUnidade = " + unidade.idUnidade;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -104,6 +106,7 @@ namespace Sistema.DAO
                     {
                         model.idUnidade = Convert.ToInt32(reader["idUnidade"]);
                         model.dsUnidade = Convert.ToString(reader["dsUnidade"]);
+                        model.sigla = Convert.ToString(reader["sigla"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -161,6 +164,7 @@ namespace Sistema.DAO
                     SELECT
                         idUnidade AS idUnidade,
                         dsUnidade AS dsUnidade,
+                        sigla AS sigla,
                         dtCadastro AS dtCadastro,
                         dtUltAlteracao AS dtUltAlteracao
                     FROM tbUnidades" + swhere;

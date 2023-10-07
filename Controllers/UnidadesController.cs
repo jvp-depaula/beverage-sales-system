@@ -81,12 +81,13 @@ namespace Sistema.Controllers
             return Json(list);
         }
 
-        public JsonResult JsAddUnidade(string dsUnidade)
+        public JsonResult JsAddUnidade(string dsUnidade, string sigla)
         {
             DAOUnidades dao = new();
             var obj = new Models.Unidades()
             {
                 dsUnidade = dsUnidade,
+                sigla = sigla
             };
             dao.Insert(obj);
 

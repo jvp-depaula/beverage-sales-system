@@ -5,7 +5,7 @@
     var pageType = Convert.ToString(ViewBag.pageType);
 }
 
-@Html.HiddenFor(e => e.dsUnidade)
+@Html.HiddenFor(e => e.idUnidade)
 <div class="col-md-6">
     @Html.LabelFor(e => e.dsUnidade, new { @class = "form-label" })
     @(disabled ?
@@ -13,4 +13,13 @@
         @Html.TextBoxFor(model => model.dsUnidade, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.dsUnidade, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.sigla, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.sigla, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.sigla, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.sigla, null, new { @class = "help-block" })
 </div>
