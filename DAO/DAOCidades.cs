@@ -49,7 +49,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbCidades ( nmCidade, DDD, idEstado, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', {3}, '{4}')",
+                var sql = string.Format("INSERT INTO tbCidades ( nmCidade, DDD, idEstado, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')",
                     cidade.nmCidade,
                     cidade.DDD,
                     cidade.idEstado,

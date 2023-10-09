@@ -10,6 +10,9 @@ namespace Sistema.Models
         [DisplayName("Código")]
         public int id { get; set; }
 
+        [Display(Name = "Forma Pgto.")]
+        public int idFormaPgto { get; set; }
+
         // CONTATO
         [Display(Name = "Número Celular")]
         public string nrTelefoneCelular { get; set; }

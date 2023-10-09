@@ -8,7 +8,7 @@ namespace Sistema.Models
         [Display(Name = "Código")]
         public int idFormaPgto { get; set; }
         [Display(Name = "Forma de pagamento")]
-        public string nomeForma { get; set; }
+        public string dsFormaPgto { get; set; }
 
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }

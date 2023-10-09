@@ -11,6 +11,6 @@ namespace Sistema.Models
         [Display(Name = "CNPJ")]
         public string nrCNPJ { get; set; }
         [Display(Name = "Inscrição Estadual")]
-        public string nrIE { get; set; }
+        public string nrIE { get; set; }        
     }
 }
