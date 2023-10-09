@@ -1,28 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace Sistema.Models
 {
-    public class ContasPagar
+    public class ContasReceber
     {
         [Key]
         [Column(Order = 0)]
-        [Display(Name = "Fornecedor")]
-        public int idFornecedor { get; set; }
-        [Key]
-        [Column(Order = 1)]
         [Display(Name = "Nrº Modelo")]
         public string nrModelo { get; set; }
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         [Display(Name = "Nrº Série")]
         public string nrSerie { get; set; }
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         [Display(Name = "Nrº Nota")]
-        public string nrNota { get; set; }  
+        public string nrNota { get; set; }
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 3)]
         [Display(Name = "Nrº Parcela")]
         public int nrParcela { get; set; }
         [Display(Name = "Data de Emissão")]
@@ -47,5 +44,7 @@ namespace Sistema.Models
         public decimal vlDesconto { get; set; }
         [Display(Name = "Taxa Desconto")]
         public decimal txDesconto { get; set; }
+        [Display(Name = "Cliente")]
+        public int idCliente { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Sistema.Models
 {
-    public class Parcela
+    public class Parcelas
     {
         [Key]
         [Column(Order = 0)]
