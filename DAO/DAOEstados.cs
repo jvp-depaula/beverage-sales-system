@@ -170,7 +170,7 @@ namespace Sistema.DAO
                     tbEstados.flUF AS flUF,
                     tbEstados.dtCadastro AS dtCadastro,
                     tbEstados.dtUltAlteracao AS dtUltAlteracao,
-                    tbPaises.idPais AS idPais,
+                    tbEstados.idPais AS idPais,
                     tbPaises.nmPais AS nmPais
                 FROM tbEstados
                 INNER JOIN tbPaises on tbEstados.idPais = tbPaises.idPais " + swhere;

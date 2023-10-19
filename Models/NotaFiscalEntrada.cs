@@ -44,5 +44,10 @@ namespace Sistema.Models
         public decimal vlTotalItens { get; set; }
         [Display(Name = "Desconto")]
         public decimal vlDesconto { get; set; }
+        [Display(Name = "Data de cadastro")]
+        public DateTime? dtCadastro { get; set; }
+
+        [Display(Name = "Data da últ. alteração")]
+        public DateTime? dtUltAlteracao { get; set; }
     }
 }

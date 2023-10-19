@@ -20,7 +20,7 @@ namespace Sistema.DAO
                     var FormaPgto = new FormaPgto
                     {
                         idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
-                        nomeForma = Convert.ToString(reader["nomeForma"]),
+                        dsFormaPgto = Convert.ToString(reader["dsFormaPgto"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -44,8 +44,8 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbFormaPgto (nomeForma, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
-                    FormaPgto.nomeForma,
+                var sql = string.Format("INSERT INTO tbFormaPgto (dsFormaPgto, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
+                    FormaPgto.dsFormaPgto,
                     DateTime.Now.ToString("dd/MM/yyyy"),
                     DateTime.Now.ToString("dd/MM/yyyy")
                 );
@@ -69,7 +69,7 @@ namespace Sistema.DAO
             try
             {
                 string sql = "UPDATE tbFormaPgto SET nomeForma = '"
-                             + FormaPgto.nomeForma + "',"
+                             + FormaPgto.dsFormaPgto + "',"
                              + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                              + "' WHERE idFormaPgto = " + FormaPgto.idFormaPgto;
                 OpenConnection();
@@ -103,7 +103,7 @@ namespace Sistema.DAO
                     while (reader.Read())
                     {
                         model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
-                        model.nomeForma = Convert.ToString(reader["nomeForma"]);
+                        model.dsFormaPgto = Convert.ToString(reader["dsFormaPgto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -153,14 +153,14 @@ namespace Sistema.DAO
                 var filterQ = filter.Split(' ');
                 foreach (var word in filterQ)
                 {
-                    swhere += " OR tbFormaPgto.nomeForma LIKE'%" + word + "%'";
+                    swhere += " OR tbFormaPgto.dsFormaPgto LIKE'%" + word + "%'";
                 }
                 swhere = " WHERE " + swhere.Remove(0, 3);
             }
             sql = @"
                     SELECT
                         idFormaPgto AS idFormaPgto,
-                        nomeForma AS nomeForma,
+                        dsFormaPgto AS dsFormaPgto,
                         dtCadastro AS dtCadastro,
                         dtUltAlteracao AS dtUltAlteracao
                     FROM tbFormaPgto" + swhere;

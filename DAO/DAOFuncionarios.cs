@@ -210,24 +210,26 @@ namespace Sistema.DAO
             }
             sql = @"
                     SELECT
-                        idFuncionario AS idFuncionario,
-                        nmFuncionario AS nmFuncionario,
-                        dsApelido AS dsApelido,
-                        nrCPF AS nrCPF,
-                        nrRG AS nrRG,
-                        nrTelefoneCelular AS nrTelefoneCelular,
-                        nrTelefoneFixo AS nrTelefoneFixo,
-                        dsEmail AS dsEmail,
-                        nrCEP AS nrCEP,
-                        dsLogradouro AS dsLogradouro,
-                        nrEndereco AS nrEndereco,
-                        dsBairro AS dsBairro,
-                        dsComplemento AS dsComplemento,
-                        idCidade AS idCidade,
-                        dtNasc AS dtNasc,
-                        dtCadastro AS dtCadastro,
-                        dtUltAlteracao AS dtUltAlteracao
-                    FROM tbFuncionarios" + swhere;
+                        tbFuncionarios.idFuncionario AS idFuncionario,
+                        tbFuncionarios.nmFuncionario AS nmFuncionario,
+                        tbFuncionarios.dsApelido AS dsApelido,
+                        tbFuncionarios.nrCPF AS nrCPF,
+                        tbFuncionarios.nrRG AS nrRG,
+                        tbFuncionarios.nrTelefoneCelular AS nrTelefoneCelular,
+                        tbFuncionarios.nrTelefoneFixo AS nrTelefoneFixo,
+                        tbFuncionarios.dsEmail AS dsEmail,
+                        tbFuncionarios.nrCEP AS nrCEP,
+                        tbFuncionarios.dsLogradouro AS dsLogradouro,
+                        tbFuncionarios.nrEndereco AS nrEndereco,
+                        tbFuncionarios.dsBairro AS dsBairro,
+                        tbFuncionarios.dsComplemento AS dsComplemento,
+                        tbFuncionarios.idCidade AS idCidade,
+                        tbCidades.nmCidade AS nmCidade,
+                        tbFuncionarios.dtNasc AS dtNasc,
+                        tbFuncionarios.dtCadastro AS dtCadastro,
+                        tbFuncionarios.dtUltAlteracao AS dtUltAlteracao
+                    FROM tbFuncionarios
+                    INNER JOIN tbCidades ON tbFuncionarios.idCidade = tbCidades.idCidade" + swhere;
             return sql;
         }
     }

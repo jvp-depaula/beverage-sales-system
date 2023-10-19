@@ -58,11 +58,13 @@ CREATE TABLE tbClientes (
 	dsBairro VARCHAR(60) NOT NULL,
 	dsComplemento VARCHAR(60),
 	idCidade INT NOT NULL,	
+	idFormaPgto INT,
 	dtNasc DATETIME,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_Clientes PRIMARY KEY (idCliente),
-	CONSTRAINT FK_Clientes_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
+	CONSTRAINT FK_Clientes_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade),
+	CONSTRAINT FK_Clientes_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto)
 );
 
 CREATE TABLE tbFornecedores (
@@ -80,10 +82,12 @@ CREATE TABLE tbFornecedores (
 	dsBairro VARCHAR(60) NOT NULL,
 	dsComplemento VARCHAR(60),
 	idCidade INT NOT NULL,	
+	idFormaPgto INT,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_Fornecedores PRIMARY KEY (idFornecedor),
-	CONSTRAINT FK_Fornecedores_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
+	CONSTRAINT FK_Fornecedores_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade),
+	CONSTRAINT FK_Fornecedores_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto)
 );
 
 CREATE TABLE tbUnidades(
@@ -113,6 +117,8 @@ CREATE TABLE tbProdutos (
 	cdNCM VARCHAR(8) NOT NULL,
 	vlVenda DECIMAL(9,2) NOT NULL,
 	observacao VARCHAR(255) NOT NULL,
+	vlSaldo DECIMAL(9,2) NOT NULL,
+	vlCustoMedio DECIMAL(9,2) NOT NULL,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_Produtos PRIMARY KEY (idProduto),
@@ -144,7 +150,7 @@ CREATE TABLE tbFuncionarios (
 
 CREATE TABLE tbFormaPgto (
 	idFormaPgto INT NOT NULL IDENTITY(1,1),
-	nomeForma VARCHAR(255) NOT NULL,
+	dsFormaPgto VARCHAR(255) NOT NULL,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_FormaPgto PRIMARY KEY (idFormaPgto),
@@ -152,13 +158,13 @@ CREATE TABLE tbFormaPgto (
 
 CREATE TABLE tbCondicaoPgto (
 	idCondicaoPgto INT NOT NULL IDENTITY(1,1),
-	nomeCondicao VARCHAR(255) NOT NULL,
+	dsCondicaoPgto VARCHAR(255) NOT NULL,
 	idFormaPgto INT NOT NULL,
 	txJuros DECIMAL(9,2),
-	txPorcentual DECIMAL(9,2),
+	txPercentual DECIMAL(9,2),
 	qtdDias INT,
-	multa DECIMAL(9,2),
-	desconto DECIMAL(9,2),
+	vlMulta DECIMAL(9,2),
+	vlDesconto DECIMAL(9,2),
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_CondicaoPgto PRIMARY KEY (idCondicaoPgto),

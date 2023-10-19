@@ -197,10 +197,11 @@ namespace Sistema.DAO
                         tbProdutos.observacao AS observacao,
                         tbProdutos.dtCadastro AS dtCadastro,
                         tbProdutos.dtUltAlteracao AS dtUltAlteracao
-                    FROM tbProdutos JOIN tbFornecedores ON tbProdutos.idFornecedor = tbFornecedores.idFornecedor
-                                    JOIN tbCategorias ON tbProdutos.idCategoria = tbCategorias.idCategoria
-                                    JOIN tbUnidades ON tbProdutos.idUnidade = tbUnidades.idUnidade
-                                    JOIN tbMarcas ON tbProdutos.idMarca = tbMarcas.idMarca" + swhere;
+                        FROM tbProdutos 
+                        JOIN tbFornecedores ON tbProdutos.idFornecedor = tbFornecedores.idFornecedor
+                        JOIN tbCategorias ON tbProdutos.idCategoria = tbCategorias.idCategoria
+                        JOIN tbUnidades ON tbProdutos.idUnidade = tbUnidades.idUnidade
+                        JOIN tbMarcas ON tbProdutos.idMarca = tbMarcas.idMarca" + swhere;
             return sql;
         }
     }

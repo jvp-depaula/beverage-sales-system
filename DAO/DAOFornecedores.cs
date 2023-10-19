@@ -20,6 +20,7 @@ namespace Sistema.DAO
                     var fornecedor = new Fornecedores
                     {
                         id = Convert.ToInt32(reader["idFornecedor"]),
+                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
                         nmFornecedor = Convert.ToString(reader["nmFornecedor"]),
                         nmFantasia = Convert.ToString(reader["nmFantasia"]),
                         nrCNPJ = Convert.ToString(reader["nrCNPJ"]),
@@ -57,9 +58,9 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("INSERT INTO tbFornecedores (nmFornecedor, nmFantasia, nrCNPJ, nrIE, nrTelefoneCelular, nrTelefoneFixo, " +
                                                                     "dsEmail, nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade," +
-                                                                    "dtCadastro, dtUltAlteracao) " +
+                                                                    "idFormaPgto, dtCadastro, dtUltAlteracao) " +
                                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
-                                                                    "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}')",
+                                                                    "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
                     fornecedor.nmFornecedor,
                     fornecedor.nmFantasia,
                     Util.Util.Unmask(fornecedor.nrCNPJ),
@@ -73,6 +74,7 @@ namespace Sistema.DAO
                     fornecedor.dsBairro,
                     fornecedor.dsComplemento,
                     Convert.ToInt32(fornecedor.idCidade),
+                    Convert.ToInt32(fornecedor.idFormaPgto),
                     DateTime.Now.ToString("dd/MM/yyyy"),
                     DateTime.Now.ToString("dd/MM/yyyy")
                 );
@@ -94,8 +96,7 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbFornecedores SET nmFornecedor = '" +
-                    fornecedor.nmFornecedor + "'," +
+                string sql = "UPDATE tbFornecedores SET nmFornecedor = '" + fornecedor.nmFornecedor + "'," +
                     " nmFantasia = '" + fornecedor.nmFantasia + "'," +
                     " nrCNPJ = '" + Util.Util.Unmask(fornecedor.nrCNPJ) + "'," +
                     " nrIE = '" + Util.Util.Unmask(fornecedor.nrIE) + "'," +
@@ -108,6 +109,7 @@ namespace Sistema.DAO
                     " dsBairro = '" + fornecedor.dsBairro + "'," +
                     " dsComplemento = '" + fornecedor.dsComplemento + "'," +
                     " idCidade = '" + Convert.ToInt32(fornecedor.idCidade) + "'," +
+                    " idFormaPgto = '" + Convert.ToInt32(fornecedor.idFormaPgto) + "'," +
                     " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                     + "' WHERE idFornecedor = " + fornecedor.id;
                 OpenConnection();
@@ -151,6 +153,7 @@ namespace Sistema.DAO
                         model.dsBairro = Convert.ToString(reader["dsBairro"]);
                         model.dsComplemento = Convert.ToString(reader["dsComplemento"]);
                         model.idCidade = Convert.ToInt32(reader["idCidade"]);
+                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -205,23 +208,27 @@ namespace Sistema.DAO
             }
             sql = @"
                     SELECT
-                        idFornecedor AS idFornecedor,
-                        nmFornecedor AS nmFornecedor,
-                        nmFantasia AS nmFantasia,
-                        nrCNPJ AS nrCNPJ,
-                        nrIE AS nrIE,
-                        nrTelefoneCelular AS nrTelefoneCelular,
-                        nrTelefoneFixo AS nrTelefoneFixo,
-                        dsEmail AS dsEmail,
-                        nrCEP AS nrCEP,
-                        dsLogradouro AS dsLogradouro,
-                        nrEndereco AS nrEndereco,
-                        dsBairro AS dsBairro,
-                        dsComplemento AS dsComplemento,
-                        idCidade AS idCidade,
-                        dtCadastro AS dtCadastro,
-                        dtUltAlteracao AS dtUltAlteracao
-                    FROM tbFornecedores" + swhere;
+                        tbFornecedores.idFornecedor AS idFornecedor,
+                        tbFornecedores.nmFornecedor AS nmFornecedor,
+                        tbFornecedores.nmFantasia AS nmFantasia,
+                        tbFornecedores.nrCNPJ AS nrCNPJ,
+                        tbFornecedores.nrIE AS nrIE,
+                        tbFornecedores.nrTelefoneCelular AS nrTelefoneCelular,
+                        tbFornecedores.nrTelefoneFixo AS nrTelefoneFixo,
+                        tbFornecedores.dsEmail AS dsEmail,
+                        tbFornecedores.nrCEP AS nrCEP,
+                        tbFornecedores.dsLogradouro AS dsLogradouro,
+                        tbFornecedores.nrEndereco AS nrEndereco,
+                        tbFornecedores.dsBairro AS dsBairro,
+                        tbFornecedores.dsComplemento AS dsComplemento,
+                        tbFornecedores.idCidade AS idCidade,
+                        tbFornecedores.idFormaPgto AS idFormaPgto,                        
+                        tbFormaPgto.dsFormaPgto as dsFormaPgto,
+                        tbFornecedores.dtCadastro AS dtCadastro,
+                        tbFornecedores.dtUltAlteracao AS dtUltAlteracao
+                    FROM tbFornecedores
+                    INNER JOIN tbCidades ON tbFornecedores.idCidade = tbCidades.idcidade 
+                    INNER JOIN tbFormaPgto ON tbFornecedores.idFormaPgto = tbFormaPgto.idFormaPgto " + swhere;
             return sql;
         }
     }

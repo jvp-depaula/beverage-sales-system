@@ -20,13 +20,13 @@ namespace Sistema.DAO
                     var condicaoPgto = new CondicaoPgto
                     {
                         idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
-                        nomeCondicao = Convert.ToString(reader["nomeCondicao"]),
+                        dsCondicaoPgto = Convert.ToString(reader["nomeCondicao"]),
                         idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
                         txJuros = Convert.ToDecimal(reader["txJuros"]),
                         txPercentual = Convert.ToDecimal(reader["txPercentual"]),
                         qtdDias = Convert.ToInt32(reader["qtdDias"]),
-                        multa = Convert.ToDecimal(reader["multa"]),
-                        desconto = Convert.ToDecimal(reader["desconto"]),
+                        vlMulta = Convert.ToDecimal(reader["vlMulta"]),
+                        vlDesconto = Convert.ToDecimal(reader["vlDesconto"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -50,15 +50,15 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbCondicaoPgto (nomeCondicao, idFormaPgto, txJuros, txPercentual, qtdDias, multa, desconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}'," +
+                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, idFormaPgto, txJuros, txPercentual, qtdDias, vlMulta, vlDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}'," +
                     "'{5}', '{6}', '{7}', '{8}')",
-                    condicaoPgto.nomeCondicao,
+                    condicaoPgto.dsCondicaoPgto,
                     condicaoPgto.idFormaPgto,
                     condicaoPgto.txJuros,
                     condicaoPgto.txPercentual,
                     condicaoPgto.qtdDias,
-                    condicaoPgto.multa,
-                    condicaoPgto.desconto,
+                    condicaoPgto.vlMulta,
+                    condicaoPgto.vlDesconto,
                     DateTime.Now.ToString("dd/MM/yyyy"),
                     DateTime.Now.ToString("dd/MM/yyyy")
                 );
@@ -81,14 +81,14 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbCondicaoPgto SET nomeCondicao = '"
-                             + condicaoPgto.nomeCondicao + "',"
+                string sql = "UPDATE tbCondicaoPgto SET dsCondicaoPgto = '"
+                             + condicaoPgto.dsCondicaoPgto + "',"
                              + condicaoPgto.idFormaPgto + "',"
                              + condicaoPgto.txJuros + "',"
                              + condicaoPgto.txPercentual + "',"
                              + condicaoPgto.qtdDias + "',"
-                             + condicaoPgto.multa + "',"
-                             + condicaoPgto.desconto + "',"
+                             + condicaoPgto.vlMulta + "',"
+                             + condicaoPgto.vlDesconto + "',"
                              + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
                              + "' WHERE idcondicaoPgto = " + condicaoPgto.idCondicaoPgto;
                 OpenConnection();
@@ -122,13 +122,13 @@ namespace Sistema.DAO
                     while (reader.Read())
                     {
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
-                        model.nomeCondicao= Convert.ToString(reader["nomeCondicao"]);
+                        model.dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]);
                         model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
                         model.txJuros = Convert.ToDecimal(reader["txJuros"]);
                         model.txPercentual = Convert.ToDecimal(reader["txPercentual"]);
                         model.qtdDias = Convert.ToInt32(reader["qtdDias"]);
-                        model.multa = Convert.ToDecimal(reader["multa"]);
-                        model.desconto = Convert.ToDecimal(reader["desconto"]);
+                        model.vlMulta = Convert.ToDecimal(reader["vlMulta"]);
+                        model.vlDesconto = Convert.ToDecimal(reader["vlDesconto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -178,23 +178,25 @@ namespace Sistema.DAO
                 var filterQ = filter.Split(' ');
                 foreach (var word in filterQ)
                 {
-                    swhere += " OR tbCondicaoPgto.nomeCondicao LIKE '%" + word + "%'";
+                    swhere += " OR tbCondicaoPgto.dsCondicaoPgto LIKE '%" + word + "%'";
                 }
                 swhere = " WHERE " + swhere.Remove(0, 3);
             }
             sql = @"
                     SELECT
-                        idcondicaoPgto AS idcondicaoPgto,
-                        nomeCondicao AS nomeCondicao,
-                        idFormaPgto AS idFormaPgto,
-                        txJuros AS txJuros,
-                        txPercentual AS txPercentual,
-                        qtdDias AS qtdDias,
-                        multa AS multa,
-                        desconto AS desconto,
-                        dtCadastro AS dtCadastro,
-                        dtUltAlteracao AS dtUltAlteracao
-                    FROM tbCondicaoPgto" + swhere;
+                        tbCondicaoPgto.idcondicaoPgto AS idcondicaoPgto,
+                        tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto,
+                        tbCondicaoPgto.idFormaPgto AS idFormaPgto,
+                        tbFormaPgto.dsFormaPgto AS dsFormaPgto,
+                        tbCondicaoPgto.txJuros AS txJuros,
+                        tbCondicaoPgto.txPercentual AS txPercentual,
+                        tbCondicaoPgto.qtdDias AS qtdDias,
+                        tbCondicaoPgto.multa AS multa,
+                        tbCondicaoPgto.desconto AS desconto,
+                        tbCondicaoPgto.dtCadastro AS dtCadastro,
+                        tbCondicaoPgto.dtUltAlteracao AS dtUltAlteracao
+                    FROM tbCondicaoPgto
+                    INNER JOIN tbFormaPgto ON tbCondicaoPGto.idFormaPgto = tbformaPgto.idFormaPgto " + swhere;
             return sql;
         }
     }

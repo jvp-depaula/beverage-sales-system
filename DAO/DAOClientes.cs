@@ -20,6 +20,7 @@ namespace Sistema.DAO
                     var cliente = new Clientes
                     {
                         id = Convert.ToInt32(reader["idCliente"]),
+                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
                         flTipo = Convert.ToString(reader["flTipo"]),
                         nmCliente = Convert.ToString(reader["nmCliente"]),
                         nmFantasia = Convert.ToString(reader["nmFantasia"]),
@@ -58,13 +59,14 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbClientes (nmCliente, flTipo, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
+                var sql = string.Format("INSERT INTO tbClientes (nmCliente, flTipo, idFormaPgto, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
                                                                 "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade, dtNasc," +
                                                                 "dtCadastro, dtUltAlteracao) " +
                                                                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
-                                                                "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}', '{16}')",
+                                                                "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}', '{16}', '{17}')",
                     cliente.nmCliente,
                     cliente.flTipo,
+                    cliente.idFormaPgto,
                     cliente.nmFantasia,
                     Util.Util.Unmask(cliente.nrCPFCNPJ),
                     Util.Util.Unmask(cliente.nrRG_IE),
@@ -102,6 +104,7 @@ namespace Sistema.DAO
                 string sql = "UPDATE tbClientes SET" +
                     " nmCliente = '" + cliente.nmCliente + "'," +
                     " flTipo = '" + cliente.flTipo + "'," +
+                    " idFormaPgto = '" + cliente.idFormaPgto + "'," +
                     " nmFantasia = '" + cliente.nmFantasia + "'," +                    
                     " nrCPFCNPJ = '" + Util.Util.Unmask(cliente.nrCPFCNPJ) + "'," +
                     " nrRG_IE = '" + Util.Util.Unmask(cliente.nrRG_IE) + "'," +
@@ -146,6 +149,7 @@ namespace Sistema.DAO
                     {
                         model.id = Convert.ToInt32(reader["idCliente"]);
                         model.flTipo = Convert.ToString(reader["flTipo"]);
+                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
                         model.nmCliente = Convert.ToString(reader["nmCliente"]);
                         model.nmFantasia = Convert.ToString(reader["nmFantasia"]);
                         model.nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]);
@@ -214,25 +218,30 @@ namespace Sistema.DAO
             }
             sql = @"
                     SELECT
-                        idCliente AS idCliente,
-                        flTipo AS flTipo,
-                        nmCliente AS nmCliente,
-                        nmFantasia AS nmFantasia,
-                        nrCPFCNPJ AS nrCPFCNPJ,
-                        nrRG_IE AS nrRG_IE,
-                        nrTelefoneCelular AS nrTelefoneCelular,
-                        nrTelefoneFixo AS nrTelefoneFixo,
-                        dsEmail AS dsEmail,
-                        nrCEP AS nrCEP,
-                        dsLogradouro AS dsLogradouro,
-                        nrEndereco AS nrEndereco,
-                        dsBairro AS dsBairro,
-                        dsComplemento AS dsComplemento,
-                        idCidade AS idCidade,
-                        dtNasc AS dtNasc,
-                        dtCadastro AS dtCadastro,
-                        dtUltAlteracao AS dtUltAlteracao
-                    FROM tbClientes" + swhere;
+                        tbClientes.idCliente AS idCliente,
+                        tbClientes.flTipo AS flTipo,
+                        tbClientes.idFormaPgto AS idFormaPgto,
+                        tbFormaPgto.dsFormaPgto AS dsFormaPgto,
+                        tbClientes.nmCliente AS nmCliente,
+                        tbClientes.nmFantasia AS nmFantasia,
+                        tbClientes.nrCPFCNPJ AS nrCPFCNPJ,
+                        tbClientes.nrRG_IE AS nrRG_IE,
+                        tbClientes.nrTelefoneCelular AS nrTelefoneCelular,
+                        tbClientes.nrTelefoneFixo AS nrTelefoneFixo,
+                        tbClientes.dsEmail AS dsEmail,
+                        tbClientes.nrCEP AS nrCEP,
+                        tbClientes.dsLogradouro AS dsLogradouro,
+                        tbClientes.nrEndereco AS nrEndereco,
+                        tbClientes.dsBairro AS dsBairro,
+                        tbClientes.dsComplemento AS dsComplemento,
+                        tbClientes.idCidade AS idCidade,
+                        tbCidades.nmCidade AS nmCidade,
+                        tbClientes.dtNasc AS dtNasc,
+                        tbClientes.dtCadastro AS dtCadastro,
+                        tbClientes.dtUltAlteracao AS dtUltAlteracao
+                    FROM tbClientes
+                    INNER JOIN tbCidades ON tbClientes.idCidade = tbCidades.nmCidade
+                    INNER JOIN tbFormaPgto ON tbCondicaoPgto.idFormaPgto = tbFormaPgto.idFormaPgto" + swhere;
             return sql;
         }
     }
