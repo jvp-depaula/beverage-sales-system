@@ -33,5 +33,10 @@ namespace Sistema.Models
         public decimal vlDesconto { get; set; }
         [Display(Name = "Cliente")]
         public int idCliente { get; set; }
+        [Display(Name = "Data de cadastro")]
+        public DateTime? dtCadastro { get; set; }
+
+        [Display(Name = "Data da últ. alteração")]
+        public DateTime? dtUltAlteracao { get; set; }
     }
 }

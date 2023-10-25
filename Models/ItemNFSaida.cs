@@ -28,6 +28,11 @@ namespace Sistema.Models
         [Display(Name = "Quantidade")]
         public decimal qtdItem { get; set; }
         [Display(Name = "Valor da Venda")]
-        public decimal vlVenda { get; set;}
+        public decimal vlVenda { get; set; }
+        [Display(Name = "Data de cadastro")]
+        public DateTime? dtCadastro { get; set; }
+
+        [Display(Name = "Data da últ. alteração")]
+        public DateTime? dtUltAlteracao { get; set; }
     }
 }

@@ -38,5 +38,10 @@ namespace Sistema.Models
         public decimal vlOutrasDespesas { get; set; }
         [Display(Name = "Custo")]
         public decimal vlCusto { get; set; }
+        [Display(Name = "Data de cadastro")]
+        public DateTime? dtCadastro { get; set; }
+
+        [Display(Name = "Data da últ. alteração")]
+        public DateTime? dtUltAlteracao { get; set; }
     }
 }

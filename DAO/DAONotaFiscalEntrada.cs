@@ -33,7 +33,9 @@ namespace Sistema.DAO
                         vlSeguro = Convert.ToDecimal(reader["vlSeguro"]),
                         vlOutrasDespesas = Convert.ToDecimal(reader["vlOutrasDespesas"]),
                         vlTotalItens = Convert.ToDecimal(reader["vlTotalItens"]),
-                        vlDesconto = Convert.ToDecimal(reader["vlDesconto"])
+                        vlDesconto = Convert.ToDecimal(reader["vlDesconto"]),
+                        dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
+                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltalteracao"])
                     };
 
                     list.Add(NotasFiscaisEntrada);
@@ -94,9 +96,9 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbNotafiscalEntrada SET dtEmissao = '" + notaFiscalEntrada.dtEmissao + "',"
-                             + " dtEntrada = '" + notaFiscalEntrada.dtEntrada + "',"
-                             + " chaveNFe = '" + notaFiscalEntrada.chaveNFe + "',"
+                string sql = "UPDATE tbNotafiscalEntrada SET dtEmissao = '" + Util.Util.FormatDate(notaFiscalEntrada.dtEmissao) + "',"
+                             + " dtEntrada = '" + Util.Util.FormatDate(notaFiscalEntrada.dtEntrada) + "',"
+                             + " chaveNFe = '" + Util.Util.Unmask(notaFiscalEntrada.chaveNFe) + "',"
                              + " flSituacao = '" + notaFiscalEntrada.flSituacao + "',"
                              + " vlTotalNota = '" + notaFiscalEntrada.vlTotalNota + "',"
                              + " vlFrete = '" + notaFiscalEntrada.vlFrete + "',"

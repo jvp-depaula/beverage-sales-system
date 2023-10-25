@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Xml.Linq;
 
 namespace Sistema.Models
 {
@@ -23,5 +22,10 @@ namespace Sistema.Models
         public decimal txPercentMulta { get; set; }
         [Display(Name = "% Desconto")]
         public decimal txPercentDesconto { get; set; }
+        [Display(Name = "Data de cadastro")]
+        public DateTime? dtCadastro { get; set; }
+
+        [Display(Name = "Data da últ. alteração")]
+        public DateTime? dtUltAlteracao { get; set; }
     }
 }

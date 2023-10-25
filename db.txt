@@ -42,6 +42,29 @@ CREATE TABLE tbCategorias (
 	CONSTRAINT PK_Categorias PRIMARY KEY (idCategoria)	
 );
 
+CREATE TABLE tbFormaPgto (
+	idFormaPgto INT NOT NULL IDENTITY(1,1),
+	dsFormaPgto VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_FormaPgto PRIMARY KEY (idFormaPgto),
+);
+
+CREATE TABLE tbCondicaoPgto (
+	idCondicaoPgto INT NOT NULL IDENTITY(1,1),
+	dsCondicaoPgto VARCHAR(255) NOT NULL,
+	idFormaPgto INT NOT NULL,
+	txJuros DECIMAL(9,2),
+	txPercentual DECIMAL(9,2),
+	qtdDias INT,
+	vlMulta DECIMAL(9,2),
+	vlDesconto DECIMAL(9,2),
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_CondicaoPgto PRIMARY KEY (idCondicaoPgto),
+	CONSTRAINT FK_CondicaoPgto_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto)
+);
+
 CREATE TABLE tbClientes (
 	idCliente INT NOT NULL IDENTITY(1,1),
 	flTipo VARCHAR(1) NOT NULL,
@@ -146,27 +169,134 @@ CREATE TABLE tbFuncionarios (
 	dtNasc DATETIME NOT NULL,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_Funcionarios PRIMARY KEY (idFuncionario),
+	CONSTRAINT FK_Funcionarios_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
 );
 
-CREATE TABLE tbFormaPgto (
-	idFormaPgto INT NOT NULL IDENTITY(1,1),
-	dsFormaPgto VARCHAR(255) NOT NULL,
+CREATE TABLE tbNotaFiscalSaida (
+	nrModelo VARCHAR(255) NOT NULL,
+	nrSerie VARCHAR(255) NOT NULL,
+	nrNota VARCHAR(255) NOT NULL,
+	dtEmissao DATETIME NOT NULL,
+	chaveNFe VARCHAR(255) NOT NULL,
+	flSituacao VARCHAR(255) NOT NULL,
+	vlTotalNota DECIMAL (9,2) NOT NULL,
+	vlTotalItens DECIMAL (9,2) NOT NULL,
+	vlDesconto DECIMAL (9,2) NOT NULL,
+	idCliente INT NOT NULL,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
-	CONSTRAINT PK_FormaPgto PRIMARY KEY (idFormaPgto),
+	CONSTRAINT PK_tbNotaFiscalSaida KEY CLUSTERED (nrModelo, nrSerie, nrNota),
+	CONSTRAINT FK_NotaFiscalSaida_Clientes FOREIGN KEY (idCliente) REFERENCES tbClientes (idCliente)
 );
 
-CREATE TABLE tbCondicaoPgto (
-	idCondicaoPgto INT NOT NULL IDENTITY(1,1),
-	dsCondicaoPgto VARCHAR(255) NOT NULL,
+CREATE TABLE tbNotaFiscalEntrada (
+    idFornecedor INT NOT NULL,
+	nrModelo VARCHAR(255) NOT NULL,
+	nrSerie VARCHAR(255) NOT NULL,
+	nrNota VARCHAR(255) NOT NULL,
+	dtEmissao DATETIME NOT NULL,
+	dtEntrada DATETIME NOT NULL,
+	chaveNFe VARCHAR(255) NOT NULL,
+	flSituacao VARCHAR(255) NOT NULL,
+	vlTotalNota DECIMAL (9,2) NOT NULL,
+	vlTotalItens DECIMAL (9,2) NOT NULL,
+	vlDesconto DECIMAL (9,2) NOT NULL,
+	vlFrete DECIMAL (9,2) NOT NULL,
+	vlSeguro DECIMAL (9,2) NOT NULL,
+	vlOutrasDespesas DECIMAL (9,2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_tbNotaFiscalEntrada KEY CLUSTERED (idFornecedor, nrModelo, nrSerie, nrNota),
+	CONSTRAINT FK_NotaFiscalEntrada_Clientes FOREIGN KEY (idCliente) REFERENCES tbClientes (idCliente)
+);
+
+CREATE TABLE tbItemNFEntrada (
+	idProduto INT NOT NULL,
+	idFornecedor INT NOT NULL,
+	nrModelo VARCHAR(255) NOT NULL,
+	nrSerie VARCHAR(255) NOT NULL,
+	nrNota VARCHAR(255) NOT NULL,
+	qtdItem DECIMAL(9,2) NOT NULL,
+	vlFrete DECIMAL(9,2) NOT NULL,
+	vlDesconto DECIMAL(9,2) NOT NULL,
+	vlSeguro DECIMAL(9,2) NOT NULL,
+	vlOutrasDespesas DECIMAL(9,2) NOT NULL,
+	vlCusto DECIMAL(9,2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_tbItemNFEntrada KEY CLUSTERED (idProduto, idFornecedor, nrModelo, nrSerie, nrNota)
+);
+
+CREATE TABLE tbItemNFSaida (
+	idProduto INT NOT NULL,
+	idCliente INT NOT NULL,
+	nrModelo VARCHAR(255) NOT NULL,
+	nrSerie VARCHAR(255) NOT NULL,
+	nrNota VARCHAR(255) NOT NULL,
+	qtdItem DECIMAL(9,2) NOT NULL,
+	vlVenda DECIMAL(9,2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_tbItemNFSaida KEY CLUSTERED (idProduto, idCliente, nrModelo, nrSerie, nrNota)
+);
+
+CREATE TABLE tbParcela (
+	idCondicaoPgto INT NOT NULL,
 	idFormaPgto INT NOT NULL,
-	txJuros DECIMAL(9,2),
-	txPercentual DECIMAL(9,2),
-	qtdDias INT,
-	vlMulta DECIMAL(9,2),
-	vlDesconto DECIMAL(9,2),
+	dias INT NOT NULL,
+	txPercentParcela DECIMAL (9,2) NOT NULL,
+	txPercentJuros DECIMAL (9,2) NOT NULL,
+	txPercentMulta DECIMAL (9,2) NOT NULL,
+	txPercentDesconto DECIMAL (9,2) NOT NULL,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
-	CONSTRAINT PK_CondicaoPgto PRIMARY KEY (idCondicaoPgto),
-	CONSTRAINT FK_CondicaoPgto_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto)
+	CONSTRAINT PK_tbParcelas KEY CLUSTERED (idCondicaoPgto, idFormaPgto)
+);
+
+CREATE TABLE tbContasPagar (
+    idFornecedor INT NOT NULL,
+	nrModelo VARCHAR(255) NOT NULL,
+	nrSerie VARCHAR(255) NOT NULL,
+	nrNota VARCHAR(255) NOT NULL,
+	nrParcela VARCHAR (255) NOT NULL,
+	dtEmissao DATETIME NOT NULL,
+	dtVencimento DATETIME NOT NULL,
+	vlParcela DECIMAL (9,2) NOT NULL,
+	idFormaPgto INT NOT NULL,
+	vlPago DECIMAL (9,2) NOT NULL,
+	dtPgto DATETIME NOT NULL,
+	flSituacao VARCHAR(255) NOT NULL,
+	vlJuros DECIMAL (9,2) NOT NULL,
+	vlMulta DECIMAL (9,2) NOT NULL,
+	vlDesconto DECIMAL (9,2) NOT NULL,
+	txDesconto DECIMAL (9,2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_tbContasPagar KEY CLUSTERED (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela),
+	CONSTRAINT FK_tbContasPagar_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto (idFormaPgto)
+);
+
+CREATE TABLE tbContasReceber (
+    nrModelo VARCHAR(255) NOT NULL,
+	nrSerie VARCHAR(255) NOT NULL,
+	nrNota VARCHAR(255) NOT NULL,
+	nrParcela VARCHAR (255) NOT NULL,
+	dtEmissao DATETIME NOT NULL,
+	dtVencimento DATETIME NOT NULL,
+	vlParcela DECIMAL (9,2) NOT NULL,
+	idFormaPgto INT NOT NULL,
+	vlPago DECIMAL (9,2) NOT NULL,
+	dtPgto DATETIME NOT NULL,
+	flSituacao VARCHAR(255) NOT NULL,
+	idCliente INT NOT NULL,
+	vlJuros DECIMAL (9,2) NOT NULL,
+	vlMulta DECIMAL (9,2) NOT NULL,
+	vlDesconto DECIMAL (9,2) NOT NULL,
+	txDesconto DECIMAL (9,2) NOT NULL,
+	dtCadastro DATETIME NOT NULL,
+	dtUltAlteracao DATETIME NOT NULL,
+	CONSTRAINT PK_tbContasReceber KEY CLUSTERED (nrModelo, nrSerie, nrNota, nrParcela),
+	CONSTRAINT FK_tbContasReceber_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto (idFormaPgto)
+	CONSTRAINT FK_tbContasReceber_Clientes FOREIGN KEY (idCliente) REFERENCES tbClientes (idCliente)
 );
