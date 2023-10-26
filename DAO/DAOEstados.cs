@@ -23,7 +23,7 @@ namespace Sistema.DAO
                         idEstado = Convert.ToInt32(reader["idEstado"]),
                         nmEstado = Convert.ToString(reader["nmEstado"]),
                         flUF = Convert.ToString(reader["flUF"]),
-                        idPais = Convert.ToInt32(reader["idPais"]),           
+                        idPais = Convert.ToInt32(reader["idPais"]),
                         nmPais = Convert.ToString(reader["nmPais"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
@@ -52,8 +52,8 @@ namespace Sistema.DAO
                     estado.nmEstado,
                     estado.flUF,
                     Convert.ToInt32(estado.idPais),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                     );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -73,12 +73,12 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbEstados SET nmEstado = '"
-                    + estado.nmEstado + "'," +
-                    " flUF = '" + estado.flUF + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'," +
-                    " idPais = " + estado.idPais +
-                    " WHERE idEstado = " + estado.idEstado;
+                var sql = String.Format("UPDATE tbEstados SET nmEstado = '{0}', flUF = '{1}', dtUltAlteracao = '{2}', idPais = '{3}' WHERE idEstado = '{4}'",
+                    estado.nmEstado,
+                    estado.flUF,
+                    Util.Util.FormatDate(DateTime.Now),
+                    estado.idPais,
+                    estado.idEstado);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -145,7 +145,7 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-        
+
         private string Search(int? id, string filter)
         {
             var sql = string.Empty;

@@ -24,7 +24,7 @@ namespace Sistema.DAO
                         idCliente = Convert.ToInt32(reader["idCliente"]),
                         nrModelo = Convert.ToString(reader["nrModelo"]),
                         nrSerie = Convert.ToString(reader["nrSerie"]),
-                        nrNota = Convert.ToString(reader["nrNota"]),
+                        nrNota = Convert.ToInt32(reader["nrNota"]),
                         qtdItem = Convert.ToDecimal(reader["qtdItem"]),
                         vlVenda = Convert.ToDecimal(reader["vlVenda"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
@@ -60,8 +60,8 @@ namespace Sistema.DAO
                     ItemNFSaida.nrNota,
                     Convert.ToDecimal(ItemNFSaida.qtdItem),
                     Convert.ToDecimal(ItemNFSaida.vlVenda),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
 
                 OpenConnection();
@@ -82,14 +82,16 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbItemNFSaida SET qtdItem = '" + ItemNFSaida.qtdItem + "',"
-                             + " vlVenda = '" + ItemNFSaida.vlVenda + "',"
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'"
-                             + " WHERE idProduto = '" + ItemNFSaida.idProduto + "'"
-                             + " AND idCliente = '" + ItemNFSaida.idCliente + "'"
-                             + " AND nrModelo = '" + ItemNFSaida.nrModelo + "'"
-                             + " AND nrSerie = '" + ItemNFSaida.nrSerie + "'"
-                             + " AND nrNota = '" + ItemNFSaida.nrNota + "'";                             
+                var sql = String.Format("UPDATE tbItemNFSaida SET qtdItem = '{0}', vlVenda = '{1}', dtUltAlteracao = '{2}'" +
+                    "WHERE idProduto = '{3}', idCliente = '{4}', nrModelo = '{5}', nrSerie = '{6}', nrNota ='{7}')," +
+                    Convert.ToDecimal(ItemNFSaida.qtdItem),
+                    Convert.ToDecimal(ItemNFSaida.vlVenda),
+                    Util.Util.FormatDate(DateTime.Now),
+                    Convert.ToInt32(ItemNFSaida.idProduto),
+                    Convert.ToInt32(ItemNFSaida.idCliente),
+                    ItemNFSaida.nrModelo,
+                    ItemNFSaida.nrSerie,
+                    ItemNFSaida.nrNota);                
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -125,7 +127,7 @@ namespace Sistema.DAO
                         model.idCliente = Convert.ToInt32(reader["idCliente"]);
                         model.nrModelo = Convert.ToString(reader["nrModelo"]);
                         model.nrSerie = Convert.ToString(reader["nrSerie"]);
-                        model.nrNota = Convert.ToString(reader["nrNota"]);
+                        model.nrNota = Convert.ToInt32(reader["nrNota"]);
                         model.qtdItem = Convert.ToDecimal(reader["qtdItem"]);
                         model.vlVenda = Convert.ToDecimal(reader["vlVenda"]);                        
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);

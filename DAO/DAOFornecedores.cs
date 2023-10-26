@@ -75,8 +75,8 @@ namespace Sistema.DAO
                     fornecedor.dsComplemento,
                     Convert.ToInt32(fornecedor.idCidade),
                     Convert.ToInt32(fornecedor.idFormaPgto),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -96,22 +96,27 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbFornecedores SET nmFornecedor = '" + fornecedor.nmFornecedor + "'," +
-                    " nmFantasia = '" + fornecedor.nmFantasia + "'," +
-                    " nrCNPJ = '" + Util.Util.Unmask(fornecedor.nrCNPJ) + "'," +
-                    " nrIE = '" + Util.Util.Unmask(fornecedor.nrIE) + "'," +
-                    " nrTelefoneCelular = '" + Util.Util.Unmask(fornecedor.nrTelefoneCelular) + "'," +
-                    " nrTelefoneFixo = '" + Util.Util.Unmask(fornecedor.nrTelefoneFixo) + "'," +
-                    " dsEmail = '" + fornecedor.dsEmail + "'," +
-                    " nrCEP = '" + Util.Util.Unmask(fornecedor.nrCEP) + "'," +
-                    " dsLogradouro = '" + fornecedor.dsLogradouro + "'," +
-                    " nrEndereco = '" + Convert.ToInt32(fornecedor.nrEndereco) + "'," +
-                    " dsBairro = '" + fornecedor.dsBairro + "'," +
-                    " dsComplemento = '" + fornecedor.dsComplemento + "'," +
-                    " idCidade = '" + Convert.ToInt32(fornecedor.idCidade) + "'," +
-                    " idFormaPgto = '" + Convert.ToInt32(fornecedor.idFormaPgto) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                    + "' WHERE idFornecedor = " + fornecedor.id;
+                var sql = String.Format("UPDATE tbFornecedores SET nmFornecedor = '{0}', " +
+                    "nmFantasia = '{1}', nrCNPJ = '{2}', nrIE = '{3}', nrTelefoneCelular = '{4}'," +
+                    "nrTelefoneFixo = '{5}', dsEmail = '{6}', nrCEP = '{7}', dsLogradouro = '{8}', nrEndereco = '{9}'," +
+                    "dsBairro = '{10}', dsComplemento = '{11}', idCidade = '{12}', idFormaPgto = '{13}', dtUltAlteracao = '{14}'" +
+                    "WHERE idFornecedor = '{15}'",
+                    fornecedor.nmFornecedor,
+                    fornecedor.nmFantasia,
+                    Util.Util.Unmask(fornecedor.nrCNPJ),
+                    Util.Util.Unmask(fornecedor.nrIE),
+                    Util.Util.Unmask(fornecedor.nrTelefoneCelular),
+                    Util.Util.Unmask(fornecedor.nrTelefoneFixo),
+                    fornecedor.dsEmail,
+                    Util.Util.Unmask(fornecedor.nrCEP),
+                    fornecedor.dsLogradouro,
+                    fornecedor.nrEndereco,
+                    fornecedor.dsBairro,
+                    fornecedor.dsComplemento,
+                    fornecedor.idCidade,
+                    fornecedor.idFormaPgto,
+                    Util.Util.FormatDate(DateTime.Now),
+                    fornecedor.id);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

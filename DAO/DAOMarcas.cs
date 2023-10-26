@@ -46,8 +46,8 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("INSERT INTO tbMarcas (nmMarca, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
                     marca.nmMarca,
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
 
                 OpenConnection();
@@ -68,10 +68,11 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbMarcas SET nmMarca = '"
-                             + marca.nmMarca + "',"
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                             + "' WHERE idMarca = " + marca.idMarca;
+
+                var sql = string.Format("UPDATE tbMarcas SET nmMarca = '{0}', dtUltAlteracao = '{1}' WHERE idMarca = '{2}'",
+                    marca.nmMarca,
+                    Util.Util.FormatDate(DateTime.Now),
+                    marca.idMarca);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

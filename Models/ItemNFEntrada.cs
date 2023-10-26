@@ -25,7 +25,7 @@ namespace Sistema.Models
         [Key]
         [Column(Order = 4)]
         [Display(Name = "Nrº Nota")]
-        public string nrNota { get; set; }
+        public int nrNota { get; set; }
         [Display(Name = "Quantidade")]
         public decimal qtdItem { get; set; }
         [Display(Name = "Frete")]

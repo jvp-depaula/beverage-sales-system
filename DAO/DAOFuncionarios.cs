@@ -76,8 +76,8 @@ namespace Sistema.DAO
                     func.dsComplemento,
                     Convert.ToInt32(func.idCidade),
                     Convert.ToDateTime(func.dtNasc),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -97,23 +97,26 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbFuncionarios SET " +
-                    " nmFuncionario = '" + func.nmFuncionario + "'," +
-                    " dsApelido = '" + func.dsApelido + "'," +
-                    " nrCPF = '" + Util.Util.Unmask(func.nrCPF) + "'," +
-                    " nrRG = '" + Util.Util.Unmask(func.nrRG) + "'," +
-                    " nrTelefoneCelular = '" + Util.Util.Unmask(func.nrTelefoneCelular) + "'," +
-                    " nrTelefoneFixo = '" + Util.Util.Unmask(func.nrTelefoneFixo) + "'," +
-                    " dsEmail = '" + func.dsEmail + "'," +
-                    " nrCEP = '" + Util.Util.Unmask(func.nrCEP) + "'," +
-                    " dsLogradouro = '" + func.dsLogradouro + "'," +
-                    " nrEndereco = '" + Convert.ToInt32(func.nrEndereco) + "'," +
-                    " dsBairro = '" + func.dsBairro + "'," +
-                    " dsComplemento = '" + func.dsComplemento + "'," +
-                    " idCidade = '" + Convert.ToInt32(func.idCidade) + "'," +
-                    " dtNasc = '" + Convert.ToDateTime(func.dtNasc).ToString("dd/MM/yyyy") + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                    + "' WHERE idFuncionario = " + func.id;
+                var sql = String.Format("UPDATE tbFuncionarios SET nmFuncionario = '{0}', dsApelido = '{1}', nrCPF = '{2}', nrRG = '{3}'," +
+                    "nrTelefoneCelular = '{4}', nrTelefoneFixo = '{5}', dsEmail = '{6}'," +
+                    "nrCEP = '{7}', dsLogradouro = '{8}', nrEndereco = '{9}', dsBairro = '{10}', dsComplemento = '{11}', " +
+                    "idCidade = '{12}', dtNasc = '{13}', dtUltAlteracao = '{14}' WHERE idFuncionario = '{15}'",
+                    func.nmFuncionario,
+                    func.dsApelido,
+                    Util.Util.Unmask(func.nrCPF),
+                    Util.Util.Unmask(func.nrRG),
+                    Util.Util.Unmask(func.nrTelefoneCelular),
+                    Util.Util.Unmask(func.nrTelefoneFixo),
+                    func.dsEmail,
+                    Util.Util.Unmask(func.nrCEP),
+                    func.dsLogradouro,
+                    func.nrEndereco,
+                    func.dsBairro,
+                    func.dsComplemento,
+                    func.idCidade,
+                    Util.Util.FormatDate(func.dtNasc),
+                    Util.Util.FormatDate(DateTime.Now),
+                    func.id);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -142,7 +145,7 @@ namespace Sistema.DAO
                     while (reader.Read())
                     {
                         model.id = Convert.ToInt32(reader["idFuncionario"]);
-                        model.nmFuncionario= Convert.ToString(reader["nmFuncionario"]);
+                        model.nmFuncionario = Convert.ToString(reader["nmFuncionario"]);
                         model.dsApelido = Convert.ToString(reader["dsApelido"]);
                         model.nrCPF = Convert.ToString(reader["nrCPF"]);
                         model.nrRG = Convert.ToString(reader["nrRG"]);

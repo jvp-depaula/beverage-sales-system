@@ -22,7 +22,7 @@ namespace Sistema.DAO
                     {
                         nrModelo = Convert.ToString(reader["nrModelo"]),
                         nrSerie = Convert.ToString(reader["nrSerie"]),
-                        nrNota = Convert.ToString(reader["nrNota"]),
+                        nrNota = Convert.ToInt32(reader["nrNota"]),
                         dtEmissao = Convert.ToDateTime(reader["dtEmissao"]),
                         chaveNFe = Convert.ToString(reader["chaveNFe"]),
                         flSituacao = Convert.ToString(reader["flSituacao"]),
@@ -66,8 +66,8 @@ namespace Sistema.DAO
                     Convert.ToDecimal(NotaFiscalSaida.vlTotalItens),
                     Convert.ToDecimal(NotaFiscalSaida.vlDesconto),
                     Convert.ToInt32(NotaFiscalSaida.idCliente),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
 
                 OpenConnection();
@@ -88,17 +88,20 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbNotaFiscalSaida SET dtEmissao = '" + Util.Util.FormatDate(NotaFiscalSaida.dtEmissao) + "',"
-                             + " chaveNFe = '" + Util.Util.Unmask(NotaFiscalSaida.chaveNFe) + "',"
-                             + " flSituacao = '" + NotaFiscalSaida.flSituacao + "',"
-                             + " vlTotalNota = '" + NotaFiscalSaida.vlTotalNota + "',"
-                             + " vlTotalItens = '" + NotaFiscalSaida.vlTotalItens + "',"
-                             + " vlDesconto = '" + NotaFiscalSaida.vlDesconto + "',"
-                             + " idCliente = '" + NotaFiscalSaida.idCliente + "', "
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'"
-                             + " AND nrModelo = '" + NotaFiscalSaida.nrModelo + "'"
-                             + " AND nrSerie = '" + NotaFiscalSaida.nrSerie + "'"
-                             + " AND nrNota = '" + NotaFiscalSaida.nrNota + "'";                             
+                var sql = string.Format("UPDATE tbNotaFiscalSaida SET dtEmissao = '{0}', chaveNFe = '{1}', flSituacao = '{2}', " +
+                    "vlTotalNota = '{3}', vlTotalItens = '{4}', vlDesconto = '{5}', idCliente = '{6}', dtUltAlteracao = '{7}' " +
+                    "WHERE nrModelo = '{8}', nrSerie = '{9}', nrNota = '{10}'",
+                    Util.Util.FormatDate(NotaFiscalSaida.dtEmissao),
+                    Util.Util.Unmask(NotaFiscalSaida.chaveNFe),
+                    NotaFiscalSaida.flSituacao,
+                    Convert.ToDecimal(NotaFiscalSaida.vlTotalNota),
+                    Convert.ToDecimal(NotaFiscalSaida.vlTotalItens),
+                    Convert.ToDecimal(NotaFiscalSaida.vlDesconto),
+                    Convert.ToInt32(NotaFiscalSaida.idCliente),
+                    Util.Util.FormatDate(DateTime.Now),
+                    NotaFiscalSaida.nrModelo,
+                    NotaFiscalSaida.nrSerie,
+                    NotaFiscalSaida.nrNota);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -131,7 +134,7 @@ namespace Sistema.DAO
                     {
                         model.nrModelo = Convert.ToString(reader["nrModelo"]);
                         model.nrSerie = Convert.ToString(reader["nrSerie"]);
-                        model.nrNota = Convert.ToString(reader["nrNota"]);
+                        model.nrNota = Convert.ToInt32(reader["nrNota"]);
                         model.dtEmissao = Convert.ToDateTime(reader["dtEmissao"]);
                         model.chaveNFe = Convert.ToString(reader["chaveNFe"]);
                         model.flSituacao = Convert.ToString(reader["flSituacao"]);

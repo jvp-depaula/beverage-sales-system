@@ -48,10 +48,9 @@ namespace Sistema.DAO
                 var sql = string.Format("INSERT INTO tbUnidades (dsUnidade, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}')",
                     unidade.dsUnidade,
                     unidade.sigla,
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
-
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -70,10 +69,12 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbUnidades SET dsUnidade = '" + unidade.dsUnidade + "'," +
-                             " sigla = '" + unidade.sigla + "'," +
-                             " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'" +
-                             " WHERE idUnidade = " + unidade.idUnidade;
+                var sql = string.Format("UPDATE tbUnidades SET dsUnidade = '{0}', sigla = '{1}', dtUltAlteracao = '{2}' WHERE idUnidade = '{3}'",
+                     unidade.dsUnidade,
+                     unidade.sigla,
+                     Util.Util.FormatDate(DateTime.Now),
+                     unidade.idUnidade
+                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

@@ -80,8 +80,8 @@ namespace Sistema.DAO
                     cliente.dsComplemento,
                     Convert.ToInt32(cliente.idCidade),
                     Convert.ToDateTime(cliente.dtNasc),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -101,25 +101,30 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbClientes SET" +
-                    " nmCliente = '" + cliente.nmCliente + "'," +
-                    " flTipo = '" + cliente.flTipo + "'," +
-                    " idFormaPgto = '" + cliente.idFormaPgto + "'," +
-                    " nmFantasia = '" + cliente.nmFantasia + "'," +                    
-                    " nrCPFCNPJ = '" + Util.Util.Unmask(cliente.nrCPFCNPJ) + "'," +
-                    " nrRG_IE = '" + Util.Util.Unmask(cliente.nrRG_IE) + "'," +
-                    " nrTelefoneCelular = '" + Util.Util.Unmask(cliente.nrTelefoneCelular) + "'," +
-                    " nrTelefoneFixo = '" + Util.Util.Unmask(cliente.nrTelefoneFixo) + "'," +
-                    " dsEmail = '" + cliente.dsEmail + "'," +
-                    " nrCEP = '" + Util.Util.Unmask(cliente.nrCEP) + "'," +
-                    " dsLogradouro = '" + cliente.dsLogradouro + "'," +
-                    " nrEndereco = '" + Convert.ToInt32(cliente.nrEndereco) + "'," +
-                    " dsBairro = '" + cliente.dsBairro + "'," +
-                    " dsComplemento = '" + cliente.dsComplemento + "'," +
-                    " idCidade = '" + Convert.ToInt32(cliente.idCidade) + "'," +
-                    " dtNasc = '" + Util.Util.FormatDate(cliente.dtNasc) + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                    + "' WHERE idCliente = " + cliente.id;
+                var sql = string.Format("UPDATE tbClientes SET nmCliente = '{0}', " +
+                    "flTipo = '{1}', " +
+                    "idFormaPgto = '{2}', " +
+                    "nmFantasia = '{3}'," +
+                    "nrCPFCNPJ = '{4}'," +
+                    "nrRG_IE = '{5}'," +
+                    "nrTelefoneCelular = '{6}'," +
+                    "nrTelefoneFixo = '{7}'," +
+                    "dsEmail = '{8}'," +
+                    "nrCEP = '{9}'," +
+                    "dsLogradouro = '{10}'," +
+                    "nrEndereco = '{11}'," +
+                    "dsBairro = '{12}'," +
+                    "dsComplemento = '{13}'," +
+                    "idCidade = '{14}'," +
+                    "dtNasc = '{15}'," +
+                    "dtUltAlteracao = '{16}' WHERE idCliente = '{17}'", 
+                    cliente.nmCliente, cliente.flTipo, cliente.idFormaPgto,
+                    cliente.nmFantasia, Util.Util.Unmask(cliente.nrCPFCNPJ), 
+                    Util.Util.Unmask(cliente.nrRG_IE), Util.Util.Unmask(cliente.nrTelefoneCelular),
+                    Util.Util.Unmask(cliente.nrTelefoneFixo), cliente.dsEmail, 
+                    Util.Util.Unmask(cliente.nrCEP), cliente.dsLogradouro, cliente.nrEndereco,
+                    cliente.dsBairro, cliente.dsComplemento, cliente.idCidade,
+                    Util.Util.FormatDate(cliente.dtNasc), Util.Util.FormatDate(DateTime.Now), cliente.id);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

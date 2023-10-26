@@ -46,10 +46,8 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("INSERT INTO tbFormaPgto (dsFormaPgto, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
                     FormaPgto.dsFormaPgto,
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
-                );
-
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now));
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -68,10 +66,10 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbFormaPgto SET nomeForma = '"
-                             + FormaPgto.dsFormaPgto + "',"
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                             + "' WHERE idFormaPgto = " + FormaPgto.idFormaPgto;
+                var sql = String.Format("UPDATE tbFormaPgto SET dsFormaPgto = '{0}', dtUltAlteracao = {1}' WHERE idFormaPgto = '{2}'",
+                    FormaPgto.dsFormaPgto,
+                    Util.Util.FormatDate(DateTime.Now),
+                    FormaPgto.idFormaPgto);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

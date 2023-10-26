@@ -46,8 +46,8 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("INSERT INTO tbCategorias (nmCategoria, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
                     categoria.nmCategoria,
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
 
                 OpenConnection();
@@ -68,10 +68,7 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbCategorias SET nmCategoria = '"
-                             + categoria.nmCategoria + "'," 
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                             + "' WHERE idCategoria = " + categoria.idCategoria;
+                var sql = String.Format("UPDATE tbCategorias SET nmCategoria = '{0}', dtUltAlteracao = '{1}' WHERE idCategoria = '{2}'", categoria.nmCategoria, Util.Util.FormatDate(DateTime.Now), categoria.idCategoria);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

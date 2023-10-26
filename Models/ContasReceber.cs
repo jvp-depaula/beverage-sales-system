@@ -17,7 +17,7 @@ namespace Sistema.Models
         [Key]
         [Column(Order = 2)]
         [Display(Name = "Nrº Nota")]
-        public string nrNota { get; set; }
+        public int nrNota { get; set; }
         [Key]
         [Column(Order = 3)]
         [Display(Name = "Nrº Parcela")]

@@ -24,7 +24,7 @@ namespace Sistema.DAO
                         nmCidade = Convert.ToString(reader["nmCidade"]),
                         DDD = Convert.ToString(reader["DDD"]),
                         idEstado = Convert.ToInt32(reader["idEstado"]),
-                        nmEstado = Convert.ToString(reader["nmEstado"]),     
+                        nmEstado = Convert.ToString(reader["nmEstado"]),
                         nmPais = Convert.ToString(reader["nmPais"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
@@ -53,8 +53,8 @@ namespace Sistema.DAO
                     cidade.nmCidade,
                     cidade.DDD,
                     cidade.idEstado,
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                     );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -74,11 +74,11 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbCidades SET nmCidade = '" + cidade.nmCidade + "'," +
-                    " DDD = '" + cidade.DDD + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'," +
-                    " idEstado = " + cidade.idEstado +
-                    " WHERE idCidade = " + cidade.idCidade;
+                var sql = String.Format("UPDATE tbCidades SET nmCidade = '{0}', DDD = '{1}', dtUltAlteracao = '{2}', idEstado = '{3}' WHERE idCidade = '{4}'",
+                    cidade.nmCidade,
+                    cidade.DDD,
+                    Util.Util.FormatDate(DateTime.Now),
+                    cidade.idCidade);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -154,7 +154,7 @@ namespace Sistema.DAO
             if (id != null && !string.IsNullOrEmpty(filter))
             {
                 swhere = " WHERE idCidade = " + id + " OR " + "tbCidades.nmCidade LIKE'%" + filter + "%'";
-            } 
+            }
             else if (id != null)
             {
                 swhere = " WHERE idCidade = " + id;

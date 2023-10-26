@@ -17,7 +17,7 @@ namespace Sistema.Models
         [Key]
         [Column(Order = 2)]
         [Display(Name = "Nrº Nota")]
-        public string nrNota { get; set; }
+        public int nrNota { get; set; }
         [Display(Name = "Data de Emissão")]
         public DateTime dtEmissao { get; set; }
         [Display(Name = "Chave NFe")]

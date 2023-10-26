@@ -60,9 +60,8 @@ namespace Sistema.DAO
                                         produto.cdNCM,
                                         Convert.ToDecimal(produto.vlVenda),
                                         produto.observacao,
-                                        DateTime.Now.ToString("dd/MM/yyyy"),
-                                        DateTime.Now.ToString("dd/MM/yyyy")
-                                    );
+                                        Util.Util.FormatDate(DateTime.Now),
+                                        Util.Util.FormatDate(DateTime.Now));
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -81,17 +80,18 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbProdutos SET dsProduto = '"
-                    + produto.dsProduto + "'," +
-                    " idFornecedor = '" + Convert.ToInt32(produto.idFornecedor) + "'," +
-                    " idCategoria = '" + Convert.ToInt32(produto.idCategoria) + "'," +
-                    " idUnidade = '" + produto.idUnidade + "'," +
-                    " idMarca = '" + produto.idMarca + "'," +
-                    " cdNCM = '" + produto.cdNCM + "'," +
-                    " vlVenda = '" + Convert.ToDecimal(produto.vlVenda) + "'," +
-                    " observacao = '" + produto.observacao + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                    + "' WHERE idProduto = " + produto.idProduto;
+                var sql = string.Format("UPDATE tbProdutos SET dsProduto = '{0}', idFornecedor = '{1}', idCategoria = '{2}', " +
+                    "idUnidade = '{3}', idMarca = '{4}', cdNCM = '{5}', vlVenda = '{6}', observacao = '{7}', dtUltAlteracao = '{8}' WHERE idProduto = '{9}'",
+                     produto.dsProduto,
+                     produto.idFornecedor,
+                     Convert.ToInt32(produto.idCategoria),
+                     Convert.ToInt32(produto.idUnidade),
+                     Convert.ToInt32(produto.idMarca),
+                     produto.cdNCM,
+                     Convert.ToDecimal(produto.vlVenda),
+                     produto.observacao,
+                     Util.Util.FormatDate(DateTime.Now),
+                     produto.idProduto);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();

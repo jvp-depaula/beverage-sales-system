@@ -24,7 +24,7 @@ namespace Sistema.DAO
                         idFornecedor = Convert.ToInt32(reader["idFornecedor"]),
                         nrModelo = Convert.ToString(reader["nrModelo"]),
                         nrSerie = Convert.ToString(reader["nrSerie"]),
-                        nrNota = Convert.ToString(reader["nrNota"]),
+                        nrNota = Convert.ToInt32(reader["nrNota"]),
                         qtdItem = Convert.ToDecimal(reader["qtdItem"]),
                         vlFrete = Convert.ToDecimal(reader["vlFrete"]),
                         vlDesconto = Convert.ToDecimal(reader["vlDesconto"]),
@@ -68,8 +68,8 @@ namespace Sistema.DAO
                     Convert.ToDecimal(ItemNFEntrada.vlSeguro),
                     Convert.ToDecimal(ItemNFEntrada.vlOutrasDespesas),
                     Convert.ToDecimal(ItemNFEntrada.vlCusto),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
 
                 OpenConnection();
@@ -90,18 +90,22 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbItemNFEntrada SET qtdItem = '" + ItemNFEntrada.qtdItem + "',"
-                             + " vlFrete = '" + ItemNFEntrada.vlFrete + "',"
-                             + " vlDesconto = '" + ItemNFEntrada.vlDesconto + "',"
-                             + " vlSeguro = '" + ItemNFEntrada.vlSeguro + "',"
-                             + " vlOutrasDespesas = '" + ItemNFEntrada.vlOutrasDespesas + "',"
-                             + " vlCusto = '" + ItemNFEntrada.vlCusto + "',"
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'"
-                             + " WHERE idProduto = '" + ItemNFEntrada.idProduto + "'"
-                             + " AND idFornecedor = '" + ItemNFEntrada.idFornecedor + "'"
-                             + " AND nrModelo = '" + ItemNFEntrada.nrModelo + "'"
-                             + " AND nrSerie = '" + ItemNFEntrada.nrSerie + "'"
-                             + " AND nrNota = '" + ItemNFEntrada.nrNota + "'";                             
+                var sql = String.Format("UPDATE tbItemNFEntrada SET qtdItem = '{0}', vlFrete = '{1}', vlDesconto = '{2}', " +
+                    "vlSeguro = '{3}', vlOutrasDespesas = '{4}', vlCusto = '{5}', dtUltAlteracao = '{6}' WHERE idProduto = '{7}'" +
+                    "AND idFornecedor = '{8}' AND nrModelo = '{9}' AND nrSerie = '{10}' AND nrNota = '{11}'",
+                    ItemNFEntrada.qtdItem,
+                    ItemNFEntrada.vlFrete,
+                    ItemNFEntrada.vlDesconto,
+                    ItemNFEntrada.vlSeguro,
+                    ItemNFEntrada.vlOutrasDespesas,
+                    ItemNFEntrada.vlCusto,
+                    Util.Util.FormatDate(DateTime.Now),
+                    ItemNFEntrada.idProduto,
+                    ItemNFEntrada.idFornecedor,
+                    ItemNFEntrada.nrModelo,
+                    ItemNFEntrada.nrSerie,
+                    ItemNFEntrada.nrNota
+                    );
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -123,7 +127,7 @@ namespace Sistema.DAO
             {
                 var model = new Models.ItemNFEntrada();
 
-                if (idProduto != null && idFornecedor != null && !String.IsNullOrEmpty(nrModelo) && 
+                if (idProduto != null && idFornecedor != null && !String.IsNullOrEmpty(nrModelo) &&
                     !String.IsNullOrEmpty(nrSerie) && !String.IsNullOrEmpty(nrNota))
                 {
                     OpenConnection();
@@ -137,7 +141,7 @@ namespace Sistema.DAO
                         model.idFornecedor = Convert.ToInt32(reader["idFornecedor"]);
                         model.nrModelo = Convert.ToString(reader["nrModelo"]);
                         model.nrSerie = Convert.ToString(reader["nrSerie"]);
-                        model.nrNota = Convert.ToString(reader["nrNota"]);
+                        model.nrNota = Convert.ToInt32(reader["nrNota"]);
                         model.qtdItem = Convert.ToDecimal(reader["qtdItem"]);
                         model.vlFrete = Convert.ToDecimal(reader["vlFrete"]);
                         model.vlDesconto = Convert.ToDecimal(reader["vlDesconto"]);

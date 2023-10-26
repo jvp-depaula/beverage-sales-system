@@ -10,7 +10,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = this.Search(null, null, null, null, null);
+                var sql = this.Search(null, null);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 reader = SqlQuery.ExecuteReader();
@@ -21,12 +21,10 @@ namespace Sistema.DAO
                     var Parcelas = new Parcela
                     {
                         idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
-                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
+                        nrParcela = Convert.ToInt32(reader["nrParcela"]),
                         dias = Convert.ToString(reader["dias"]),
+                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
                         txPercentParcela = Convert.ToDecimal(reader["txPercentParcela"]),
-                        txPercentJuros = Convert.ToDecimal(reader["txPercentJuros"]),
-                        txPercentMulta = Convert.ToDecimal(reader["txPercentMulta"]),
-                        txPercentDesconto = Convert.ToDecimal(reader["txPercentDesconto"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltalteracao"])
                     };
@@ -50,18 +48,15 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbParcelas (idCondicaoPgto, idFormaPgto, dias, txPercentParcela " +
-                    "txPercentJuros, txPercentMulta, txPercentDesconto, dtCadastro, dtUltAlteracao) " +
-                    "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')",
+                var sql = string.Format("INSERT INTO tbParcelas (idCondicaoPgto, nrParcela, dias, idFormaPgto, txPercentParcela dtUltAlteracao) " +
+                    "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}')",
                     Convert.ToInt32(Parcela.idCondicaoPgto),
+                    Convert.ToInt32(Parcela.nrParcela),
+                    Convert.ToInt32(Parcela.dias),
                     Convert.ToInt32(Parcela.idFormaPgto),
-                    Parcela.dias,
                     Convert.ToDecimal(Parcela.txPercentParcela),
-                    Convert.ToDecimal(Parcela.txPercentJuros),
-                    Convert.ToDecimal(Parcela.txPercentMulta),
-                    Convert.ToDecimal(Parcela.txPercentDesconto),
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now)
                 );
 
                 OpenConnection();
@@ -82,14 +77,14 @@ namespace Sistema.DAO
         {
             try
             {
-                string sql = "UPDATE tbParcela SET dias = '" + Parcela.dias + "',"
-                             + " txPercentParcela = '" + Parcela.txPercentParcela + "',"
-                             + " txPercentJuros = '" + Parcela.txPercentJuros + "',"
-                             + " txPercentMulta = '" + Parcela.txPercentMulta + "',"
-                             + " txPercentDesconto = '" + Parcela.txPercentDesconto + "',"
-                             + " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'"
-                             + " WHERE idCondicaoPgto = '" + Parcela.idCondicaoPgto + "'"
-                             + " AND idFormaPgto = '" + Parcela.idFormaPgto + "'";
+                var sql = string.Format("UPDATE tbParcelas SET dias = '{0}', idFormaPgto = '{1}', " +
+                    "txPercentParcela = '{2}', dtUltAlteracao = '{3}' WHERE idCondicaoPgto = '{4}', nrParcela = '{5}'",
+                    Convert.ToInt32(Parcela.dias),
+                    Convert.ToInt32(Parcela.idFormaPgto),
+                    Convert.ToDecimal(Parcela.txPercentParcela),
+                    Util.Util.FormatDate(DateTime.Now),
+                    Convert.ToInt32(Parcela.idCondicaoPgto),
+                    Convert.ToInt32(Parcela.nrParcela));
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -105,28 +100,26 @@ namespace Sistema.DAO
             }
         }
 
-        public Parcela GetParcelas(int? idCondicaoPgto, int? idFormaPgto)
+        public Parcela GetParcelas(int? idCondicaoPgto, int? nrParcela)
         {
             try
             {
                 var model = new Models.Parcela();
 
-                if (idCondicaoPgto != null && idFormaPgto != null)
+                if (idCondicaoPgto != null && nrParcela != null)
                 {
                     OpenConnection();
-                    var sql = this.Search(idCondicaoPgto, idFormaPgto);
+                    var sql = this.Search(idCondicaoPgto, nrParcela);
                     SqlQuery = new SqlCommand(sql, con);
                     reader = SqlQuery.ExecuteReader();
 
                     while (reader.Read())
                     {
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
-                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
+                        model.nrParcela = Convert.ToInt32(reader["nrParcela"]);
                         model.dias = Convert.ToString(reader["dias"]);
+                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
                         model.txPercentParcela = Convert.ToDecimal(reader["txPercentParcela"]);
-                        model.txPercentJuros = Convert.ToDecimal(reader["txPercentJuros"]);
-                        model.txPercentMulta = Convert.ToDecimal(reader["txPercentMulta"]);
-                        model.txPercentDesconto = Convert.ToDecimal(reader["txPercentDesconto"]);                        
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -143,11 +136,11 @@ namespace Sistema.DAO
             }
         }
 
-        public void Delete(int? idCondicaoPgto, int? idFormaPgto)
+        public void Delete(int? idCondicaoPgto, int? nrParcela)
         {
             try
             {
-                string sql = "DELETE FROM tbParcelas WHERE idCondicaoPgto = " + idCondicaoPgto + " AND idFormaPgto = " + idFormaPgto + ";";
+                string sql = "DELETE FROM tbParcelas WHERE idCondicaoPgto = " + idCondicaoPgto + " AND nrParcela = " + nrParcela + ";";
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -163,25 +156,25 @@ namespace Sistema.DAO
             }
         }
 
-        private string Search(int? idCondicaoPgto, int? idFormaPgto)
+        private string Search(int? idCondicaoPgto, int? nrParcela)
         {
             var sql = string.Empty;
             var swhere = string.Empty;
-            if (idCondicaoPgto != null && idFormaPgto != null)
+            if (idCondicaoPgto != null && nrParcela != null)
             {
-                swhere = " WHERE idCondicaoPgto = " + idCondicaoPgto + " AND idFormaPgto = " + idFormaPgto;
+                swhere = " WHERE idCondicaoPgto = " + idCondicaoPgto + " AND nrParcela = " + nrParcela;
             }
             sql = @"
                     SELECT
                         tbParcela.idCondicaoPgto AS idCondicaoPgto,
+                        tbParcela.nrParcela AS nrParcela,
                         tbParcela.idFormaPgto AS idFormaPgto,
+                        tbFormaPgto.dsFormaPgto AS dsFormaPgto,
                         tbParcela.dias AS dias,
                         tbParcela.txPercentParcela AS txPercentParcela,
-                        tbParcela.txPercentJuros AS txPercentJuros,
-                        tbParcela.txPercentMulta AS txPercentMulta,
-                        tbParcela.txPercentDesconto AS txPercentDesconto,
                         tbParcela.dtCadastro AS dtCadastro,
                         tbParcela.dtUltAlteracao AS dtUltAlteracao
+                    INNER JOIN tbFormaPgto ON tbParcela.idFormaPgto = tbFormaPgto.idFormaPgto
                     FROM tbParcela" + swhere;
             return sql;
         }

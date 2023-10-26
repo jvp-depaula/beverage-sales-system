@@ -1,9 +1,10 @@
 ﻿using Sistema.Models;
 using System.Data.SqlClient;
+using System.Drawing;
 
 namespace Sistema.DAO
 {
-    public class DAOPaises : Sistema.DAO.DAO
+    public class DAOPaises : DAO
     {
         public List<Paises> GetPaises()
         {
@@ -22,7 +23,7 @@ namespace Sistema.DAO
                         idPais = Convert.ToInt32(reader["idPais"]),
                         nmPais = Convert.ToString(reader["nmPais"]),
                         sigla = Convert.ToString(reader["sigla"]),
-                        DDI = Convert.ToString(reader["DDI"]),       
+                        DDI = Convert.ToString(reader["DDI"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -45,13 +46,12 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbPaises (nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')", 
+                var sql = string.Format("INSERT INTO tbPaises (nmPais, DDI, sigla, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')",
                     pais.nmPais,
                     pais.DDI,
                     pais.sigla,
-                    DateTime.Now.ToString("dd/MM/yyyy"),
-                    DateTime.Now.ToString("dd/MM/yyyy")
-                    );
+                    Util.Util.FormatDate(DateTime.Now),
+                    Util.Util.FormatDate(DateTime.Now));
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
@@ -65,30 +65,21 @@ namespace Sistema.DAO
                 CloseConnection();
             }
         }
-        
-        public bool Update(Models.Paises pais)
+
+        public void Update(Models.Paises pais)
         {
             try
             {
-                string sql = "UPDATE tbPaises SET nmPais = '"
-                    + pais.nmPais + "'," +
-                    " DDI = '" + pais.DDI + "'," +
-                    " sigla = '" + pais.sigla + "'," +
-                    " dtUltAlteracao = '" + DateTime.Now.ToString("dd/MM/yyyy")
-                    + "' WHERE idPais = " + pais.idPais;
+                string sql = String.Format("UPDATE tbPaises SET nmPais = '{0}', DDI = '{1}', sigla = '{2}', dtUltAlteracao = '{3}' WHERE idPais = '{4}'",
+                    pais.nmPais,
+                    pais.DDI,
+                    pais.sigla,
+                    DateTime.Now.ToString("dd/MM/yyyy"),
+                    pais.idPais);
+
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
@@ -133,24 +124,14 @@ namespace Sistema.DAO
             }
         }
 
-        public bool Delete(int? idPais)
+        public void Delete(int? idPais)
         {
             try
             {
                 string sql = "DELETE FROM tbPaises WHERE idPais = " + idPais;
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
-
-                int i = SqlQuery.ExecuteNonQuery();
-
-                if (i > 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                SqlQuery.ExecuteNonQuery();
             }
             catch (Exception error)
             {
