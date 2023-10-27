@@ -8,6 +8,7 @@ namespace Sistema.Models
         public int idCondicaoPgto { get; set; }
         [Display(Name = "Condição de Pagamento")]
         public string dsCondicaoPgto { get; set; }
+
         [Display(Name = "% Multa")]
         public decimal vlMulta { get; set; }
         [Display(Name = "% Desconto")]

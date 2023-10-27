@@ -1,3 +1,7 @@
+CREATE DATABASE SistemaDB;
+
+USE SistemaDB;
+
 CREATE TABLE tbPaises (
 	idPais INT NOT NULL IDENTITY(1,1),
 	nmPais VARCHAR(60) NOT NULL,
@@ -49,9 +53,9 @@ CREATE TABLE tbFormaPgto (
 CREATE TABLE tbCondicaoPgto (
 	idCondicaoPgto INT NOT NULL IDENTITY(1,1),
 	dsCondicaoPgto VARCHAR(255) NOT NULL,
-	txJuros DECIMAL(9,2),
-	txMulta DECIMAL(9,2),
-	txDesconto DECIMAL(9,2),
+	vlJuros DECIMAL(9,2),
+	vlMulta DECIMAL(9,2),
+	vlDesconto DECIMAL(9,2),
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_CondicaoPgto PRIMARY KEY (idCondicaoPgto),
@@ -85,13 +89,13 @@ CREATE TABLE tbClientes (
 	dsBairro VARCHAR(60) NOT NULL,
 	dsComplemento VARCHAR(60),
 	idCidade INT NOT NULL,	
-	idFormaPgto INT NOT NULL,
+	idCondicaoPgto INT NOT NULL,
 	dtNasc DATETIME,
 	dtCadastro DATETIME NOT NULL,
 	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_Clientes PRIMARY KEY (idCliente),
 	CONSTRAINT FK_Clientes_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade),
-	CONSTRAINT FK_Clientes_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto)
+	CONSTRAINT FK_Clientes_CondicaoPgto FOREIGN KEY (idCondicaoPgto) REFERENCES tbCondicaoPgto(idCondicaoPgto)
 );
 
 CREATE TABLE tbFornecedores (

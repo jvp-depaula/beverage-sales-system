@@ -20,7 +20,7 @@ namespace Sistema.DAO
                     var fornecedor = new Fornecedores
                     {
                         id = Convert.ToInt32(reader["idFornecedor"]),
-                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
+                        idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
                         nmFornecedor = Convert.ToString(reader["nmFornecedor"]),
                         nmFantasia = Convert.ToString(reader["nmFantasia"]),
                         nrCNPJ = Convert.ToString(reader["nrCNPJ"]),
@@ -58,7 +58,7 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("INSERT INTO tbFornecedores (nmFornecedor, nmFantasia, nrCNPJ, nrIE, nrTelefoneCelular, nrTelefoneFixo, " +
                                                                     "dsEmail, nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade," +
-                                                                    "idFormaPgto, dtCadastro, dtUltAlteracao) " +
+                                                                    "idCondicaoPgto, dtCadastro, dtUltAlteracao) " +
                                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
                                                                     "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
                     fornecedor.nmFornecedor,
@@ -74,7 +74,7 @@ namespace Sistema.DAO
                     fornecedor.dsBairro,
                     fornecedor.dsComplemento,
                     Convert.ToInt32(fornecedor.idCidade),
-                    Convert.ToInt32(fornecedor.idFormaPgto),
+                    Convert.ToInt32(fornecedor.idCondicaoPgto),
                     Util.Util.FormatDate(DateTime.Now),
                     Util.Util.FormatDate(DateTime.Now)
                 );
@@ -99,7 +99,7 @@ namespace Sistema.DAO
                 var sql = String.Format("UPDATE tbFornecedores SET nmFornecedor = '{0}', " +
                     "nmFantasia = '{1}', nrCNPJ = '{2}', nrIE = '{3}', nrTelefoneCelular = '{4}'," +
                     "nrTelefoneFixo = '{5}', dsEmail = '{6}', nrCEP = '{7}', dsLogradouro = '{8}', nrEndereco = '{9}'," +
-                    "dsBairro = '{10}', dsComplemento = '{11}', idCidade = '{12}', idFormaPgto = '{13}', dtUltAlteracao = '{14}'" +
+                    "dsBairro = '{10}', dsComplemento = '{11}', idCidade = '{12}', idCondicaoPgto = '{13}', dtUltAlteracao = '{14}'" +
                     "WHERE idFornecedor = '{15}'",
                     fornecedor.nmFornecedor,
                     fornecedor.nmFantasia,
@@ -114,7 +114,7 @@ namespace Sistema.DAO
                     fornecedor.dsBairro,
                     fornecedor.dsComplemento,
                     fornecedor.idCidade,
-                    fornecedor.idFormaPgto,
+                    fornecedor.idCondicaoPgto,
                     Util.Util.FormatDate(DateTime.Now),
                     fornecedor.id);
                 OpenConnection();
@@ -158,7 +158,7 @@ namespace Sistema.DAO
                         model.dsBairro = Convert.ToString(reader["dsBairro"]);
                         model.dsComplemento = Convert.ToString(reader["dsComplemento"]);
                         model.idCidade = Convert.ToInt32(reader["idCidade"]);
-                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
+                        model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }
@@ -227,13 +227,13 @@ namespace Sistema.DAO
                         tbFornecedores.dsBairro AS dsBairro,
                         tbFornecedores.dsComplemento AS dsComplemento,
                         tbFornecedores.idCidade AS idCidade,
-                        tbFornecedores.idFormaPgto AS idFormaPgto,                        
-                        tbFormaPgto.dsFormaPgto as dsFormaPgto,
+                        tbFornecedores.idCondicaoPgto AS idCondicaoPgto,                        
+                        tbCondicaoPgto.dsCondicaoPgto as dsCondicaoPgto,
                         tbFornecedores.dtCadastro AS dtCadastro,
                         tbFornecedores.dtUltAlteracao AS dtUltAlteracao
                     FROM tbFornecedores
                     INNER JOIN tbCidades ON tbFornecedores.idCidade = tbCidades.idcidade 
-                    INNER JOIN tbFormaPgto ON tbFornecedores.idFormaPgto = tbFormaPgto.idFormaPgto " + swhere;
+                    INNER JOIN tbCondicaoPgto ON tbFornecedores.idCondicaoPgto = tbCondicaoPgto.idCondicaoPgto " + swhere;
             return sql;
         }
     }

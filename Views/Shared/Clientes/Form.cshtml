@@ -62,6 +62,24 @@
     @Html.ValidationMessageFor(model => model.dtNasc, null, new { @class = "help-block" })
 </div>
 
+<div class="col-md-3">
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.idCondicaoPgto, new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idCondicaoPgto, Model.ListaCondicoesPgto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idCondicaoPgto, Model.ListaCondicoesPgto, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalCondicoes" data-bs-toggle="modal" data-bs-target="#modalCondicoes"><i class="fas fa-search"></i></button>
+        }
+    </div>
+</div>
+
+
 <hr />
 <!--CONTATO-->
 <div class="col-md-6">
@@ -212,6 +230,34 @@
             <div class="modal-footer AddPais" style="display: none">
                 <button type="button" class="btn btn-secondary" id="btnEscondeAddPais">Fechar</button>
                 <button type="button" class="btn btn-success" id="btnSalvarAddPais">Salvar</button>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCondicoes">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloModal">Lista Condições Pgto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>        
+
+            <!--Condições Pgto-->
+            <div class="modal-body SelecionaCondicoes" style="display: none">
+                <partial name="~/Views/Shared/CondicaoPgto/SelecionaCondicaoPgto.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaCondicoes" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFechaModalCondicao">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnAddCondicao">Adicionar Condição</button>
+            </div>
+
+            <div class="modal-body AddCondicoes" style="display: none">
+                <partial name="~/Views/Shared/CondicaoPgto/AddCondicaoPgto.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddCondicoes" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddCondicao">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddCondicao">Salvar</button>
             </div>
         </div>
     </div>

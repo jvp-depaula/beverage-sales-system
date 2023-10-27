@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
 
@@ -17,7 +18,19 @@ namespace Sistema.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            DAOCidades daoCidades = new();
+
+            List<Models.Cidades> listCidades = daoCidades.GetCidades();
+
+            var listaCidades = new Funcionarios
+            {
+                ListaCidades = listCidades.Select(u => new SelectListItem
+                {
+                    Value = u.idCidade.ToString(),
+                    Text = u.nmCidade.ToString()
+                }),
+            };
+            return View(listaCidades);
         }
 
         [HttpPost]

@@ -10,8 +10,9 @@ namespace Sistema.Models
         [DisplayName("Código")]
         public int id { get; set; }
 
-        [Display(Name = "Forma Pgto.")]
-        public int idFormaPgto { get; set; }
+        [Display(Name = "Condicao Pgto.")]
+        public int idCondicaoPgto { get; set; }
+        public IEnumerable<SelectListItem> ListaCondicoesPgto { get; set; }
 
         // CONTATO
         [Display(Name = "Número Celular")]

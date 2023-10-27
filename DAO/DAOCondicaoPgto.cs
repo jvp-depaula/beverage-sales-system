@@ -5,7 +5,7 @@ namespace Sistema.DAO
 {
     public class DAOCondicaoPgto : DAO
     {
-        public List<CondicaoPgto> GetCondicaoPgto()
+        public List<CondicaoPgto> GetCondicoesPgto()
         {
             try
             {
@@ -20,7 +20,7 @@ namespace Sistema.DAO
                     var condicaoPgto = new CondicaoPgto
                     {
                         idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
-                        dsCondicaoPgto = Convert.ToString(reader["nomeCondicao"]),
+                        dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]),
                         vlJuros = Convert.ToDecimal(reader["vlJuros"]),
                         vlMulta = Convert.ToDecimal(reader["vlMulta"]),
                         vlDesconto = Convert.ToDecimal(reader["vlDesconto"]),
@@ -97,7 +97,7 @@ namespace Sistema.DAO
             }
         }
 
-        public CondicaoPgto GetcondicaoPgto(int? idcondicaoPgto)
+        public CondicaoPgto GetCondicaoPgto(int? idcondicaoPgto)
         {
             try
             {

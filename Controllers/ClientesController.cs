@@ -21,16 +21,24 @@ namespace Sistema.Controllers
         public ActionResult Create()
         {
             DAOCidades daoCidades = new();
+            DAOCondicaoPgto daoCondicao = new();
+
             List<Models.Cidades> listCidades = daoCidades.GetCidades();
+            List<Models.CondicaoPgto> listcondicaoPgto = daoCondicao.GetCondicoesPgto();
+
             var listaCidades = new Clientes
             {
                 ListaCidades = listCidades.Select(u => new SelectListItem
                 {
                     Value = u.idCidade.ToString(),
                     Text = u.nmCidade.ToString()
+                }),
+                ListaCondicoesPgto = listcondicaoPgto.Select(u => new SelectListItem
+                {
+                    Value = u.idCondicaoPgto.ToString(),
+                    Text = u.dsCondicaoPgto.ToString()
                 })
             };
-
             return View(listaCidades);
         }
 

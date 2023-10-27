@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Sistema.Models.CondicaoPgto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+<p style="text-align: right">
+    <a asp-action="Create">Adicionar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dsCondicaoPgto)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.vlMulta)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.vlDesconto)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.vlJuros)
+            </th>           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dsCondicaoPgto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.vlMulta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.vlDesconto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.vlJuros)
+                </td>
+                <td style="text-align: right; width: 200px">
+                    <a asp-action="Edit" asp-route-id="@item.idCondicaoPgto">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.idCondicaoPgto">Visualizar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.idCondicaoPgto">Deletar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

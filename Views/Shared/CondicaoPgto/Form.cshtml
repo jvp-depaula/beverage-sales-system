@@ -1,0 +1,45 @@
+﻿@model Sistema.Models.CondicaoPgto
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.idCondicaoPgto)
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsCondicaoPgto, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsCondicaoPgto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsCondicaoPgto, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsCondicaoPgto, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.vlMulta, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.vlMulta, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.vlMulta, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
+        )
+    @Html.ValidationMessageFor(model => model.vlMulta, null, new { @class = "help-block" })
+</div>
+<div class="col-md-4">
+    @Html.LabelFor(e => e.vlDesconto, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.vlDesconto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.vlDesconto, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
+        )
+    @Html.ValidationMessageFor(model => model.vlDesconto, null, new { @class = "help-block" })
+</div>
+<div class="col-md-4">
+    @Html.LabelFor(e => e.vlJuros, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.vlJuros, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.vlJuros, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
+        )
+    @Html.ValidationMessageFor(model => model.vlJuros, null, new { @class = "help-block" })
+</div>

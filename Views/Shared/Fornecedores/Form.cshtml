@@ -43,6 +43,20 @@
     @Html.ValidationMessageFor(model => model.nrIE, null, new { @class = "help-block" })
 </div>
 
+<div class="col-md-6">
+    @Html.LabelFor(e => e.idCondicaoPgto, new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idCondicaoPgto, Model.ListaCondicoesPgto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idCondicaoPgto, Model.ListaCondicoesPgto, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalCondicoes" data-bs-toggle="modal" data-bs-target="#modalCondicoes"><i class="fas fa-search"></i></button>
+        }
+    </div>
+</div>
+
 <hr />
 
 <div class="col-md-6">
@@ -121,9 +135,107 @@
 
 <div class="col-md-12">
     @Html.LabelFor(e => e.idCidade, new { @class = "form-label" })
-    @(disabled ?
-        @Html.TextBoxFor(model => model.idCidade, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.idCidade, new { @class = "form-control", maxlength = "150", @placeholder = "" })
-        )
-    @Html.ValidationMessageFor(model => model.idCidade, null, new { @class = "help-block" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idCidade, Model.ListaCidades, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idCidade, Model.ListaCidades, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModal" data-bs-toggle="modal" data-bs-target="#modal"><i class="fas fa-search"></i></button>
+        }
+    </div>
+</div>
+
+
+<!-- CIDADES - ESTADOS - PAISES -->
+<div class="modal fade" tabindex="-1" id="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloModal">Lista Cidades</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!--Cidade-->
+            <div class="modal-body SelecionaCidade" style="display: none">
+                <partial name="~/Views/Shared/Cidades/SelecionaCidade.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaCidade" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModal">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddCidade">Adicionar Cidade</button>
+            </div>
+
+            <div class="modal-body AddCidades" style="display: none">
+                <partial name="~/Views/Shared/Cidades/AddCidades.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddCidades" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddCidade">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddCidade">Salvar</button>
+            </div>
+
+
+            <!--Estado-->
+            <div class="modal-body SelecionaEstado" style="display: none">
+                <partial name="~/Views/Shared/Estados/SelecionaEstado.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaEstado" style="display: none">
+                <button type="button" class="btn btn-secondary" id="bntEscondeSelecionaEstado">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddEstado">Adicionar Estado</button>
+            </div>
+
+            <div class="modal-body AddEstados" style="display: none">
+                <partial name="~/Views/Shared/Estados/AddEstados.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddEstados" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddEstado">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddEstado">Salvar</button>
+            </div>
+
+            <!--País-->
+            <div class="modal-body SelecionaPais" style="display: none">
+                <partial name="~/Views/Shared/Paises/SelecionaPais.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaPais" style="display: none">
+                <button type="button" class="btn btn-secondary" id="bntEscondeSelecionaPais">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnAddPais">Adicionar País</button>
+            </div>
+
+            <div class="modal-body AddPais" style="display: none">
+                <partial name="~/Views/Shared/Paises/AddPaises.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddPais" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddPais">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddPais">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCondicoes">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloModal">Lista Condições Pgto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!--Condições Pgto-->
+            <div class="modal-body SelecionaCondicoes" style="display: none">
+                <partial name="~/Views/Shared/CondicaoPgto/SelecionaCondicaoPgto.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaCondicoes" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFechaModalCondicao">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnAddCondicao">Adicionar Condição</button>
+            </div>
+
+            <div class="modal-body AddCondicoes" style="display: none">
+                <partial name="~/Views/Shared/CondicaoPgto/AddCondicaoPgto.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddCondicoes" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddCondicao">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddCondicao">Salvar</button>
+            </div>
+        </div>
+    </div>
 </div>

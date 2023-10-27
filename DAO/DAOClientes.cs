@@ -20,7 +20,7 @@ namespace Sistema.DAO
                     var cliente = new Clientes
                     {
                         id = Convert.ToInt32(reader["idCliente"]),
-                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
+                        idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
                         flTipo = Convert.ToString(reader["flTipo"]),
                         nmCliente = Convert.ToString(reader["nmCliente"]),
                         nmFantasia = Convert.ToString(reader["nmFantasia"]),
@@ -59,14 +59,14 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbClientes (nmCliente, flTipo, idFormaPgto, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
+                var sql = string.Format("INSERT INTO tbClientes (nmCliente, flTipo, idCondicaoPgto, nmFantasia, nrCPFCNPJ, nrRG_IE, nrTelefoneCelular, nrTelefoneFixo, dsEmail," +
                                                                 "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade, dtNasc," +
                                                                 "dtCadastro, dtUltAlteracao) " +
                                                                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
                                                                 "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}', '{16}', '{17}')",
                     cliente.nmCliente,
                     cliente.flTipo,
-                    cliente.idFormaPgto,
+                    cliente.idCondicaoPgto,
                     cliente.nmFantasia,
                     Util.Util.Unmask(cliente.nrCPFCNPJ),
                     Util.Util.Unmask(cliente.nrRG_IE),
@@ -103,7 +103,7 @@ namespace Sistema.DAO
             {
                 var sql = string.Format("UPDATE tbClientes SET nmCliente = '{0}', " +
                     "flTipo = '{1}', " +
-                    "idFormaPgto = '{2}', " +
+                    "idCondicaoPgto = '{2}', " +
                     "nmFantasia = '{3}'," +
                     "nrCPFCNPJ = '{4}'," +
                     "nrRG_IE = '{5}'," +
@@ -118,7 +118,7 @@ namespace Sistema.DAO
                     "idCidade = '{14}'," +
                     "dtNasc = '{15}'," +
                     "dtUltAlteracao = '{16}' WHERE idCliente = '{17}'", 
-                    cliente.nmCliente, cliente.flTipo, cliente.idFormaPgto,
+                    cliente.nmCliente, cliente.flTipo, cliente.idCondicaoPgto,
                     cliente.nmFantasia, Util.Util.Unmask(cliente.nrCPFCNPJ), 
                     Util.Util.Unmask(cliente.nrRG_IE), Util.Util.Unmask(cliente.nrTelefoneCelular),
                     Util.Util.Unmask(cliente.nrTelefoneFixo), cliente.dsEmail, 
@@ -154,7 +154,7 @@ namespace Sistema.DAO
                     {
                         model.id = Convert.ToInt32(reader["idCliente"]);
                         model.flTipo = Convert.ToString(reader["flTipo"]);
-                        model.idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]);
+                        model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
                         model.nmCliente = Convert.ToString(reader["nmCliente"]);
                         model.nmFantasia = Convert.ToString(reader["nmFantasia"]);
                         model.nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]);
@@ -225,8 +225,8 @@ namespace Sistema.DAO
                     SELECT
                         tbClientes.idCliente AS idCliente,
                         tbClientes.flTipo AS flTipo,
-                        tbClientes.idFormaPgto AS idFormaPgto,
-                        tbFormaPgto.dsFormaPgto AS dsFormaPgto,
+                        tbClientes.idCondicaoPgto AS idCondicaoPgto,
+                        tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto,
                         tbClientes.nmCliente AS nmCliente,
                         tbClientes.nmFantasia AS nmFantasia,
                         tbClientes.nrCPFCNPJ AS nrCPFCNPJ,
@@ -245,8 +245,8 @@ namespace Sistema.DAO
                         tbClientes.dtCadastro AS dtCadastro,
                         tbClientes.dtUltAlteracao AS dtUltAlteracao
                     FROM tbClientes
-                    INNER JOIN tbCidades ON tbClientes.idCidade = tbCidades.nmCidade
-                    INNER JOIN tbFormaPgto ON tbCondicaoPgto.idFormaPgto = tbFormaPgto.idFormaPgto" + swhere;
+                    INNER JOIN tbCidades ON tbClientes.idCidade = tbCidades.idCidade
+                    INNER JOIN tbCondicaoPgto ON tbCondicaoPgto.idCondicaoPgto = tbCondicaoPgto.idCondicaoPgto" + swhere;
             return sql;
         }
     }
