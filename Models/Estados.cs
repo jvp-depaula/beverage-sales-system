@@ -10,13 +10,16 @@ namespace Sistema.Models
         [Display(Name = "Código")]
         public int idEstado { get; set; }
 
+        [Required(ErrorMessage = "Informe o estado!")]
         [Display(Name = "Estado")]
         public string nmEstado { get; set; }
 
+        [Required(ErrorMessage = "Selecione o País!")]
         [Display(Name = "País")]
         public int idPais { get; set; }
         public string nmPais { get; set; }
 
+        [Required(ErrorMessage = "Informe a UF!")]
         [Display(Name = "UF")]
         public string flUF { get; set; }
 

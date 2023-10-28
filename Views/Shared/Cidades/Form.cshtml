@@ -35,7 +35,7 @@
     @Html.LabelFor(e => e.DDD, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.DDD, new { @class = "form-control", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.DDD, new { @class = "form-control number", @placeholder = "" })
+        @Html.TextBoxFor(model => model.DDD, new { @class = "form-control", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.DDD, null, new { @class = "help-block" })
 </div>

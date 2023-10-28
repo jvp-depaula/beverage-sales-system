@@ -10,14 +10,17 @@ namespace Sistema.Models
         [Display(Name = "Código")]
         public int idCidade { get; set; }
 
+        [Required(ErrorMessage = "Informe a Cidade!")]
         [Display(Name = "Cidade")]
         public string nmCidade { get; set; }
 
+        [Required(ErrorMessage = "Selecione o Estado!")]
         [Display(Name = "Estado")]
         public int idEstado { get; set; }
         public string nmEstado { get; set; }
         public string nmPais { get; set; }
 
+        [Required(ErrorMessage = "Informe o DDD!")]
         [Display(Name = "DDD")]
         public string DDD { get; set; }
 

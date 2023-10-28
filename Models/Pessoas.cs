@@ -11,6 +11,7 @@ namespace Sistema.Models
         public int id { get; set; }
 
         [Display(Name = "Condicao Pgto.")]
+        [Required(ErrorMessage = "Selecione a condição de Pgto!")]
         public int idCondicaoPgto { get; set; }
         public IEnumerable<SelectListItem> ListaCondicoesPgto { get; set; }
 
@@ -20,25 +21,34 @@ namespace Sistema.Models
         [Display(Name = "Número Telefone")]
         public string nrTelefoneFixo { get; set; }
         [Display(Name = "Email")]
+        [Required(ErrorMessage = "Informe o email!")]
         public string dsEmail { get; set; }
 
         // TIPO
         [Display(Name = "Pessoa")]
+        [Required(ErrorMessage = "Selecione o Tipo de Pessoa!")]
         public string flTipo { get; set; }
 
         // ENDERECO
         [Display(Name = "CEP")]
+        [Required(ErrorMessage = "Informe o CEP!")]
         public string nrCEP { get; set; }
         [Display(Name = "Logradouro")]
+        [Required(ErrorMessage = "Informe o logradouro!")]
         public string dsLogradouro { get; set; }
         [Display(Name = "Número")]
+        [Required(ErrorMessage = "Informe o número!")]
         public string nrEndereco { get; set; }
         [Display(Name = "Bairro")]
+        [Required(ErrorMessage = "Informe o bairro!")]
         public string dsBairro { get; set; }
         [Display(Name = "Complemento")]
+        [Required(ErrorMessage = "Informe o complemento!")]
         public string dsComplemento { get; set; }
         [Display(Name = "Cidade")]
+        [Required(ErrorMessage = "Selecione a Cidade!")]
         public int idCidade { get; set; }
+        public string nmCidade { get; set; }
         public IEnumerable<SelectListItem> ListaCidades { get; set; }
 
 
@@ -57,6 +67,7 @@ namespace Sistema.Models
             {
                 return new[]
                 {
+                    new SelectListItem { Value = "", Text = "Selecionar" },
                     new SelectListItem { Value = "F", Text = "FÍSICA" },
                     new SelectListItem { Value = "J", Text = "JURÍDICA" }                    
                 };

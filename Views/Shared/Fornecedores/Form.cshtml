@@ -29,7 +29,7 @@
     @Html.LabelFor(e => e.nrCNPJ, new { @class = "form-label labelCPFCNPJ" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrCNPJ, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrCNPJ, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrCNPJ, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrCNPJ, null, new { @class = "help-block" })
 </div>
@@ -38,7 +38,7 @@
     @Html.LabelFor(e => e.nrIE, new { @class = "form-label labelRG_IE" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrIE, new { @class = "form-control", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrIE, new { @class = "form-control number", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrIE, new { @class = "form-control", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrIE, null, new { @class = "help-block" })
 </div>
@@ -63,7 +63,7 @@
     @Html.LabelFor(e => e.nrTelefoneCelular, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrTelefoneCelular, null, new { @class = "help-block" })
 </div>
@@ -72,7 +72,7 @@
     @Html.LabelFor(e => e.nrTelefoneFixo, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrTelefoneFixo, null, new { @class = "help-block" })
 </div>
@@ -92,7 +92,7 @@
     @Html.LabelFor(e => e.nrCEP, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrCEP, null, new { @class = "help-block" })
 </div>
@@ -110,7 +110,7 @@
     @Html.LabelFor(e => e.nrEndereco, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control number", maxlength = "150" })
+        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", maxlength = "150" })
         )
     @Html.ValidationMessageFor(model => model.nrEndereco, null, new { @class = "help-block" })
 </div>

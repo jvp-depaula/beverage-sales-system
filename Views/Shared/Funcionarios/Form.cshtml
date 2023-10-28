@@ -29,7 +29,7 @@
     @Html.LabelFor(e => e.nrCPF, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrCPF, null, new { @class = "help-block" })
 </div>
@@ -38,7 +38,7 @@
     @Html.LabelFor(e => e.nrRG, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control number", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrRG, null, new { @class = "help-block" })
 </div>
@@ -47,7 +47,7 @@
     @Html.LabelFor(e => e.dtNasc, new { @class = "form-label labelDtNasc" })
     @(disabled ?
         @Html.TextBoxFor(model => model.dtNasc, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.dtNasc, new { @class = "form-control date-picker", @type = "date", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.dtNasc, "{0:dd/MM/yyyy}", new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.dtNasc, null, new { @class = "help-block" })
 </div>
@@ -58,7 +58,7 @@
     @Html.LabelFor(e => e.nrTelefoneCelular, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrTelefoneCelular, null, new { @class = "help-block" })
 </div>
@@ -67,7 +67,7 @@
     @Html.LabelFor(e => e.nrTelefoneFixo, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrTelefoneFixo, null, new { @class = "help-block" })
 </div>
@@ -87,7 +87,7 @@
     @Html.LabelFor(e => e.nrCEP, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control number", maxlength = "150", @placeholder = "" })
+        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", maxlength = "150", @placeholder = "" })
         )
     @Html.ValidationMessageFor(model => model.nrCEP, null, new { @class = "help-block" })
 </div>
@@ -105,7 +105,7 @@
     @Html.LabelFor(e => e.nrEndereco, new { @class = "form-label" })
     @(disabled ?
         @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control number", maxlength = "150" })
+        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", maxlength = "150" })
         )
     @Html.ValidationMessageFor(model => model.nrEndereco, null, new { @class = "help-block" })
 </div>

@@ -9,9 +9,11 @@ namespace Sistema.Models
         public int idUnidade { get; set; }
 
         [Display(Name = "Unidade")]
+        [Required(ErrorMessage = "Informe a unidade!")]
         public string dsUnidade { get; set; }
 
         [Display(Name = "Sigla")]
+        [Required(ErrorMessage = "Informe a sigla!")]
         public string sigla { get; set; }
 
         [Display(Name = "Data de cadastro")]

@@ -1,21 +1,23 @@
 $(document).ready(function () {
     $("#flTipo").on('change', function () {
-        if ($(this).val() == "F") {
+        if ($(this).val() == "") {
+            $("#formDiv").css("display", "none");
+        } else if ($(this).val() == "F") {
+            $("#formDiv").css("display", "");
             $(".labelCPFCNPJ").text("CPF");
             $(".labelNmFantasia").text("Apelido");
             $(".labelRG_IE").text("RG");
             $(".labelDtNasc").text("Data de Nascimento");
             $("#nrCPFCNPJ").attr("placeholder", "___.___.___-__");
             $("#nrRG_IE").attr("placeholder", "__.___.___-_");
-        }
-        else {
+        } else {
+            $("#formDiv").css("display", "");
             $(".labelCPFCNPJ").text("CNPJ");
             $(".labelNmFantasia").text("Nome Fantasia");
             $(".labelRG_IE").text("Inscr. Estadual");
             $(".labelDtNasc").text("Data de Fundação");
             $("#nrCPFCNPJ").attr("placeholder", "__.___.___/____-__");
-        }
-
+        };
     });
 
     $("#nrCPFCNPJ").on('keyup change', function () {
@@ -29,7 +31,7 @@ $(document).ready(function () {
     });
 
     $("#nrRG_IE").on('keyup change', function () {
-        if (("#flTipo").val() == "F")
+        if ($("#flTipo").val() == "F")
             $("#nrRG_IE").mask("99.999.999-9");
         else
             $("#nrRG_IE").mask("");
@@ -45,6 +47,10 @@ $(document).ready(function () {
 
     $("#nrTelefoneFixo").on('keyup change', function () {
         $(this).mask("(99) 9999-9999");
+    });
+
+    $("#dtNasc").on('keyup change', function () {
+        $(this).mask("99/99/9999");
     });
 
     $("#flTipo").change();

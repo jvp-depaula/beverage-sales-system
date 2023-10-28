@@ -9,6 +9,7 @@ namespace Sistema.Models
         public int idMarca { get; set; }
 
         [Display(Name = "Marca")]
+        [Required(ErrorMessage = "Informe o nome da Marca!")]
         public string nmMarca { get; set; }
 
         [Display(Name = "Data de cadastro")]

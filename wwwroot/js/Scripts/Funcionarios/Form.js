@@ -24,11 +24,21 @@ $(document).ready(function () {
         $(this).mask("(99) 9999-9999");
     });
 
+    $("#dtNasc").on('keyup change', function () {
+        $(this).mask("99/99/9999");
+    });
+
     $("#nrCPF").change();
     $("nrRG").change();
     $("#nrCEP").change();
     $("#nrTelefoneCelular").change();
     $("#nrTelefoneFixo").change();
+
+    $("#nrCEP").on('change', function () {
+        if ($(this).val()) {
+            Endereco.consultaCep($(this).val());
+        }
+    });
 
     // --------------------- CIDADES ------------------------
     // SELECIONAR
@@ -443,4 +453,67 @@ var Paises = {
             }
         });
     },
+};
+
+var Endereco = {
+    limpaForm() {
+        $("#dsLogradouro").val("");
+        $("#dsBairro").val("");
+        $("#dsComplemento").val("");
+    },
+
+    consultaCep(cep) {
+        if (cep != "") {
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if (validacep.test(cep.replace("-", ""))) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                $("#dsLogradouro").val("...");
+                $("#dsBairro").val("...");
+                $("#dsComplemento").val("...");
+
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+                    if (!("erro" in dados)) {
+                        //Atualiza os campos com os valores da consulta.
+                        $("#dsLogradouro").val(dados.logradouro);
+                        $("#dsBairro").val(dados.bairro);
+                        $("#dsComplemento").val(dados.complemento);
+                        let cidade = dados.localidade ?? "";
+                        Endereco.buscaCidade(cidade);
+                    }
+                    else {
+                        //CEP pesquisado não foi encontrado.
+                        Endereco.limpaForm();
+                        alert("CEP não encontrado.");
+                    }
+                });
+            } else {
+                //cep é inválido.
+                Endereco.limpaForm();
+                alert("Formato de CEP inválido.");
+            }
+        } else {
+            //cep sem valor, limpa formulário.
+            Endereco.limpaForm();
+        };
+    },
+
+    buscaCidade(cidade) {
+        $.ajax({
+            url: "/Cidades/JsConsultaCidade",
+            data: {
+                nmCidade: cidade
+            },
+            success: function (result) {
+                if (result.idCidade != null) {
+                    $("#idCidade").val(result.idCidade);
+                } else {
+                    alert("Cidade não encontrada no banco de dados do Sistema!");
+                };
+            }
+        });
+    }
 };

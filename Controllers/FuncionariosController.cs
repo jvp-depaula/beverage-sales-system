@@ -13,6 +13,13 @@ namespace Sistema.Controllers
         {
             var daoFuncionarios = new DAOFuncionarios();
             List<Models.Funcionarios> list = daoFuncionarios.GetFuncionarios();
+
+            foreach (var item in list)
+            {
+                item.nrCPF = Util.Util.FormatCPFCNPJ(item.nrCPF);
+                item.nrTelefoneCelular = Util.Util.FormatTelefone(item.nrTelefoneCelular);
+            }
+
             return View(list);
         }
 
@@ -76,7 +83,17 @@ namespace Sistema.Controllers
         private ActionResult GetView(int? codFuncionario)
         {
             var daoFuncionarios = new DAOFuncionarios();
+            DAOCidades daoCidades = new();
+
             var model = daoFuncionarios.GetFuncionario(codFuncionario);
+
+            List<Models.Cidades> listCidades = daoCidades.GetCidades();
+
+            model.ListaCidades = listCidades.Select(u => new SelectListItem
+            {
+                Value = u.idCidade.ToString(),
+                Text = u.nmCidade.ToString(),
+            });            
             return View(model);
         }
     }

@@ -9,12 +9,15 @@ namespace Sistema.Models
         public int idPais { get; set; }
 
         [Display(Name = "País")]
+        [Required(ErrorMessage = "Informe o país!")]
         public string nmPais { get; set; }
 
         [Display(Name = "DDI")]
+        [Required(ErrorMessage = "Informe o DDI")]
         public string DDI { get; set; }
 
         [Display(Name = "Sigla")]
+        [Required(ErrorMessage = "Informe a Sigla")]
         public string sigla { get; set; }
 
         [Display(Name = "Data de cadastro")]

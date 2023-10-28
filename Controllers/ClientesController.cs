@@ -15,6 +15,14 @@ namespace Sistema.Controllers
         {
             var daoClientes = new DAOClientes();
             List<Models.Clientes> list = daoClientes.GetClientes();
+
+            foreach (var item in list)
+            {
+                item.flTipo = item.flTipo == "F" ? "Física" : "Jurídica";
+                item.nrCPFCNPJ = Util.Util.FormatCPFCNPJ(item.nrCPFCNPJ);
+                item.nrTelefoneCelular = Util.Util.FormatTelefone(item.nrTelefoneCelular);
+            }
+
             return View(list);
         }
 
@@ -85,9 +93,26 @@ namespace Sistema.Controllers
         private ActionResult GetView(int? codCliente)
         {
             var daoClientes = new DAOClientes();
+            DAOCidades daoCidades = new();
+            DAOCondicaoPgto daoCondicao = new();
+
             var model = daoClientes.GetCliente(codCliente);
+
+            List<Models.Cidades> listCidades = daoCidades.GetCidades();
+            List<Models.CondicaoPgto> listcondicaoPgto = daoCondicao.GetCondicoesPgto();
+
+            model.ListaCidades = listCidades.Select(u => new SelectListItem
+            {
+                Value = u.idCidade.ToString(),
+                Text = u.nmCidade.ToString(),
+            });
+
+            model.ListaCondicoesPgto = listcondicaoPgto.Select(u => new SelectListItem
+            {
+                Value = u.idCondicaoPgto.ToString(),
+                Text = u.dsCondicaoPgto.ToString()
+            });
             return View(model);
         }
-
     }
 }

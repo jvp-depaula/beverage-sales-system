@@ -33,6 +33,7 @@ namespace Sistema.DAO
                         nrEndereco = Convert.ToString(reader["nrEndereco"]),
                         dsBairro = Convert.ToString(reader["dsBairro"]),
                         idCidade = Convert.ToInt32(reader["idCidade"]),
+                        nmCidade = Convert.ToString(reader["nmCidade"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -158,6 +159,7 @@ namespace Sistema.DAO
                         model.dsBairro = Convert.ToString(reader["dsBairro"]);
                         model.dsComplemento = Convert.ToString(reader["dsComplemento"]);
                         model.idCidade = Convert.ToInt32(reader["idCidade"]);
+                        model.nmCidade = Convert.ToString(reader["nmCidade"]);
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
@@ -227,6 +229,7 @@ namespace Sistema.DAO
                         tbFornecedores.dsBairro AS dsBairro,
                         tbFornecedores.dsComplemento AS dsComplemento,
                         tbFornecedores.idCidade AS idCidade,
+                        tbCidades.nmCidade AS nmCidade,
                         tbFornecedores.idCondicaoPgto AS idCondicaoPgto,                        
                         tbCondicaoPgto.dsCondicaoPgto as dsCondicaoPgto,
                         tbFornecedores.dtCadastro AS dtCadastro,

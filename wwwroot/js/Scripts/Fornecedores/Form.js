@@ -24,6 +24,12 @@ $(document).ready(function () {
     $("#nrTelefoneFixo").change();
     $("#nrCEP").change();
 
+    $("#nrCEP").on('change', function () {
+        if ($(this).val()) {
+            Endereco.consultaCep($(this).val());
+        }
+    });
+
     // --------------------- CIDADES ------------------------
     // SELECIONAR
     $("#modal").on('show.bs.modal', function (e) {
@@ -484,6 +490,7 @@ var Paises = {
         });
     },
 };
+
 
 var Endereco = {
     limpaForm() {

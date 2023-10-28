@@ -8,6 +8,7 @@ namespace Sistema.Models
         [Display(Name = "Código")]
         public int idCategoria { get; set; }
 
+        [Required(ErrorMessage = "Informe a categoria!")]
         [Display(Name = "Categoria")]
         public string nmCategoria { get; set; }
 
