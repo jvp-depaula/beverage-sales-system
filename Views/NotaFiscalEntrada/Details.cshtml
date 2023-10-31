@@ -1,0 +1,40 @@
+﻿@model Sistema.Models.NotaFiscalEntrada
+
+@{
+    ViewData["Title"] = "Visualizar";
+}
+
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Compra <small>Visualizar</small></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Details";
+                        ViewBag.disabledForm = true;
+                    }
+
+                    @using (Html.BeginForm("Details", "NotaFiscalEntrada", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        <partial name="~/Views/Shared/NotaFiscalEntrada/Form.cshtml" model="Model"></partial>
+
+                        <div class="col-12 mt-10">
+                            <a href="@Url.Action("Index", "NotaFiscalEntrada")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

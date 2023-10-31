@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-using System.Security.Policy;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace Sistema.Models
 {
@@ -12,6 +12,9 @@ namespace Sistema.Models
         [Display(Name = "Fornecedor")]
         [Required(ErrorMessage = "Selecione o Fornecedor")]
         public int idFornecedor { get; set; }
+        public string nmFornecedor { get; set; }
+        public IEnumerable<SelectListItem> ListaFornecedores { get; set; }
+
         [Key]
         [Column(Order = 1)]
         [Display(Name = "Nrº Modelo")]
@@ -39,8 +42,7 @@ namespace Sistema.Models
         [Display(Name = "Situação")]
         public string flSituacao { get; set; }
         [Display(Name = "Total Nota")]
-        public decimal vlTotalNota { get; set; }
-        public IEnumerable<ItemNFEntrada> itensNF { get; set; }
+        public decimal vlTotalNota { get; set; }        
         [Display(Name = "Frete")]
         [Required(ErrorMessage = "Informe o Frete!")]
         public decimal vlFrete { get; set; }
@@ -54,12 +56,42 @@ namespace Sistema.Models
         public decimal vlTotalItens { get; set; }
         [Display(Name = "Desconto")]
         [Required(ErrorMessage = "Informe o desconto!")]
-
         public decimal vlDesconto { get; set; }
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 
         [Display(Name = "Data da últ. alteração")]
         public DateTime? dtUltAlteracao { get; set; }
+
+
+        public int idProduto { get; set; }
+        public string dsProduto { get; set; }
+        public IEnumerable<SelectListItem> ListaProdutos { get; set; }
+        public class ProdutosVM
+        {
+            public int idProduto { get; set; }
+            public string dsProduto { get; set; }
+            public string dsUnidade { get; set; }
+            public decimal? qtProduto { get; set; }
+            [DisplayFormat(DataFormatString = "{0:###.###,##}")]
+            public decimal? vlVenda { get; set; }
+            public decimal? vlCompra { get; set; }
+            public decimal? txDesconto { get; set; }
+            public decimal? vlTotal { get; set; }
+        }
+        public string jsProdutos { get; set; }
+        public List<ProdutosVM> ProdutosCompra
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(jsProdutos))
+                    return new List<ProdutosVM>();
+                return JsonConvert.DeserializeObject<List<ProdutosVM>>(jsProdutos);
+            }
+            set
+            {
+                jsProdutos = JsonConvert.SerializeObject(value);
+            }
+        }
     }
 }

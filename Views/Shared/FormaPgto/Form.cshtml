@@ -1,0 +1,18 @@
+﻿@model Sistema.Models.FormaPgto
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.idFormaPgto)
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsFormaPgto, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsFormaPgto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsFormaPgto, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsFormaPgto, null, new { @class = "help-block" })
+</div>
+<br />

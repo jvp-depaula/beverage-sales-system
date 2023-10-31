@@ -26,6 +26,7 @@
   </ItemGroup>  
 
   <ItemGroup>
+    <Folder Include="Views\NotaFiscalSaida\" />
     <Folder Include="wwwroot\js\Scripts\Produtos\" />
   </ItemGroup>
 

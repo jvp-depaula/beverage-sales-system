@@ -66,10 +66,10 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = String.Format("UPDATE tbFormaPgto SET dsFormaPgto = '{0}', dtUltAlteracao = {1}' WHERE idFormaPgto = '{2}'",
+                var sql = String.Format("UPDATE tbFormaPgto SET dsFormaPgto = '{0}', dtUltAlteracao = '{1}' WHERE idFormaPgto = '{2}'",
                     FormaPgto.dsFormaPgto,
                     Util.Util.FormatDate(DateTime.Now),
-                    FormaPgto.idFormaPgto);
+                    Convert.ToInt32(FormaPgto.idFormaPgto));
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
