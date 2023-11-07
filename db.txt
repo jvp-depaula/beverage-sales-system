@@ -181,72 +181,59 @@ CREATE TABLE tbFuncionarios (
 	CONSTRAINT FK_Funcionarios_Cidades FOREIGN KEY (idCidade) REFERENCES tbCidades(idCidade)
 );
 
-CREATE TABLE tbNotaFiscalSaida (
-	nrModelo VARCHAR(255) NOT NULL,
-	nrSerie VARCHAR(255) NOT NULL,
-	nrNota INT NOT NULL IDENTITY(1, 1),
-	dtEmissao DATETIME NOT NULL,
-	chaveNFe VARCHAR(255) NOT NULL,
-	flSituacao VARCHAR(255) NOT NULL,
-	vlTotalNota DECIMAL (9,2) NOT NULL,
-	vlTotalItens DECIMAL (9,2) NOT NULL,
-	vlDesconto DECIMAL (9,2) NOT NULL,
-	idCliente INT NOT NULL,
-	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL,
-	CONSTRAINT PK_tbNotaFiscalSaida PRIMARY KEY (nrModelo, nrSerie, nrNota),
-	CONSTRAINT FK_NotaFiscalSaida_Clientes FOREIGN KEY (idCliente) REFERENCES tbClientes (idCliente)
-);
-
-CREATE TABLE tbNotaFiscalEntrada (
+CREATE TABLE tbCompras (
     idFornecedor INT NOT NULL,
 	nrModelo VARCHAR(255) NOT NULL,
 	nrSerie VARCHAR(255) NOT NULL,
 	nrNota INT NOT NULL,
 	dtEmissao DATETIME NOT NULL,
-	dtEntrada DATETIME NOT NULL,
+	dtEntrega DATETIME NOT NULL,
 	chaveNFe VARCHAR(255) NOT NULL,
 	flSituacao VARCHAR(255) NOT NULL,
-	vlTotalNota DECIMAL (9,2) NOT NULL,
-	vlTotalItens DECIMAL (9,2) NOT NULL,
-	vlDesconto DECIMAL (9,2) NOT NULL,
 	vlFrete DECIMAL (9,2) NOT NULL,
 	vlSeguro DECIMAL (9,2) NOT NULL,
-	vlOutrasDespesas DECIMAL (9,2) NOT NULL,
+	vlDespesas DECIMAL (9,2) NOT NULL,
+	observacao VARCHAR(500),
 	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_tbNotaFiscalEntrada PRIMARY KEY (idFornecedor, nrModelo, nrSerie, nrNota),
 	CONSTRAINT FK_NotaFiscalEntrada_Fornecedores FOREIGN KEY (idFornecedor) REFERENCES tbFornecedores (idFornecedor)
 );
 
-CREATE TABLE tbItemNFEntrada (
-	idProduto INT NOT NULL,
-	idFornecedor INT NOT NULL,
-	nrModelo VARCHAR(255) NOT NULL,
-	nrSerie VARCHAR(255) NOT NULL,
-	nrNota INT NOT NULL,
-	qtdItem DECIMAL(9,2) NOT NULL,
-	vlFrete DECIMAL(9,2) NOT NULL,
-	vlDesconto DECIMAL(9,2) NOT NULL,
-	vlSeguro DECIMAL(9,2) NOT NULL,
-	vlOutrasDespesas DECIMAL(9,2) NOT NULL,
-	vlCusto DECIMAL(9,2) NOT NULL,
-	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL,
-	CONSTRAINT PK_tbItemNFEntrada PRIMARY KEY (idProduto, idFornecedor, nrModelo, nrSerie, nrNota)
+CREATE TABLE tbVendas (
+	idVenda INT NOT NULL IDENTITY(1,1),
+	idFuncionario INT NOT NULL,
+	idCliente INT NOT NULL,
+	idCondicaoPgto INT NOT NULL,
+	flSituacao VARCHAR(1) NOT NULL,
+	dtVenda DATETIME NOT NULL,	
+	CONSTRAINT PK_Vendas PRIMARY KEY (idVenda)
+	CONSTRAINT FK_Vendas_Funcionario FOREIGN KEY (idFuncionario) REFERENCES tbFuncionario (idFuncionario),
+	CONSTRAINT FK_Vendas_Cliente FOREIGN KEY (idCliente) REFERENCES tbClientes (idCliente),
+	CONSTRAINT FK_Vendas_CondicaoPgto FOREIGN KEY (idCondicaoPgto) REFERENCES tbCondicaoPgto (idCondicaoPgto)
 );
 
-CREATE TABLE tbItemNFSaida (
+
+CREATE TABLE tbProdutosVenda (
+	idVenda INT NOT NULL,
 	idProduto INT NOT NULL,
-	idCliente INT NOT NULL,
-	nrModelo VARCHAR(255) NOT NULL,
-	nrSerie VARCHAR(255) NOT NULL,
+	qtdProduto DECIMAL(18, 2) NOT NULL,
+	vlProduto DECIMAL (18, 2) NOT NULL,
+	txDesconto DECIMAL (18, 2) NOT NULL
+	CONSTRAINT PK_tbProdutosVenda PRIMARY KEY (idVenda, idProduto),
+	CONSTRAINT FK_tbProdutosVenda_Vendas FOREIGN KEY (idVenda) REFERENCES tbVendas (idVenda),
+	CONSTRAINT FK_tbProdutosVenda_Produtos FOREIGN KEY (idProdutos) REFERENCES tbProdutos (idProduto),
+);
+
+CREATE TABLE tbProdutosCompra (
+	idProduto INT NOT NULL,
+	nrModelo VARCHAR(3) NOT NULL,
+	nrSerie VARCHAR(3) NOT NULL, 
 	nrNota INT NOT NULL,
-	qtdItem DECIMAL(9,2) NOT NULL,
-	vlVenda DECIMAL(9,2) NOT NULL,
-	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL,
-	CONSTRAINT PK_tbItemNFSaida PRIMARY KEY (idProduto, idCliente, nrModelo, nrSerie, nrNota)
+	idFornecedor INT NOT NULL,
+	qtdProduto DECIMAL (18, 2) NOT NULL,
+	vlCompra DECIMAL (18, 2) NOT NULL,
+	txDesconto DECIMAL (18, 2) NOT NULL,
+	vlVenda DECIMAL (18, 2), NOT NULL
 );
 
 CREATE TABLE tbContasPagar (
@@ -259,15 +246,12 @@ CREATE TABLE tbContasPagar (
 	dtVencimento DATETIME NOT NULL,
 	vlParcela DECIMAL (9,2) NOT NULL,
 	idFormaPgto INT NOT NULL,
-	vlPago DECIMAL (9,2) NOT NULL,
 	dtPgto DATETIME NOT NULL,
 	flSituacao VARCHAR(255) NOT NULL,
 	vlJuros DECIMAL (9,2) NOT NULL,
 	vlMulta DECIMAL (9,2) NOT NULL,
 	vlDesconto DECIMAL (9,2) NOT NULL,
 	txDesconto DECIMAL (9,2) NOT NULL,
-	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL,
 	CONSTRAINT PK_tbContasPagar PRIMARY KEY (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela),
 	CONSTRAINT FK_tbContasPagar_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto (idFormaPgto)
 );

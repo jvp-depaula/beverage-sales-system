@@ -1,9 +1,19 @@
-﻿@model Sistema.Models.NotaFiscalEntrada
+﻿@model Sistema.Models.Compras
 
 @{
     var disabled = Convert.ToBoolean(ViewBag.disabledForm);
     var pageType = Convert.ToString(ViewBag.pageType);
     var tam = pageType == "create" ? 8 : 7;
+}
+
+@if (pageType != "create")
+{
+    <div class="row g-3">
+        <div class="col-md-3">
+            @Html.LabelFor(e => e.flSituacao, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.flSituacao, new { @class = "form-control", autofocus = "autofocus", disabled = "disabled" })
+        </div>
+    </div>
 }
 
 <div class="CabecalhoNota">
@@ -38,8 +48,8 @@
         @Html.LabelFor(e => e.idFornecedor, new { @class = "form-label" })
         <div class="input-group mb-3">
             @(disabled ?
-                @Html.DropDownListFor(model => model.idFornecedor, Model.ListaFornecedores, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-                @Html.DropDownListFor(model => model.idFornecedor, Model.ListaFornecedores, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.idFornecedor, Model.ListFornecedores, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+                @Html.DropDownListFor(model => model.idFornecedor, Model.ListFornecedores, new { @class = "form-control" })
                 )
             @if (pageType == "Create" || pageType == "Edit")
             {
@@ -56,7 +66,7 @@
 
 <div class="Corpo row g-3" style="display: none">
     <div class="col-md-4">
-        @Html.LabelFor(e => e.dtEmissao, new { @class = "form-label labelDtNasc" })
+        @Html.LabelFor(e => e.dtEmissao, new { @class = "form-label" })
         @(disabled ?
             @Html.TextBoxFor(model => model.dtEmissao, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
             @Html.TextBoxFor(model => model.dtEmissao, "{0:dd/MM/yyyy}", new { @class = "form-control", maxlength = "150", @placeholder = "" })
@@ -65,12 +75,12 @@
     </div>
 
     <div class="col-md-4">
-        @Html.LabelFor(e => e.dtEntrada, new { @class = "form-label labelDtNasc" })
+        @Html.LabelFor(e => e.dtCadastro, new { @class = "form-label" })
         @(disabled ?
-            @Html.TextBoxFor(model => model.dtEntrada, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-            @Html.TextBoxFor(model => model.dtEntrada, "{0:dd/MM/yyyy}", new { @class = "form-control", maxlength = "150", @placeholder = "" })
+            @Html.TextBoxFor(model => model.dtCadastro, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.TextBoxFor(model => model.dtCadastro, "{0:dd/MM/yyyy}", new { @class = "form-control", maxlength = "150", @placeholder = "" })
             )
-        @Html.ValidationMessageFor(model => model.dtEntrada, null, new { @class = "help-block" })
+        @Html.ValidationMessageFor(model => model.dtCadastro, null, new { @class = "help-block" })
     </div>
 
     <div class="col-md-4">
@@ -94,8 +104,8 @@
             @Html.LabelFor(e => e.idProduto, new { @class = "form-label" })
             <div class="input-group mb-3">
                 @(disabled ?
-                    @Html.DropDownListFor(model => model.dsProduto, Model.ListaProdutos, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-                    @Html.DropDownListFor(model => model.dsProduto, Model.ListaProdutos, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.dsProduto, Model.ListProdutos, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+                    @Html.DropDownListFor(model => model.dsProduto, Model.ListProdutos, new { @class = "form-control" })
                     )
                 @if (pageType == "Create" || pageType == "Edit")
                 {

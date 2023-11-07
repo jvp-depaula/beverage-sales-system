@@ -51,8 +51,8 @@ namespace Sistema.Models
         [Display(Name = "Observação")]
         public string observacao { get; set; }
 
-        [Display(Name = "Custo Médio")]
-        public decimal vlCustoMedio { get; set; }
+        [Display(Name = "Valor Última Compra")]
+        public decimal vlUltCompra { get; set; }
        
         [Display(Name = "Saldo")] // Estoque.
         public int vlSaldo { get; set; } // Estoque - Saldo do Produto em Estoque.

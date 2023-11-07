@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Sistema.Models.NotaFiscalEntrada>
+﻿@model IEnumerable<Sistema.Models.Compras>
 
 @{
     ViewData["Title"] = "Index";
@@ -26,10 +26,10 @@
                 @Html.DisplayNameFor(model => model.dtEmissao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dtEntrada)
+                @Html.DisplayNameFor(model => model.dtCadastro)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.vlTotalNota)
+                @Html.DisplayNameFor(model => model.dtEntrega)
             </th>
             <th></th>
         </tr>
@@ -54,10 +54,10 @@
                     @Html.DisplayFor(modelItem => item.dtEmissao)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.dtEntrada)
+                    @Html.DisplayFor(modelItem => item.dtCadastro)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.vlTotalNota)
+                    @Html.DisplayFor(modelItem => item.dtEntrega)
                 </td>
                 <td style="text-align: right; width: 200px">
                     <a asp-action="Edit" asp-route-id="@item">Editar</a> |

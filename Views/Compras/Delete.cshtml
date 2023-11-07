@@ -1,4 +1,4 @@
-﻿@model Sistema.Models.NotaFiscalEntrada
+﻿@model Sistema.Models.Compras
 
 @{
     ViewData["Title"] = "Excluir";
@@ -23,13 +23,13 @@
                         ViewBag.disabledForm = true;
                     }
 
-                    @using (Html.BeginForm("Delete", "NotaFiscalEntrada", FormMethod.Post, new { @class = "row g-3" }))
+                    @using (Html.BeginForm("Delete", "Compras", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        <partial name="~/Views/Shared/NotaFiscalEntrada/Form.cshtml" model="Model"></partial>
+                        <partial name="~/Views/Shared/Compras/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
                             <button type="submit" class="btn btn-danger">Excluir</button>
-                            <a href="@Url.Action("Index", "NotaFiscalEntrada")" class="btn btn-primary">
+                            <a href="@Url.Action("Index", "Compras")" class="btn btn-primary">
                                 Cancelar
                             </a>
                         </div>

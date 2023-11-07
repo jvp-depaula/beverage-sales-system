@@ -1,14 +1,14 @@
-﻿@model Sistema.Models.NotaFiscalEntrada
+﻿@model Sistema.Models.Compras
 
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Adicionar";
 }
 
 <section>
     <div class="toolbar row">
         <div class="col-sm-6 hidden-xs">
             <div class="page-header">
-                <h1>Compra <small>Editar</small></h1>
+                <h1>Compra <small>Inserir</small></h1>
             </div>
         </div>
     </div>
@@ -19,16 +19,16 @@
                 <div class="panel-body">
 
                     @{
-                        ViewBag.pageType = "Edit";
+                        ViewBag.pageType = "Create";
                     }
 
-                    @using (Html.BeginForm("Edit", "NotaFiscalEntrada", FormMethod.Post, new { @class = "row g-3" }))
+                    @using (Html.BeginForm("Create", "Compras", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        <partial name="~/Views/Shared/NotaFiscalEntrada/Form.cshtml" model="Model"></partial>
+                        <partial name="~/Views/Shared/Compras/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
                             <button type="submit" class="btn btn-success">Salvar</button>
-                            <a href="@Url.Action("Index", "NotaFiscalEntrada")" class="btn btn-primary">
+                            <a href="@Url.Action("Index", "Compras")" class="btn btn-primary">
                                 Cancelar
                             </a>
                         </div>

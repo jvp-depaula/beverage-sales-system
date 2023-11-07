@@ -6,6 +6,13 @@
   </PropertyGroup>
 	
   <ItemGroup>
+    <Compile Remove="Views\NotaFiscalSaida\**" />
+    <Content Remove="Views\NotaFiscalSaida\**" />
+    <EmbeddedResource Remove="Views\NotaFiscalSaida\**" />
+    <None Remove="Views\NotaFiscalSaida\**" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <Content Remove="wwwroot\js\Scripts\Clientes\Form.js" />
     <Content Remove="wwwroot\js\Scripts\Fornecedores\Form.js" />
     <Content Remove="wwwroot\js\Scripts\Funcionarios\Form.js" />
@@ -26,7 +33,6 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <Folder Include="Views\NotaFiscalSaida\" />
     <Folder Include="wwwroot\js\Scripts\Produtos\" />
   </ItemGroup>
 

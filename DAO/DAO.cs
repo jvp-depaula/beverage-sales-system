@@ -41,7 +41,15 @@ namespace Sistema.DAO
                 throw new Exception("Erro ao fechar a conexão: " + error.Message);
             }
         }
-
+        protected string FormatDecimal(decimal? valor)
+        {
+            var result = string.Empty;
+            if (valor != null)
+            {
+                result = valor.Value.ToString().Replace(",", ".");
+            }
+            return result;
+        }
 
         // -- TESTES -- 
         public string Insert(System.Type type, string tableName)
