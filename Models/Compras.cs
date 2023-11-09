@@ -25,22 +25,38 @@ namespace Sistema.Models
         [Display(Name = "Chave NFe")]
         public string chaveNFe { get; set; }
         public IEnumerable<SelectListItem> ListFornecedores { get; set; }
+        [Display(Name = "Fornecedor")]
         public int? idFornecedorAux { get; set; }
         public string nmFornecedor { get; set; }
         public IEnumerable<SelectListItem> ListCondicaoPagamento { get; set; }
+        [Display(Name = "Condição de Pgto")]
         public int? idCondicaoPgto { get; set; }
         public string dsCondicaoPgto { get; set; }
+        [Display(Name = "tx. Juros")]
         public decimal? CondicaoPagamento_txJuros { get; set; }
+        [Display(Name = "Multa")]
         public decimal? CondicaoPagamento_vlMulta { get; set; }
+        [Display(Name = "Desconto")]
         public decimal? CondicaoPagamento_vlDesconto { get; set; }
         public IEnumerable<SelectListItem> ListProdutos { get; set; }
+        [Display(Name = "Produto")]
         public int? idProduto { get; set; }
         public string dsProduto { get; set; }
+        [Display(Name = "Qtd. Produto")]
+        public decimal? Produto_qtdProduto { get; set; }
+        [Display(Name = "Unidade")]
+        public int? Produto_idUnidade { get; set; }
+        public string Produto_dsUnidade { get; set; }
+        [Display(Name = "Valor Unitário")]
+        public decimal? Produto_vlVenda { get; set; }
+        [Display(Name = "tx Desconto")]
+        public decimal? Produto_txDesconto { get; set; }
 
         [Display(Name = "Situação")]
         public string flSituacao { get; set; }
         [Display(Name = "Observação")]
         public string observacao { get; set; }
+        [Display(Name = "Total")]
         public decimal? vlTotal { get; set; }
 
         [Display(Name = "Valor do frete")]
@@ -58,7 +74,7 @@ namespace Sistema.Models
             public string dsProduto { get; set; }
             public int? idUnidade { get; set; }
             public string dsUnidade { get; set; }
-            public decimal? qtdProduto { get; set; }
+            public decimal? qtdEstoque { get; set; }
             public decimal? vlVenda { get; set; }
             public decimal? vlCompra { get; set; }
             public decimal? txDesconto { get; set; }
@@ -94,6 +110,7 @@ namespace Sistema.Models
                 jsParcelas = JsonConvert.SerializeObject(value);
             }
         }
+        [Display(Name = "Data de Cadastro")]
         public DateTime dtCadastro { get; set; }
     }
 }

@@ -602,7 +602,7 @@ var CondicoesPgto = {
     },
 
     fechaAddCondicoes() {
-        Paises.limpaForm();
+        CondicoesPgto.limpaForm();
         $(".AddCondicoes").css("display", "none");
         $(".SelecionaCondicoes").css("display", "");
     },

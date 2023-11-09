@@ -100,8 +100,43 @@ namespace Sistema.Controllers
 
         private ActionResult GetView(int? codProduto)
         {
+            var daoMarcas = new DAOMarcas();
+            var daoFornecedores = new DAOFornecedores();
+            var daoCategorias = new DAOCategorias();
+            var daoUnidades = new DAOUnidades();
+            
+            List<Models.Marcas> listMarcas = daoMarcas.GetMarcas();
+            List<Fornecedores> listFornecedores = daoFornecedores.GetFornecedores();
+            List<Categorias> listCategorias = daoCategorias.GetCategorias();
+            List<Unidades> listUnidades = daoUnidades.GetUnidades();
+
             var daoProdutos = new DAOProdutos();
             var model = daoProdutos.GetProduto(codProduto);
+
+            model.ListaCategorias = listCategorias.Where(u => u.idCategoria == model.idCategoria).Select(u => new SelectListItem
+            {
+                Value = u.idCategoria.ToString(),
+                Text = u.nmCategoria.ToString(),
+            });
+
+            model.ListaFornecedores = listFornecedores.Where(u => u.id == model.idFornecedor).Select(u => new SelectListItem
+            {
+                Value = u.id.ToString(),
+                Text = u.nmFornecedor.ToString(),
+            });
+
+            model.ListaMarcas = listMarcas.Where(u => u.idMarca == model.idMarca).Select(u => new SelectListItem
+            {
+                Value = u.idMarca.ToString(),
+                Text = u.nmMarca.ToString(),
+            });
+
+            model.ListaUnidades = listUnidades.Where(u => u.idUnidade == model.idUnidade).Select(u => new SelectListItem
+            {
+                Value = u.idUnidade.ToString(),
+                Text = u.dsUnidade.ToString(),
+            });
+
             return View(model);
         }
 
@@ -109,7 +144,6 @@ namespace Sistema.Controllers
         {
             DAOProdutos daoProdutos = new();
             List<Models.Produtos> list = daoProdutos.GetProdutos();
-
             return Json(list);
         }
         /*

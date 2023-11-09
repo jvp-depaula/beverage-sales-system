@@ -184,6 +184,23 @@ $(document).ready(function () {
         Categorias.AddCategorias(false);
         Categorias.SelecionarCategorias(false);
     });
+
+// ------------------------ FORNECEDORES ------------------------
+    $("#btnAbreModalFornecedor").on('click', function () {
+        Fornecedores.SelecionarFornecedores(true);
+        Fornecedores.CarregaLista();
+    });
+
+    // SELECIONAR   
+    $(document).on('click', '.selectFornecedor-btn', function () {
+        var id = $(this).data('value');
+        $("#idFornecedor").val(id);
+        $("#btnFecharModalFornecedor").click();
+    });
+
+    $('#modalFornecedor').on('hide.bs.modal', function (e) {
+        Fornecedores.SelecionarFornecedores(false);
+    });
 });
 
 var Marcas = {
@@ -346,6 +363,42 @@ var Categorias = {
                             <td scope="row">${categorias.nmCategoria}</td>
                             <td style="text-align: right">
                             <button type="button" class="btn btn-sm btn-primary selectCategoria-btn" data-value="${categorias.idCategoria}" data-name="${categorias.nmCategoria}">
+                                Selecionar
+                            </button>
+                            </td>
+                        </tr>
+                        `
+                    );
+                });
+            }
+        });
+    },
+};
+
+var Fornecedores = {
+    SelecionarFornecedores(mostra) {
+        if (mostra)
+            $(".SelecionaFornecedor").css("display", "");
+        else
+            $(".SelecionaFornecedor").css("display", "none");
+    },
+
+    CarregaLista() {
+        let modal = $("#modalFornecedor");
+        let url = "/Fornecedores/JsSearch";
+        $.ajax({
+            url: url,
+            success: function (result) {
+                var tbody = modal.find('#bodyFornecedor');
+                tbody.empty();
+                result.forEach(function (fornecedores) {
+                    tbody.append(
+                        `
+                        <tr>
+                            <td scope="row">${fornecedores.id}</td>
+                            <td scope="row">${fornecedores.nmFornecedor}</td>
+                            <td style="text-align: right">
+                            <button type="button" class="btn btn-sm btn-primary selectFornecedor-btn" data-value="${fornecedores.id}" data-name="${fornecedores.nmFornecedor}">
                                 Selecionar
                             </button>
                             </td>

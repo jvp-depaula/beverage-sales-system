@@ -1,11 +1,24 @@
+var tableEstados = null;
+var tablePaises = null;
 $(document).ready(function () {
+    tableEstados = $('#tbEstados').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },        
+    });
+
+    tablePaises = $('#tbPaises').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        }
+    });
+
     // --------------------- ESTADOS ------------------------
     // SELECIONAR
     $('#modal').on('show.bs.modal', function (e) {
         Estados.SelecionarEstados(true);
-        Estados.CarregaLista();
+        // Estados.CarregaLista();
     });
-
     $(document).on('click', '.selectEstado-btn', function () {
         var id = $(this).data('value');
         $("#idEstado").val(id);
@@ -45,7 +58,7 @@ $(document).ready(function () {
                             return $("<option></option>").val(el.idEstado).text(el.nmEstado)
                         });
                         $('#idEstado').html(options);
-                        
+
                         Estados.limpaForm();
                         Estados.AddEstados(false);
                         Estados.SelecionarEstados(true);
@@ -67,7 +80,7 @@ $(document).ready(function () {
         Paises.SelecionarPaises(true);
         Paises.CarregaLista();
     });
-    
+
     // SELECIONAR   
     $(document).on('click', '.selectPais-btn', function () {
         var id = $(this).data('value');
@@ -104,7 +117,7 @@ $(document).ready(function () {
                     }
                 }
             });
-        };        
+        };
     });
     $("#btnAddPais").on('click', function () {
         Paises.SelecionarPaises(false);
@@ -150,7 +163,7 @@ var Estados = {
         if (mostra)
             $(".AddEstados").css("display", "");
         else {
-            $(".AddEstados").css("display", "none");            
+            $(".AddEstados").css("display", "none");
         }
     },
 
@@ -175,29 +188,11 @@ var Estados = {
     },
 
     CarregaLista() {
-        let modal = $("#modal");
         let url = "/Estados/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyEstados');
-                tbody.empty();
-                result.forEach(function (estados) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${estados.idEstado}</td>
-                            <td>${estados.nmEstado}</td>
-                            <td>${estados.nmPais}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectEstado-btn" data-value="${estados.idEstado}" data-name="${estados.nmEstado}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableEstados.rows.add(result);
             }
         });
     }
@@ -215,7 +210,7 @@ var Paises = {
         if (mostra)
             $(".AddPais").css("display", "");
         else {
-            $(".AddPais").css("display", "none");            
+            $(".AddPais").css("display", "none");
         }
     },
 

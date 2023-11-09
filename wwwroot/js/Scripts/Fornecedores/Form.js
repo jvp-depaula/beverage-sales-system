@@ -1,4 +1,29 @@
 $(document).ready(function () {
+
+    $('#tbCondicaoPgto').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        }
+    });
+
+    $('#tbCidades').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        }
+    });
+
+    $('#tbEstados').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        }
+    });
+
+    $('#tbPaises').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        }
+    });
+
     $("#nrCNPJ").on('keyup change', function () {
         $(this).attr("placeholder", "__.___.___/____-__");
         $(this).mask("99.999.999/9999-99");

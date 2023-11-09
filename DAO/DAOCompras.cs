@@ -95,7 +95,7 @@ namespace Sistema.DAO
                     );
                 string sqlProduto = "INSERT INTO tbProdutosCompra (idProduto, nrModelo, nrSerie, nrNota, idFornecedor, qtdProduto, vlCompra, txDesconto, vlVenda) VALUES ( {0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8})";
                 string sqlParcela = "INSERT INTO tbContasPagar (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela, dtEmissao, dtVencimento, vlParcela, idFormaPgto, dtPgto, flSituacao, vlJuros, vlMulta, vlDesconto) VALUES ({0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8}, {9}, '{10}', {11}, {12}, {13})";
-                string sqlUpdateProduto = "UPDATE tbProdutos set vlSaldo += {0}, vlUltCompra = {1}, dtUltAlteracao = {2} WHERE idProduto = {3}";
+                string sqlUpdateProduto = "UPDATE tbProdutos set qtdEstoque += {0}, vlUltCompra = {1}, dtUltAlteracao = {2} WHERE idProduto = {3}";
                 using (con)
                 {
                     OpenConnection();
@@ -109,11 +109,11 @@ namespace Sistema.DAO
                         command.ExecuteNonQuery();
                         foreach (var item in compra.ProdutosCompra)
                         {
-                            var Item = string.Format(sqlProduto, item.idProduto, compra.nrModelo, compra.nrSerie, compra.nrNota, compra.idFornecedor, this.FormatDecimal(item.qtdProduto), this.FormatDecimal(item.vlCompra), this.FormatDecimal(item.txDesconto), this.FormatDecimal(item.vlVenda));
+                            var Item = string.Format(sqlProduto, item.idProduto, compra.nrModelo, compra.nrSerie, compra.nrNota, compra.idFornecedor, this.FormatDecimal(item.qtdEstoque), this.FormatDecimal(item.vlCompra), this.FormatDecimal(item.txDesconto), this.FormatDecimal(item.vlVenda));
                             command.CommandText = Item;
                             command.ExecuteNonQuery();
 
-                            var upProd = string.Format(sqlUpdateProduto, this.FormatDecimal(item.qtdProduto), this.FormatDecimal(item.vlCompra), DateTime.Now, item.idProduto);
+                            var upProd = string.Format(sqlUpdateProduto, this.FormatDecimal(item.qtdEstoque), this.FormatDecimal(item.vlCompra), DateTime.Now, item.idProduto);
                             command.CommandText = upProd;
                             command.ExecuteNonQuery();
                         }
@@ -195,7 +195,7 @@ namespace Sistema.DAO
                             dsProduto = Convert.ToString(reader["dsProduto"]),
                             idUnidade = Convert.ToInt32(reader["idUnidade"]),  
                             dsUnidade = Convert.ToString(reader["dsUnidade"]),
-                            qtdProduto = Convert.ToDecimal(reader["qtdProduto"]),
+                            qtdEstoque = Convert.ToDecimal(reader["qtdProduto"]),
                             vlCompra = Convert.ToDecimal(reader["vlCompra"]),
                             txDesconto = Convert.ToDecimal(reader["txDesconto"]),
                             vlVenda = Convert.ToDecimal(reader["vlVenda"]),
@@ -286,7 +286,7 @@ namespace Sistema.DAO
 	                    tbFornecedores.nmFornecedor AS nmFornecedor,
 	                    tbCompras.idCondicaoPgto AS idCondicaoPgto,
 	                    tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto
-                    FROM idFornecedor 
+                    FROM tbCompras 
                     INNER JOIN tbFornecedores on tbCompras.idFornecedor = tbFornecedores.idFornecedor
                     INNER JOIN tbCondicaoPgto on tbCompras.idCondicaoPgto = tbCondicaoPgto.idCondicaoPgto
                 " + swhere + ";";

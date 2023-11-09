@@ -15,7 +15,6 @@
     @Html.ValidationMessageFor(model => model.dsProduto, null, new { @class = "help-block" })
 </div>
 
-
 <div class="col-md-3">
     @Html.LabelFor(e => e.idMarca, new { @class = "form-label" })
     <div class="input-group mb-3">
@@ -78,6 +77,24 @@
         )
     @Html.ValidationMessageFor(model => model.cdNCM, null, new { @class = "help-block" })
 </div>
+
+@if (pageType != "Create")
+{
+    <div class="col-md-4">
+        @Html.LabelFor(e => e.qtdEstoque, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.qtdEstoque, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
+    </div>
+
+    <div class="col-md-4">
+        @Html.LabelFor(e => e.vlUltCompra, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.vlUltCompra, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
+    </div>
+    
+    <div class="col-md-4">
+        @Html.LabelFor(e => e.vlCusto, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.vlCusto, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
+    </div>
+}
 
 <div class="col-md-12">
     @Html.LabelFor(e => e.idFornecedor, new { @class = "form-label" })
@@ -198,6 +215,28 @@
                 <button type="button" class="btn btn-secondary" id="btnFecharAddCategoria">Fechar</button>
                 <button type="button" class="btn btn-default" id="btnSalvarCategoria">Adicionar Categoria</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- FORNECEDORES -->
+<div class="modal fade" tabindex="-1" id="modalFornecedor">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Selecionar Fornecedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- SELECIONAR -->
+            <div class="modal-body SelecionaFornecedor" style="display: none">
+                <partial name="~/Views/Shared/Fornecedores/SelecionaFornecedor.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaFornecedor" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalFornecedor">Fechar</button>                
+            </div>                        
         </div>
     </div>
 </div>

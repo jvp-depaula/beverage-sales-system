@@ -111,5 +111,13 @@ namespace Sistema.Controllers
 
             return View(model);
         }
+
+        public JsonResult JsSearch()
+        {
+            DAOFornecedores dAOFornecedores = new();
+            List<Models.Fornecedores> list = daoFornecedores.GetFornecedores();
+
+            return Json(list);
+        }
     }
 }

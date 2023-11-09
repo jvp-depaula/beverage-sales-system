@@ -13,7 +13,9 @@
   </ItemGroup>
 	
   <ItemGroup>
+    <Content Remove="Views\Shared\Produtos\AddProdutos.cshtml" />
     <Content Remove="wwwroot\js\Scripts\Clientes\Form.js" />
+    <Content Remove="wwwroot\js\Scripts\Compras\Form.js" />
     <Content Remove="wwwroot\js\Scripts\Fornecedores\Form.js" />
     <Content Remove="wwwroot\js\Scripts\Funcionarios\Form.js" />
   </ItemGroup>  
@@ -28,12 +30,9 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\Scripts\Clientes\Form.js" />
+    <None Include="wwwroot\js\Scripts\Compras\Form.js" />
     <None Include="wwwroot\js\Scripts\Fornecedores\Form.js" />
     <None Include="wwwroot\js\Scripts\Funcionarios\Form.js" />
-  </ItemGroup>  
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js\Scripts\Produtos\" />
   </ItemGroup>
 
 </Project>

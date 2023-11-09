@@ -43,7 +43,7 @@ namespace Sistema.Controllers
                 ListProdutos = listProd.Select(u => new SelectListItem
                 {
                     Value = u.idProduto.ToString(),
-                    Text = u.dsProduto.ToString() + " - " + u.vlSaldo.ToString(),
+                    Text = u.dsProduto.ToString() + " - " + Convert.ToInt32(u.qtdEstoque).ToString(),
                     Selected = false                    
                 }),
                 ListCondicaoPagamento = listCond.Select(u => new SelectListItem

@@ -52,7 +52,7 @@ namespace Sistema.Controllers
                 ListProdutos = listProd.Select(u => new SelectListItem
                 {
                     Value = u.idProduto.ToString(),
-                    Text = u.dsProduto.ToString() + " - " + u.vlSaldo.ToString(),
+                    Text = u.dsProduto.ToString() + " - " + u.qtdEstoque.ToString(),
                     Selected = false                    
                 }),
                 ListCondicaoPgto = listCond.Select(u => new SelectListItem

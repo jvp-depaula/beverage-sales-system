@@ -22,14 +22,21 @@ namespace Sistema.DAO
                         idProduto = Convert.ToInt32(reader["idProduto"]),
                         dsProduto = Convert.ToString(reader["dsProduto"]),
                         idFornecedor = Convert.ToInt32(reader["idFornecedor"]),
+                        nmFornecedor = Convert.ToString(reader["nmFornecedor"]),
                         idCategoria = Convert.ToInt32(reader["idCategoria"]),
+                        nmCategoria = Convert.ToString(reader["nmCategoria"]),
                         idUnidade = Convert.ToInt32(reader["idUnidade"]),
+                        dsUnidade = Convert.ToString(reader["dsUnidade"]),
                         idMarca = Convert.ToInt32(reader["idMarca"]),
+                        nmMarca = Convert.ToString(reader["nmMarca"]),
                         cdNCM = Convert.ToString(reader["cdNCM"]),
                         vlVenda = Convert.ToDecimal(reader["vlVenda"]),
+                        vlCusto = Convert.ToDecimal(reader["vlCusto"]),
+                        qtdEstoque = Convert.ToDecimal(reader["qtdEstoque"]),
+                        vlUltCompra = Convert.ToDecimal(reader["vlUltCompra"]),
                         observacao = Convert.ToString(reader["observacao"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
-                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
+                        dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])                        
                     };
 
                     list.Add(produto);
@@ -51,7 +58,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, idUnidade, idMarca, cdNCM, vlVenda, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')",
+                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, idUnidade, idMarca, cdNCM, vlVenda, qtdEstoque, vlCusto, vlUltCompra, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, '{5}', {6}, {7}, {8}, {9}, '{10}', {11}, {12})",
                                         produto.dsProduto,
                                         produto.idFornecedor,
                                         Convert.ToInt32(produto.idCategoria),
@@ -59,6 +66,9 @@ namespace Sistema.DAO
                                         Convert.ToInt32(produto.idMarca),
                                         produto.cdNCM,
                                         Convert.ToDecimal(produto.vlVenda),
+                                        produto.vlCusto == null ? 0 : produto.vlCusto,
+                                        produto.vlUltCompra == null ? 0 : produto.vlUltCompra,
+                                        produto.qtdEstoque == null ? 0 : produto.qtdEstoque,
                                         produto.observacao,
                                         Util.Util.FormatDate(DateTime.Now),
                                         Util.Util.FormatDate(DateTime.Now));
@@ -81,7 +91,7 @@ namespace Sistema.DAO
             try
             {
                 var sql = string.Format("UPDATE tbProdutos SET dsProduto = '{0}', idFornecedor = '{1}', idCategoria = '{2}', " +
-                    "idUnidade = '{3}', idMarca = '{4}', cdNCM = '{5}', vlVenda = '{6}', observacao = '{7}', dtUltAlteracao = '{8}' WHERE idProduto = '{9}'",
+                    "idUnidade = '{3}', idMarca = '{4}', cdNCM = '{5}', vlVenda = '{6}', observacao = '{7}', dtUltAlteracao = '{8}', vlCusto = {9}, vlUltCompra = {10}, qtdEstoque = {11} WHERE idProduto = '{12}'",
                      produto.dsProduto,
                      produto.idFornecedor,
                      Convert.ToInt32(produto.idCategoria),
@@ -91,6 +101,9 @@ namespace Sistema.DAO
                      Convert.ToDecimal(produto.vlVenda),
                      produto.observacao,
                      Util.Util.FormatDate(DateTime.Now),
+                     produto.vlCusto ?? 0,
+                     produto.vlUltCompra ?? 0,
+                     produto.qtdEstoque ?? 0,
                      produto.idProduto);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
@@ -122,11 +135,18 @@ namespace Sistema.DAO
                         model.idProduto = Convert.ToInt32(reader["idProduto"]);
                         model.dsProduto = Convert.ToString(reader["dsProduto"]);
                         model.idFornecedor = Convert.ToInt32(reader["idFornecedor"]);
+                        model.nmFornecedor = Convert.ToString(reader["nmFornecedor"]);
                         model.idCategoria = Convert.ToInt32(reader["idCategoria"]);
+                        model.nmCategoria = Convert.ToString(reader["nmCategoria"]);
                         model.idUnidade = Convert.ToInt32(reader["idUnidade"]);
+                        model.dsUnidade = Convert.ToString(reader["dsUnidade"]);
                         model.idMarca = Convert.ToInt32(reader["idMarca"]);
+                        model.nmMarca = Convert.ToString(reader["nmMarca"]);
                         model.cdNCM = Convert.ToString(reader["cdNCM"]);
                         model.vlVenda = Convert.ToDecimal(reader["vlVenda"]);
+                        model.qtdEstoque = Convert.ToDecimal(reader["qtdEstoque"]);
+                        model.vlUltCompra = Convert.ToDecimal(reader["vlUltcompra"]);
+                        model.vlCusto = Convert.ToDecimal(reader["vlCusto"]);
                         model.observacao = Convert.ToString(reader["observacao"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
@@ -194,6 +214,9 @@ namespace Sistema.DAO
                         tbMarcas.nmMarca AS nmMarca,
                         tbProdutos.cdNCM AS cdNCM,
                         tbProdutos.vlVenda AS vlVenda,
+                        tbProdutos.vlCusto AS vlCusto,
+                        tbProdutos.vlUltCompra AS vlUltCompra,
+                        tbProdutos.qtdEstoque AS qtdEstoque,
                         tbProdutos.observacao AS observacao,
                         tbProdutos.dtCadastro AS dtCadastro,
                         tbProdutos.dtUltAlteracao AS dtUltAlteracao

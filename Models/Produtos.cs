@@ -43,7 +43,11 @@ namespace Sistema.Models
         [Required(ErrorMessage = "Informe o NCM!")]
         public string cdNCM { get; set; }
 
-        [Display(Name = "Valor de venda")]
+        [Display(Name = "Valor de Compra")]
+        [DisplayFormat(DataFormatString = "{0:###.###,##}")]
+        public decimal? vlCusto { get; set; }
+
+        [Display(Name = "Valor de Venda")]
         [Required(ErrorMessage = "Informe o valor de venda!")]
         [DisplayFormat(DataFormatString = "{0:###.###,##}")]
         public decimal vlVenda { get; set; }
@@ -52,10 +56,10 @@ namespace Sistema.Models
         public string observacao { get; set; }
 
         [Display(Name = "Valor Última Compra")]
-        public decimal vlUltCompra { get; set; }
+        public decimal? vlUltCompra { get; set; }
        
-        [Display(Name = "Saldo")] // Estoque.
-        public int vlSaldo { get; set; } // Estoque - Saldo do Produto em Estoque.
+        [Display(Name = "Estoque")] // Estoque.
+        public decimal? qtdEstoque { get; set; } // Estoque - Saldo do Produto em Estoque.
 
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
