@@ -53,33 +53,11 @@ $(document).ready(function () {
         let condicaoPgto = $("#dsCondicaoPgto").val();
         if (condicaoPgto) {
             let parcelas = condicaoPgto.split(",");
-            if (parcelas.length > 1) { 
-                $("#idFormaPgto").val($('#idFormaPgto option:contains(prazo)').val());
-                $("#idFormaPgto").prop('disabled', true);
-                $("#btnModalFormaPgto").prop('disabled', true);
+            if (parcelas.length > 1) {
                 nrParcelas = parcelas.length;
-                $("#qtDias").prop("disabled", false);
-                $("#qtDias").val(parcelas[0]);
-                $("#txPercentual").prop("disabled", false);
-                $("#txPercentual").val("");
+                Parcelas.PgtoPrazo(parcelas);                
             } else {
-                $("#idFormaPgto").val($('#idFormaPgto option:contains(vista)').val());
-                $("#idFormaPgto").prop('disabled', false);
-                $("#btnModalFormaPgto").prop('disabled', false);
-                $("#qtDias").val($("#dsCondicaoPgto").val());
-                $("#qtDias").prop("disabled", true);
-                $("#txPercentual").val("100");
-                $("#txPercentual").prop("disabled", true);
-                var parcela = {
-                    nrParcela: 1,
-                    idFormaPgto: $("#idFormaPgto").val(),
-                    dsFormaPgto: $("#idFormaPgto option:selected").text(),
-                    qtDias: 1,
-                    txPercentual: 100
-                };
-                tableParcelas.clear().draw();
-                tableParcelas.row.add(parcela);
-                tableParcelas.draw();
+                Parcelas.PgtoAVista();                
             }
         }
     });
@@ -155,25 +133,20 @@ $(document).ready(function () {
 
     // --------------------- PARCELAS ------------------------
     $("#btnAdcParcela").on('click', function () {
-        if (Parcelas.validaForm()) {
-            var formaPgto = $("#idFormaPgto option:selected").text().toLowerCase();
-            if (formaPgto.includes("vista")) {
-                
-            } else {
-                var parcelasAdicionadas = tableParcelas.rows().count();
+        if (Parcelas.validaForm()) {            
+            var parcelasAdicionadas = tableParcelas.rows().count();
 
-                if (parcelasAdicionadas <= nrParcelas) {
-                    var parcela = {
-                        nrParcela: tableParcelas.rows().count() + 1,
-                        idFormaPgto: $("#idFormaPgto").val(),
-                        dsFormaPgto: $("#idFormaPgto option:selected").text(),
-                        qtDias: $("#qtDias").val(),
-                        txPercentual: $("#txPercentual").val()
-                    };                
-                    tableParcelas.row.add(parcela);
-                    tableParcelas.draw();
-                }
-            }
+            if (parcelasAdicionadas <= nrParcelas) {
+                var parcela = {
+                    nrParcela: tableParcelas.rows().count() + 1,
+                    idFormaPgto: $("#idFormaPgto").val(),
+                    dsFormaPgto: $("#idFormaPgto option:selected").text(),
+                    qtDias: $("#qtDias").val(),
+                    txPercentual: $("#txPercentual").val()
+                };                
+                tableParcelas.row.add(parcela);
+                tableParcelas.draw();
+            }            
 
             Parcelas.VerificarParcelas();
         }
@@ -253,8 +226,59 @@ var Parcelas = {
         }        
     },
 
+    PgtoPrazo(parcelas) {
+        $("#btnAdcParcela").prop('disabled', false);
+        $("#idFormaPgto").val($('#idFormaPgto option:contains(prazo)').val());
+        $("#idFormaPgto").prop('disabled', true);
+        $("#btnModalFormaPgto").prop('disabled', true);
+        $("#qtDias").val(parcelas[0]);
+        $("#qtDias").attr("readonly", 'readonly');
+        let txPercentual = parseFloat(100 / nrParcelas).toFixed(2);
+        $("#txPercentual").prop("disabled", false);
+        $("#txPercentual").val(txPercentual);
+    },
+
+    PgtoAVista() {
+        $("#idFormaPgto").val($('#idFormaPgto option:contains(vista)').val());
+        $("#idFormaPgto").prop('disabled', true);
+        $("#btnModalFormaPgto").prop('disabled', true);
+        $("#qtDias").val($("#dsCondicaoPgto").val());
+        $("#qtDias").prop("disabled", true);
+        $("#txPercentual").val("100");
+        $("#txPercentual").prop("disabled", true);
+        $("#btnAdcParcela").prop('disabled', true);
+        var parcela = {
+            nrParcela: 1,
+            idFormaPgto: $("#idFormaPgto").val(),
+            dsFormaPgto: $("#idFormaPgto option:selected").text(),
+            qtDias: 1,
+            txPercentual: 100
+        };
+        tableParcelas.clear().draw();
+        tableParcelas.row.add(parcela);
+        tableParcelas.draw();
+    },
+
     VerificarParcelas() {
-        if (tableParcelas.rows().count() > 0) {
+        if (tableParcelas.rows().count() == (nrParcelas - 1)) {
+            var txPercentual = 0;
+            tableParcelas.column(2).data().each(function (value, index) {
+                txPercentual = parseFloat(value) + parseFloat(value);    
+            });      
+
+            if (txPercentual != 100) {
+                txPercentual = 100.00 - parseFloat(txPercentual);
+            }
+
+            $("#txPercentual").val(txPercentual.toFixed(2));
+        }
+
+        if (tableParcelas.rows().count() == 0) {
+            $("#dsCondicaoPgto").attr('readonly', '');
+            $("#vlMulta").attr('readonly', '');
+            $("#vlDesconto").attr('readonly', '');
+            $("#vlJuros").attr('readonly', '');
+        } else if (tableParcelas.rows().count() > 0 && tableParcelas.rows().count() < nrParcelas) {
             $("#dsCondicaoPgto").attr('readonly', 'readonly');
             $("#dsCondicaoPgto").css('background-color', '#dee2e6');
             $("#vlMulta").attr('readonly', 'readonly');
@@ -263,11 +287,6 @@ var Parcelas = {
             $("#vlDesconto").css('background-color', '#dee2e6');
             $("#vlJuros").attr('readonly', 'readonly');
             $("#vlJuros").css('background-color', '#dee2e6');
-        } else {
-            $("#dsCondicaoPgto").attr('readonly', '');
-            $("#vlMulta").attr('readonly', '');
-            $("#vlDesconto").attr('readonly', '');
-            $("#vlJuros").attr('readonly', '');
         }
     }
 }

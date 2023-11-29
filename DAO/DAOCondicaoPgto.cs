@@ -49,7 +49,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, vlMulta, vlJuros, vlDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, {5})",
+                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, vlMulta, vlJuros, vlDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, {5}); SELECT SCOPE_IDENTITY()",
                     condicaoPgto.dsCondicaoPgto,
                     this.FormatDecimal(condicaoPgto.vlDesconto),
                     this.FormatDecimal(condicaoPgto.vlJuros),
