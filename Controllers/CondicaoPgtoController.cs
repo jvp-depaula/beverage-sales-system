@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
 using System;
@@ -19,7 +20,18 @@ namespace Sistema.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var daoFormaPgto = new DAOFormaPgto();
+            List<FormaPgto> list = daoFormaPgto.GetFormaPgtos();
+
+            var condicao = new CondicaoPgto();
+
+            condicao.ListaFormaPgto = list.Select(u => new SelectListItem
+            {
+                Value = u.idFormaPgto.ToString(),
+                Text = u.dsFormaPgto.ToString()
+            });
+
+            return View(condicao);
         }
 
         [HttpPost]
@@ -62,10 +74,22 @@ namespace Sistema.Controllers
             return this.GetView(id);
         }
 
-        private ActionResult GetView(int? codCategoria)
+        private ActionResult GetView(int? idCondicaoPgto)
         {
             var DAOCondicaoPgto = new DAOCondicaoPgto();
-            var model = DAOCondicaoPgto.GetCondicaoPgto(codCategoria);
+            var model = DAOCondicaoPgto.GetCondicaoPgto(idCondicaoPgto);
+
+            var daoFormaPgto = new DAOFormaPgto();
+            List<FormaPgto> list = daoFormaPgto.GetFormaPgtos();
+
+            var condicao = new CondicaoPgto();
+
+            model.ListaFormaPgto = list.Select(u => new SelectListItem
+            {
+                Value = u.idFormaPgto.ToString(),
+                Text = u.dsFormaPgto.ToString()
+            });
+
             return View(model);
         }
 
@@ -93,6 +117,6 @@ namespace Sistema.Controllers
 
 
             return Json(new { success = true, novaListaCondicoes = list });
-        }
+        }        
     }
 }

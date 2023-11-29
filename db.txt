@@ -57,16 +57,14 @@ CREATE TABLE tbCondicaoPgto (
 	CONSTRAINT PK_CondicaoPgto PRIMARY KEY (idCondicaoPgto),
 );
 
-CREATE TABLE tbParcela (
+CREATE TABLE tbParcelas (
 	idCondicaoPgto INT NOT NULL,
-	nrParcela INT NOT NULL IDENTITY(1, 1),
-	dias INT NOT NULL,
 	idFormaPgto INT NOT NULL,
-    txPercentParcela DECIMAL (9,2),
-	dtCadastro DATETIME NOT NULL,
-	dtUltAlteracao DATETIME NOT NULL,
-	CONSTRAINT PK_tbParcelas PRIMARY KEY (idCondicaoPgto, nrParcela),
-	CONSTRAINT FK_Parcelas_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto (idFormaPgto)
+	nrParcela INT NOT NULL,
+	qtDias INT NOT NULL,
+	txPercentual decimal(9,2) NOT NULL,
+	CONSTRAINT FK_Parcelas_CondicaoPgto FOREIGN KEY (idCondicaoPgto) REFERENCES tbCondicaoPgto(idCondicaoPgto),
+	CONSTRAINT FK_Parcelas_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto(idFormaPgto),
 );
 
 CREATE TABLE tbClientes (
@@ -74,8 +72,8 @@ CREATE TABLE tbClientes (
 	flTipo VARCHAR(1) NOT NULL,
 	nmCliente VARCHAR(255) NOT NULL,
 	nmFantasia VARCHAR(255) NOT NULL,
-	nrCPFCNPJ VARCHAR(14) NOT NULL,
-	nrRG_IE VARCHAR(10) NOT NULL,
+	nrCPFCNPJ VARCHAR(14),
+	nrRG_IE VARCHAR(10),
 	nrTelefoneCelular VARCHAR(15),
 	nrTelefoneFixo VARCHAR(10),
 	dsEmail VARCHAR(50) NOT NULL,

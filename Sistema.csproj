@@ -14,10 +14,32 @@
 	
   <ItemGroup>
     <Content Remove="Views\Shared\Produtos\AddProdutos.cshtml" />
-    <Content Remove="wwwroot\js\Scripts\Clientes\Form.js" />
-    <Content Remove="wwwroot\js\Scripts\Compras\Form.js" />
-    <Content Remove="wwwroot\js\Scripts\Fornecedores\Form.js" />
-    <Content Remove="wwwroot\js\Scripts\Funcionarios\Form.js" />
+    <Content Remove="wwwroot\js\Scripts\CondicaoPgto\Form.js" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Include="wwwroot\js\Scripts\Categorias\Index.js" />
+    <None Include="wwwroot\js\Scripts\Cidades\Form.js" />
+    <None Include="wwwroot\js\Scripts\Cidades\Index.js" />
+    <None Include="wwwroot\js\Scripts\Clientes\Form.js" />
+    <None Include="wwwroot\js\Scripts\Clientes\Index.js" />
+    <None Include="wwwroot\js\Scripts\Compras\Form.js" />
+    <None Include="wwwroot\js\Scripts\Compras\Index.js" />
+    <None Include="wwwroot\js\Scripts\CondicaoPgto\Form.js" />
+    <None Include="wwwroot\js\Scripts\CondicaoPgto\Index.js" />
+    <None Include="wwwroot\js\Scripts\Estados\Form.js" />
+    <None Include="wwwroot\js\Scripts\Estados\Index.js" />
+    <None Include="wwwroot\js\Scripts\FormaPgto\Index.js" />
+    <None Include="wwwroot\js\Scripts\Fornecedores\Form.js" />
+    <None Include="wwwroot\js\Scripts\Fornecedores\Index.js" />
+    <None Include="wwwroot\js\Scripts\Funcionarios\Form.js" />
+    <None Include="wwwroot\js\Scripts\Funcionarios\Index.js" />
+    <None Include="wwwroot\js\Scripts\Marcas\Index.js" />
+    <None Include="wwwroot\js\Scripts\Paises\Index.js" />
+    <None Include="wwwroot\js\Scripts\Produtos\Form.js" />
+    <None Include="wwwroot\js\Scripts\Produtos\Index.js" />
+    <None Include="wwwroot\js\Scripts\Unidades\Index.js" />
+    <None Include="wwwroot\js\Scripts\Vendas\Index.js" />
   </ItemGroup>  
 
   <ItemGroup>
@@ -26,13 +48,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-  </ItemGroup>  
-
-  <ItemGroup>
-    <None Include="wwwroot\js\Scripts\Clientes\Form.js" />
-    <None Include="wwwroot\js\Scripts\Compras\Form.js" />
-    <None Include="wwwroot\js\Scripts\Fornecedores\Form.js" />
-    <None Include="wwwroot\js\Scripts\Funcionarios\Form.js" />
   </ItemGroup>
 
 </Project>

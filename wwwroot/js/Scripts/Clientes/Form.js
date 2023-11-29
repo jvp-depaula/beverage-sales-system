@@ -1,4 +1,82 @@
+var tableCidades = null;
+var tableEstados = null;
+var tablePaises = null;
+var tableCondicaoPgto = null;
+
 $(document).ready(function () {
+    tableCidades = $("#tbCidades").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idCidade" },
+            { data: "nmCidade" },
+            { data: "nmEstado" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectCidade-btn" data-id="' + data.idCidade + '" data-nm="' + data.nmCidade + '">Selecionar</button>'
+                }
+            }
+        ]
+    })
+
+    tableEstados = $('#tbEstados').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idEstado" },
+            { data: "nmEstado" },
+            { data: "nmPais" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectEstado-btn" data-id="' + data.idEstado + '" data-nm="' + data.nmEstado + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tablePaises = $('#tbPaises').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idPais" },
+            { data: "nmPais" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectPais-btn" data-id="' + data.idPais + '" data-nm="' + data.nmPais + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tableCondicaoPgto = $('#tbCondicaoPgto').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idCondicaoPgto" },
+            { data: "dsCondicaoPgto" },
+            { data: "vlMulta" },
+            { data: "vlDesconto" },
+            { data: "vlJuros" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectCondicaoPgto-btn" data-id="' + data.idCondicaoPgto + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
     $("#flTipo").on('change', function () {
         if ($(this).val() == "") {
             $("#formDiv").css("display", "none");
@@ -75,7 +153,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.selectCidade-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idCidade").val(id);
         $("#btnFecharModal").click();
     });
@@ -135,18 +213,19 @@ $(document).ready(function () {
 
     // --------------------- ESTADOS ------------------------
     // SELECIONAR
-    $("#btnMostraSelecionarEstados").on('click', function () { 
+    $("#btnMostraSelecionarEstados").on('click', function () {
         $("#txtTituloModal").html("Lista de Estados")
         Cidades.SelecionarCidades(false);
         Cidades.AddCidades(false);
         Estados.SelecionarEstados(true);
         Estados.CarregaLista();
     });
-    
+
     $(document).on('click', '.selectEstado-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idEstado").val(id);
-        $("#btnFecharModal").click();
+        Estados.SelecionarEstados(false);
+        Cidades.AddCidades(true);
     });
 
     // ADICIONAR
@@ -215,7 +294,7 @@ $(document).ready(function () {
 
     // SELECIONAR   
     $(document).on('click', '.selectPais-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idPais").val(id);
         Estados.AddEstados(true);
         Paises.SelecionarPaises(false);
@@ -290,11 +369,11 @@ $(document).ready(function () {
     // SELECIONAR
     $('#modalCondicoes').on('show.bs.modal', function (e) {
         CondicoesPgto.mostraSelecionarCondicoes();
-        CondicoesPgto.CarregaLista($(this));
+        CondicoesPgto.CarregaLista();
     });
 
-    $(document).on('click', '.selectCondicao-btn', function () {
-        var id = $(this).data('value');
+    $(document).on('click', '.selectCondicaoPgto-btn', function () {
+        var id = $(this).data('id');
         $("#idCondicaoPgto").val(id);
         CondicoesPgto.fechaModal();
     });
@@ -305,10 +384,10 @@ $(document).ready(function () {
             $.ajax({
                 url: "/CondicaoPgto/JsAddCondicao",
                 data: {
-                    dsCondicaoPgto : $("#dsCondicaoPgto").val(),
+                    dsCondicaoPgto: $("#dsCondicaoPgto").val(),
                     vlMulta: $("#vlMulta").val(),
-                    vlDesconto : $("#vlDesconto").val(),
-                    vlJuros : $("#vlJuros").val(),
+                    vlDesconto: $("#vlDesconto").val(),
+                    vlJuros: $("#vlJuros").val(),
                 },
                 success: function (result) {
                     if (result.success) {
@@ -336,7 +415,7 @@ $(document).ready(function () {
 
 var Cidades = {
     SelecionarCidades(mostra) {
-        if (mostra) 
+        if (mostra)
             $(".SelecionaCidade").css("display", "");
         else
             $(".SelecionaCidade").css("display", "none");
@@ -369,30 +448,21 @@ var Cidades = {
         $("#DDD").val("");
     },
 
+
     CarregaLista() {
-        let modal = $("#modal");
         let url = "/Cidades/JsSearch";
         $.ajax({
             url: url,
+            type: 'GET',
+            dataType: 'json',
+            cache: 'false',
             success: function (result) {
-                var tbody = modal.find('#bodyCidades');
-                tbody.empty();
-                result.forEach(function (cidades) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${cidades.nmCidade}</td>
-                            <td>${cidades.nmEstado}</td>
-                            <td>${cidades.nmPais}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectCidade-btn" data-value="${cidades.idCidade}" data-name="${cidades.nmCidade}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableCidades.clear().draw();
+                tableCidades.rows.add(result);
+                tableCidades.draw();
+            },
+            error: function () {
+                alert("Houve um erro na busca das Cidades");
             }
         });
     },
@@ -435,29 +505,16 @@ var Estados = {
     },
 
     CarregaLista() {
-        let modal = $("#modalCondicoes");
         let url = "/Estados/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyEstados');
-                tbody.empty();
-                result.forEach(function (estados) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${estados.idEstado}</td>
-                            <td>${estados.nmEstado}</td>
-                            <td>${estados.nmPais}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectEstado-btn" data-value="${estados.idEstado}" data-name="${estados.nmEstado}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableEstados.clear().draw();
+                tableEstados.rows.add(result);
+                tableEstados.draw();
+            },
+            error: function () {
+                alert("Houve um erro na busca dos Estados!");
             }
         });
     }
@@ -500,28 +557,19 @@ var Paises = {
     },
 
     CarregaLista() {
-        let modal = $("#modal");
         let url = "/Paises/JsSearch";
         $.ajax({
             url: url,
+            type: 'GET',
+            dataType: 'json',
+            cache: 'false',
             success: function (result) {
-                var tbody = modal.find('#bodyPaises');
-                tbody.empty();
-                result.forEach(function (paises) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${paises.idPais}</td>
-                            <td>${paises.nmPais}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectPais-btn" data-value="${paises.idPais}" data-name="${paises.nmPais}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tablePaises.clear().draw();
+                tablePaises.rows.add(result);
+                tablePaises.draw();
+            },
+            error: function () {
+                alert("Houve um erro na busca dos Paises");
             }
         });
     },
@@ -554,7 +602,7 @@ var Endereco = {
                         $("#dsBairro").val(dados.bairro);
                         $("#dsComplemento").val(dados.complemento);
                         let cidade = dados.localidade ?? "";
-                        Endereco.buscaCidade(cidade);
+                        Endereco.buscaCidade(null, cidade);
                     }
                     else {
                         //CEP pesquisado não foi encontrado.
@@ -573,10 +621,11 @@ var Endereco = {
         };
     },
 
-    buscaCidade(cidade) {
+    buscaCidade(id, cidade) {
         $.ajax({
             url: "/Cidades/JsConsultaCidade",
             data: {
+                idCidade: id ?? null,
                 nmCidade: cidade
             },
             success: function (result) {
@@ -635,31 +684,18 @@ var CondicoesPgto = {
         $("#vlJuros").val("");
     },
 
-    CarregaLista(modal) {
+    CarregaLista() {
         $.ajax({
             url: "/CondicaoPgto/JsSearch",
             success: function (result) {
-                var tbody = modal.find('#bodyCondicaoPgto');
-                tbody.empty();
-                result.forEach(function (condicoes) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${condicoes.idCondicaoPgto}</td>
-                            <td>${condicoes.dsCondicaoPgto}</td>
-                            <td>${condicoes.vlMulta}</td>
-                            <td>${condicoes.vlDesconto}</td>
-                            <td>${condicoes.vlJuros}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectCondicao-btn" data-value="${condicoes.idCondicaoPgto}" data-name="${condicoes.dsCondicaoPgto}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableCondicaoPgto.clear().draw();
+                tableCondicaoPgto.rows.add(result);
+                tableCondicaoPgto.draw();
+            },
+            error: function () {
+                alert("Houve um erro na busca das Condições de Pgto");
             }
         });
-    }
+
+    },
 };

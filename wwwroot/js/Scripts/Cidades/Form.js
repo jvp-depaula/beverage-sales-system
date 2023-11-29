@@ -4,23 +4,46 @@ $(document).ready(function () {
     tableEstados = $('#tbEstados').DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
-        },        
+        },     
+        columns: [
+            { data: "idEstado" },
+            { data: "nmEstado" },
+            { data: "nmPais" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectEstado-btn" data-id="' + data.idEstado + '" data-nm="' + data.nmEstado + '">Selecionar</button>'
+                }
+            }
+        ]
     });
 
     tablePaises = $('#tbPaises').DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
-        }
+        },
+        columns: [
+            { data: "idPais" },
+            { data: "nmPais" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectPais-btn" data-id="' + data.idPais + '" data-nm="' + data.nmPais + '">Selecionar</button>'
+                }
+            }
+        ]
     });
 
     // --------------------- ESTADOS ------------------------
     // SELECIONAR
     $('#modal').on('show.bs.modal', function (e) {
         Estados.SelecionarEstados(true);
-        // Estados.CarregaLista();
+        Estados.CarregaLista();
     });
     $(document).on('click', '.selectEstado-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idEstado").val(id);
         $("#btnFecharModal").click();
     });
@@ -83,7 +106,7 @@ $(document).ready(function () {
 
     // SELECIONAR   
     $(document).on('click', '.selectPais-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idPais").val(id);
         Estados.AddEstados(true);
         Paises.SelecionarPaises(false);
@@ -192,7 +215,9 @@ var Estados = {
         $.ajax({
             url: url,
             success: function (result) {
+                tableEstados.clear().draw();
                 tableEstados.rows.add(result);
+                tableEstados.draw();
             }
         });
     }
@@ -235,28 +260,19 @@ var Paises = {
     },
 
     CarregaLista() {
-        let modal = $("#modal");
         let url = "/Paises/JsSearch";
         $.ajax({
             url: url,
+            type: 'GET',
+            dataType: 'json',
+            cache: 'false',
             success: function (result) {
-                var tbody = modal.find('#bodyPaises');
-                tbody.empty();
-                result.forEach(function (paises) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${paises.idPais}</td>
-                            <td>${paises.nmPais}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectPais-btn" data-value="${paises.idPais}" data-name="${paises.nmPais}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tablePaises.clear().draw();
+                tablePaises.rows.add(result);
+                tablePaises.draw();
+            },
+            error: function () {
+                alert("Houve um erro na busca dos Paises");
             }
         });
     },

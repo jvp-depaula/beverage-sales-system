@@ -75,7 +75,7 @@ namespace Sistema.Controllers
             return Json(list);
         }
 
-        public JsonResult JsAddCategoria(string dsFormaPgto)
+        public JsonResult JsAddFormaPgto(string dsFormaPgto)
         {
             DAOFormaPgto dao = new();
             var obj = new FormaPgto()

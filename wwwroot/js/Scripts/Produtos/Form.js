@@ -1,4 +1,77 @@
+var tableMarcas = null;
+var tableUnidades = null;
+var tableCategorias = null;
+var tableFornecedores = null;
 $(document).ready(function () {
+
+    tableMarcas = $("#tbMarcas").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idMarca" },
+            { data: "nmMarca" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectMarca-btn" data-id="' + data.idMarca + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tableUnidades = $("#tbUnidades").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "dsUnidade" },
+            { data: "sigla" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectUnidade-btn" data-id="' + data.idUnidade + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tableCategorias = $("#tbCategorias").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idCategoria" },
+            { data: "nmCategoria" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectCategoria-btn" data-id="' + data.idCategoria + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tableFornecedores = $("#tbFornecedores").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "nmFornecedor" },
+            { data: "nrCNPJ" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectFornecedor-btn" data-id="' + data.id + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
 // ------------------------ MARCAS ------------------------
     $("#btnAbreModalMarca").on('click', function () {
         Marcas.SelecionarMarcas(true);
@@ -8,7 +81,7 @@ $(document).ready(function () {
 
     // SELECIONAR   
     $(document).on('click', '.selectMarca-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idMarca").val(id);
         $("#btnFecharModalMarca").click();
     });
@@ -71,7 +144,7 @@ $(document).ready(function () {
 
     // SELECIONAR
     $(document).on('click', '.selectUnidade-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idUnidade").val(id);
         $("#btnFecharModalUnidade").click();
     });
@@ -133,7 +206,7 @@ $(document).ready(function () {
 
     // SELECIONAR
     $(document).on('click', '.selectCategoria-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idCategoria").val(id);
         $("#btnFecharModalCategoria").click();
     });
@@ -193,7 +266,7 @@ $(document).ready(function () {
 
     // SELECIONAR   
     $(document).on('click', '.selectFornecedor-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idFornecedor").val(id);
         $("#btnFecharModalFornecedor").click();
     });
@@ -232,28 +305,13 @@ var Marcas = {
     },
 
     CarregaLista() {
-        let modal = $("#modalMarca");
         let url = "/Marcas/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyMarcas');
-                tbody.empty();
-                result.forEach(function (marcas) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${marcas.idMarca}</td>
-                            <td>${marcas.nmMarca}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectMarca-btn" data-value="${marcas.idMarca}" data-name="${marcas.nmMarca}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableMarcas.clear().draw();
+                tableMarcas.rows.add(result);
+                tableMarcas.draw();
             }
         });
     },
@@ -292,28 +350,13 @@ var Unidades = {
     },
 
     CarregaLista() {
-        let modal = $("#modalUnidade");
         let url = "/Unidades/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyUnidades');
-                tbody.empty();
-                result.forEach(function (unidades) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${unidades.dsUnidade}</td>
-                            <td>${unidades.sigla}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectUnidade-btn" data-value="${unidades.idUnidade}" data-name="${unidades.dsUnidade}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableUnidades.clear().draw();
+                tableUnidades.rows.add(result);
+                tableUnidades.draw();
             }
         });
     },
@@ -348,28 +391,13 @@ var Categorias = {
     },
 
     CarregaLista() {
-        let modal = $("#modalCategoria");
         let url = "/Categorias/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyCategorias');
-                tbody.empty();
-                result.forEach(function (categorias) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${categorias.idCategoria}</td>
-                            <td scope="row">${categorias.nmCategoria}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectCategoria-btn" data-value="${categorias.idCategoria}" data-name="${categorias.nmCategoria}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableCategorias.clear().draw();
+                tableCategorias.rows.add(result);
+                tableCategorias.draw();
             }
         });
     },
@@ -384,28 +412,13 @@ var Fornecedores = {
     },
 
     CarregaLista() {
-        let modal = $("#modalFornecedor");
         let url = "/Fornecedores/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyFornecedor');
-                tbody.empty();
-                result.forEach(function (fornecedores) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${fornecedores.id}</td>
-                            <td scope="row">${fornecedores.nmFornecedor}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectFornecedor-btn" data-value="${fornecedores.id}" data-name="${fornecedores.nmFornecedor}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableFornecedores.clear().draw();
+                tableFornecedores.rows.add(result);
+                tableFornecedores.draw();
             }
         });
     },

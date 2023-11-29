@@ -1,9 +1,109 @@
+var tableFornecedores = null;
+var tableProdutos = null;
+var tableItensCompra = null;
+var tableCondicaoPgto = null;
 $(document).ready(function () {
 
-    $('#tbProdutos').DataTable({
+    tableFornecedores = $("#tbFornecedores").DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
-        }
+        },
+        columns: [
+            { data: "nmFornecedor" },
+            { data: "nrCNPJ" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectFornecedor-btn" data-id="' + data.id + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tableProdutos = $('#tbProdutos').DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "dsProduto" },
+            { data: "dsUnidade" },
+            { data: "qtdEstoque" },
+            { data: "vlUltCompra" },
+            { data: "nmFornecedor" },
+            {
+                data: null,
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectProduto-btn" data-id="' + data.idProduto + '" data-unidade="' + data.dsUnidade + '">Selecionar</button>'
+                }
+            },            
+        ]
+    });
+
+    tableItensCompra = $("#listaCompra").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            {
+                data: null,
+                mRender: function (data) {
+                    return data.idProduto + " - " + data.dsProduto;
+                }
+            },
+            {
+                data: null,
+                mRender: function (data) {
+                    return data.idUnidade + " - " + data.dsUnidade;
+                }
+            },
+            { data: "qtdProduto" },
+            { data: "vlCompra" },
+            {
+                data: "txDesconto",
+                mRender: function (data) {
+                    return data + "%";
+                }
+            },
+            {
+                data: null,
+                mRender: function (data) {
+                    return data.idFornecedor + " - " + data.nmFornecedor;
+                }
+            },
+            {
+                data: null,
+                mRender: function (data) {
+                    return data.totalProduto - (data.totalProduto * data.txDesconto/100);
+                }
+            },
+            {
+                data: null,
+                mRender: function (data) {
+                    return '<a class="text-center"><i class="btn btn-danger btn-sm fa fa-trash"></i></a>'                    
+                }
+            },
+        ]
+    });
+
+    tableCondicaoPgto = $("#tbCondicaoPgto").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "idCondicaoPgto" },
+            { data: "dsCondicaoPgto" },
+            { data: "vlMulta" },
+            { data: "vlDesconto" },
+            { data: "vlJuros" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectCondicaoPgto-btn" data-id="' + data.idCondicaoPgto + '">Selecionar</button>'
+                }
+            }
+        ]
     });
 
     // --------------------- CONDICAO PGTO ------------------------
@@ -13,8 +113,8 @@ $(document).ready(function () {
         CondicoesPgto.CarregaLista($(this));
     });
 
-    $(document).on('click', '.selectCondicao-btn', function () {
-        var id = $(this).data('value');
+    $(document).on('click', '.selectCondicaoPgto-btn', function () {
+        var id = $(this).data('id');
         $("#idCondicaoPgto").val(id);
         CondicoesPgto.fechaModal();
     });
@@ -54,14 +154,14 @@ $(document).ready(function () {
     });
 
 // ------------------------ FORNECEDORES ------------------------
-    $("#btnAbreModalFornecedor").on('click', function () {
+    $("#modalFornecedor").on('show.bs.modal', function () {
         Fornecedores.SelecionarFornecedores(true);
         Fornecedores.CarregaLista();
     });
 
     // SELECIONAR   
     $(document).on('click', '.selectFornecedor-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         $("#idFornecedor").val(id);
         $("#btnFecharModalFornecedor").click();
     });
@@ -77,11 +177,27 @@ $(document).ready(function () {
         Produtos.CarregaLista();
     });
 
+    $("#modalProdutos").on('show.bs.modal', function () {
+        $("#idProduto").val("");
+    })
+
+    $("#idProduto").on('change select', function () {
+        let url = "/Produtos/jsGetProduto";
+        $.ajax({
+            url: url,
+            data: {
+                idProduto: $("#idProduto").val()
+            },
+            success: function (result) {
+                $("#idUnidade").val(result.idUnidade);
+            }
+        });
+    });
+
     // SELECIONAR   
     $(document).on('click', '.selectProduto-btn', function () {
-        var id = $(this).data('value');
+        var id = $(this).data('id');
         var estoque = $(this).data('qtdestoque');
-        let vlUnit = $(this).data('vlunit');
         $("#idProduto").val(id);
         $("#vlMaxEstoque").val(estoque);
         Produtos.AddProdutos(true);
@@ -89,42 +205,42 @@ $(document).ready(function () {
     });
 
     $('#modalProdutos').on('hide.bs.modal', function (e) {
-        Produtos.SelecionarProdutos(false);
-        Produtos.AddProdutos(true);
+        Compras.limpaForm();
     });
 
     $("#btnConfirmaProd").on('click', function () {
         if (Produtos.validaProduto()) {
-            let dsProduto = "";
-            let dsUnidade = "";
-            let quantidade = "";
-            let vlCompra = "";
-            let txDesconto = "";
-            let totalProduto = "";
-            let totalCompras = 0;
+            let idProduto = $("#idProduto").val();
+            let dsProduto = $("#idProduto option:selected").text();
+            let idUnidade = $("#idUnidade option:selected").val();
+            let dsUnidade = $("#idUnidade option:selected").text();
+            let quantidade = parseFloat($("#Produto_qtdProduto").val().replace(",", "."));
+            let vlCompraUnitario = parseFloat($("#Produto_vlVenda").val().replace(",", "."));
+            let txDesconto = parseFloat($("#Produto_txDesconto").val().replace(",", "."));
+            let totalProduto = vlCompraUnitario * quantidade;
 
-            var tbody = modal.find('#tblProduto');
-            tbody.append(
-                `
-                    <tr>
-                        <td scope="row">${dsProduto}</td>
-                        <td scope="row">${dsUnidade}</td>
-                        <td scope="row">${quantidade}</td>
-                        <td scope="row">${vlCompra}</td>
-                        <td scope="row">${txDesconto}</td>
-                        <td scope="row">${totalCompras}</td>
-                        <td style="text-align: right">
-                        <button type="button" class="btn btn-sm btn-danger deleteProduto-btn">
-                            Remover
-                        </button>
-                        <button type="button" class="btn btn-sm btn-info editProduto-btn">
-                            Editar
-                        </button>
-                        </td>
-                    </tr>
-                `
-            );            
-        }
+            let produtoCompra = {
+                idProduto: idProduto,
+                dsProduto: dsProduto,
+                idUnidade: idUnidade,
+                dsUnidade: dsUnidade,
+                qtdProduto: quantidade,
+                vlCompra: vlCompraUnitario,
+                txDesconto: txDesconto ?? 0,
+                idFornecedor: $("#idFornecedor").val(),
+                nmFornecedor: $("#idFornecedor option:selected").text(),
+                totalProduto: totalProduto
+            }
+
+            tableItensCompra.row.add(produtoCompra);
+            tableItensCompra.draw();
+        };
+
+        $("#btnFechaProd").click();
+    });
+
+    $("#listaCompra").on('click', '.fa-trash', function () {
+        tableItensCompra.row($(this).parents('tr')).remove().draw(false);            
     });
 });
 
@@ -144,43 +260,25 @@ var Produtos = {
     }, 
 
     CarregaLista() {
-        let modal = $("#modalProdutos");
         let url = "/Produtos/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyProdutos');
-                tbody.empty();
-                result.forEach(function (produtos) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${produtos.idProduto}</td>
-                            <td scope="row">${produtos.dsProduto}</td>
-                            <td scope="row">${produtos.qtdEstoque}</td>
-                            <td scope="row">${produtos.vlVenda}</td>
-                            <td scope="row">${produtos.nmFornecedor}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectProduto-btn" data-value="${produtos.idProduto}" data-name="${produtos.dsProduto}" data-qtdEstoque="${produtos.qtdEstoque}" data-vlUnit="${produtos.vlVenda}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableProdutos.clear().draw();
+                tableProdutos.rows.add(result);
+                tableProdutos.draw();
             }
         });
     },
 
     validaProduto() {
-        if (IsNullOrEmpty($("#idProduto").val())) {
+        if (!($("#idProduto").val())) {
             alert("Informe o Produto a comprar!");
             return false;
-        } else if (IsNullOrEmpty($("#Produto_qtdProduto").val())) {
+        } else if (!($("#Produto_qtdProduto").val())) {
             alert("Informe a quantidade a comprar!");
             return false;
-        } else if (IsNullOrEmpty($("#Produto_vlVenda").val())) {
+        } else if (!($("#Produto_vlVenda").val())) {
             alert("Informe o valor unitário!");
             return false
         } else {
@@ -198,32 +296,18 @@ var Fornecedores = {
     },
 
     CarregaLista() {
-        let modal = $("#modalFornecedor");
         let url = "/Fornecedores/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                var tbody = modal.find('#bodyFornecedor');
-                tbody.empty();
-                result.forEach(function (fornecedores) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${fornecedores.id}</td>
-                            <td scope="row">${fornecedores.nmFornecedor}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectFornecedor-btn" data-value="${fornecedores.id}" data-name="${fornecedores.nmFornecedor}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableFornecedores.clear().draw();
+                tableFornecedores.rows.add(result);
+                tableFornecedores.draw();
             }
         });
     },
 };
+
 var CondicoesPgto = {
     mostraSelecionarCondicoes() {
         $(".AddCondicoes").css("display", "none");
@@ -273,27 +357,20 @@ var CondicoesPgto = {
         $.ajax({
             url: "/CondicaoPgto/JsSearch",
             success: function (result) {
-                var tbody = modal.find('#bodyCondicaoPgto');
-                tbody.empty();
-                result.forEach(function (condicoes) {
-                    tbody.append(
-                        `
-                        <tr>
-                            <td scope="row">${condicoes.idCondicaoPgto}</td>
-                            <td>${condicoes.dsCondicaoPgto}</td>
-                            <td>${condicoes.vlMulta}</td>
-                            <td>${condicoes.vlDesconto}</td>
-                            <td>${condicoes.vlJuros}</td>
-                            <td style="text-align: right">
-                            <button type="button" class="btn btn-sm btn-primary selectCondicao-btn" data-value="${condicoes.idCondicaoPgto}" data-name="${condicoes.dsCondicaoPgto}">
-                                Selecionar
-                            </button>
-                            </td>
-                        </tr>
-                        `
-                    );
-                });
+                tableCondicaoPgto.clear().draw();
+                tableCondicaoPgto.rows.add(result);
+                tableCondicaoPgto.draw();
             }
         });
     }
 };
+
+var Compras = {
+    limpaForm() {
+        $("#idProduto").val("");
+        $("#idUnidade").val("");
+        $("#Produto_qtdProduto").val("");
+        $("#Produto_vlVenda").val("");
+        $("#Produto_txDesconto").val("");
+    }
+}
