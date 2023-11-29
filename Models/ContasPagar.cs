@@ -47,10 +47,13 @@ namespace Sistema.Models
         public decimal vlDesconto { get; set; }
         [Display(Name = "Taxa Desconto")]
         public decimal txDesconto { get; set; }
+<<<<<<< HEAD
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 
         [Display(Name = "Data da últ. alteração")]
         public DateTime? dtUltAlteracao { get; set; }
+=======
+>>>>>>> e62caf04ce1315a201b6806efdf2275de71abc27
     }
 }

@@ -17,7 +17,11 @@ namespace Sistema.Models
         [Key]
         [Column(Order = 2)]
         [Display(Name = "Nrº Nota")]
+<<<<<<< HEAD
         public int nrNota { get; set; }
+=======
+        public string nrNota { get; set; }
+>>>>>>> e62caf04ce1315a201b6806efdf2275de71abc27
         [Key]
         [Column(Order = 3)]
         [Display(Name = "Nrº Parcela")]
@@ -46,6 +50,7 @@ namespace Sistema.Models
         public decimal txDesconto { get; set; }
         [Display(Name = "Cliente")]
         public int idCliente { get; set; }
+<<<<<<< HEAD
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 
@@ -53,3 +58,7 @@ namespace Sistema.Models
         public DateTime? dtUltAlteracao { get; set; }
     }
 }
+=======
+    }
+}
+>>>>>>> e62caf04ce1315a201b6806efdf2275de71abc27
