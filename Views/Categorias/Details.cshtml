@@ -30,7 +30,9 @@
                         <partial name="~/Views/Shared/Categorias/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Delete", "Categorias", new { id = Model.idCategoria })" class="btn btn-danger">
+                                Excluir
+                            </a>
                             <a href="@Url.Action("Index", "Categorias")" class="btn btn-primary">
                                 Cancelar
                             </a>

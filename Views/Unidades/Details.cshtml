@@ -25,9 +25,12 @@
 
                     @using (Html.BeginForm("Details", "Unidades", FormMethod.Post, new { @class = "row g-3" }))
                     {
-                        < partial name = "~/Views/Shared/Unidades/Form.cshtml" model = "Model" ></ partial >
+                        <partial name="~/Views/Shared/Unidades/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
+                            <a href="@Url.Action("Delete", "Unidades", new { id = Model.idUnidade })" class="btn btn-danger">
+                                Excluir
+                            </a>
                             <a href="@Url.Action("Index", "Unidades")" class="btn btn-primary">
                                 Cancelar
                             </a>

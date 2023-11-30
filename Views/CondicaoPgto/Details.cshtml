@@ -30,7 +30,9 @@
                         <partial name="~/Views/Shared/CondicaoPgto/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Delete", "CondicaoPgto", new { idCondicaoPgto = Model.idCondicaoPgto })" class="btn btn-danger">
+                                Excluir
+                            </a>
                             <a href="@Url.Action("Index", "CondicaoPgto")" class="btn btn-primary">
                                 Cancelar
                             </a>
@@ -42,3 +44,9 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/CondicaoPgto/Form.js")"></script>
+}

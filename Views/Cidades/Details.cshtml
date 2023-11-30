@@ -29,6 +29,9 @@
                         <partial name="~/Views/Shared/Cidades/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
+                            <a href="@Url.Action("Delete", "Cidades", new { id = Model.idCidade })" class="btn btn-danger">
+                                Excluir
+                            </a>
                             <a href="@Url.Action("Index", "Cidades")" class="btn btn-primary">
                                 Cancelar
                             </a>

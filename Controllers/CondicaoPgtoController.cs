@@ -75,7 +75,7 @@ namespace Sistema.Controllers
             if (percentualParcelas == (decimal)100)
             {
                 daoCondicaoPgto = new DAOCondicaoPgto();
-                daoCondicaoPgto.Insert(model);
+                daoCondicaoPgto.Update(model);
             }
             else
             {

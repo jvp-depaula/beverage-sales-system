@@ -30,7 +30,9 @@
                         <partial name="~/Views/Shared/FormaPgto/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Delete", "FormaPgto", new { id = Model.idFormaPgto })" class="btn btn-danger">
+                                Excluir
+                            </a>
                             <a href="@Url.Action("Index", "FormaPgto")" class="btn btn-primary">
                                 Cancelar
                             </a>

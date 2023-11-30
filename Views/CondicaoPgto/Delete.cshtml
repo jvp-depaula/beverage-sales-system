@@ -8,7 +8,7 @@
     <div class="toolbar row">
         <div class="col-sm-6 hidden-xs">
             <div class="page-header">
-                <h1>Condição Pgto<small>Excluir</small></h1>
+                <h1>Condição Pgto<small> Excluir</small></h1>
             </div>
         </div>
     </div>
@@ -39,9 +39,9 @@
         </div>
     </div>
 </section>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/CondicaoPgto/Form.js")"></script>
 }

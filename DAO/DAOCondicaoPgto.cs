@@ -134,7 +134,7 @@ namespace Sistema.DAO
 
                         foreach (var item in condicaoPgto.ListCondicao)
                         {
-                            var Item = string.Format(sqlParcela, condicaoPgto.idCondicaoPgto, item.idCondicaoPgto, item.nrParcela, item.qtDias, item.txPercentual.ToString().Replace(",", "."));
+                            var Item = string.Format(sqlParcela, condicaoPgto.idCondicaoPgto, item.idFormaPgto, item.nrParcela, item.qtDias, item.txPercentual.ToString().Replace(",", "."));
                             command.CommandText = Item;
                             command.ExecuteNonQuery();
                         }
@@ -182,6 +182,7 @@ namespace Sistema.DAO
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
                         model.dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]);
                         model.vlMulta = Convert.ToDecimal(reader["vlMulta"]);
+                        model.vlJuros = Convert.ToDecimal(reader["vlJuros"]);
                         model.vlDesconto = Convert.ToDecimal(reader["vlDesconto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);

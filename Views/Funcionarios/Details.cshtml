@@ -28,6 +28,9 @@
                         <partial name="~/Views/Shared/Funcionarios/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
+                            <a href="@Url.Action("Delete", "Funcionarios", new { id = Model.id })" class="btn btn-danger">
+                                Excluir
+                            </a>
                             <a href="@Url.Action("Index", "Funcionarios")" class="btn btn-primary">
                                 Cancelar
                             </a>
