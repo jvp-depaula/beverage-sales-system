@@ -146,26 +146,12 @@ namespace Sistema.Controllers
             List<Models.Produtos> list = daoProdutos.GetProdutos();
             return Json(list);
         }
-        /*
-        public JsonResult JsAddProduto(string dsProduto, int idFornecedor, int idCategoria, int idUnidade, int idMarca, string cdNCM, decimal vlVenda, string observacao)
+        
+        public JsonResult jsGetProduto(int idProduto)
         {
-            DAOProdutos dao = new();
-            var obj = new Models.Produtos()
-            {
-                dsProduto = dsProduto,
-                idFornecedor = idFornecedor,
-                idCategoria = idCategoria,
-                idUnidade = idUnidade,
-                idMarca = idMarca,
-                cdNCM = cdNCM,
-                vlVenda = vlVenda,
-                observacao = observacao
-            };
-            dao.Insert(obj);
-
-            List<Models.Produtos> list = dao.GetProdutos();
-            return Json(new { success = true, novaListaProdutos = list });
-        }
-        */
+            DAOProdutos daoProdutos = new();
+            Produtos prod = daoProdutos.GetProduto(idProduto);
+            return Json(prod);
+        }               
     }
 }

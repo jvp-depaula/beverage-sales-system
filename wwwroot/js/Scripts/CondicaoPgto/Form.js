@@ -24,7 +24,7 @@ $(document).ready(function () {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
         },       
-        data: $("#jsItens").val(),
+        data: $("#jsItens").val() != "" ? JSON.parse($("#jsItens").val()) : null,
         columns: [
             { data: "nrParcela" },
             { data: "qtDias" },
@@ -152,6 +152,9 @@ $(document).ready(function () {
         }
     });
 
+    $("#tbParcelas").on('click', '.fa-trash', function () {
+        tableParcelas.row($(this).parents('tr')).remove().draw(false);
+    });
 });
 
 var FormaPgto = {
@@ -287,6 +290,8 @@ var Parcelas = {
             $("#vlDesconto").css('background-color', '#dee2e6');
             $("#vlJuros").attr('readonly', 'readonly');
             $("#vlJuros").css('background-color', '#dee2e6');
+        } else if (tableParcelas.rows().count() == nrParcelas) {
+            $("#btnAdcParcela").prop('disabled', true);
         }
     }
 }

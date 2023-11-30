@@ -295,7 +295,7 @@ namespace Sistema.DAO
                     SELECT
                         tbParcelas.idCondicaoPgto AS idCondicaoPgto,
                         tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto,
-                        tbParcelas.idCondicaoPgto AS idCondicaoPgto,
+                        tbParcelas.idFormaPgto AS idFormaPgto,
                         tbFormaPgto.dsFormaPgto AS dsFormaPgto,
                         tbParcelas.nrParcela AS nrParcela,
                         tbParcelas.qtDias AS qtDias,

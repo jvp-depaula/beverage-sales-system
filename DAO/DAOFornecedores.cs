@@ -161,6 +161,7 @@ namespace Sistema.DAO
                         model.idCidade = Convert.ToInt32(reader["idCidade"]);
                         model.nmCidade = Convert.ToString(reader["nmCidade"]);
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
+                        model.dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     }

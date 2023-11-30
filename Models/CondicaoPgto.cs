@@ -60,11 +60,11 @@ namespace Sistema.Models
         {
             public int? idCondicaoPgto { get; set; }
             public string dsCondicaoPgto { get; set; }
+            public int? idFormaPgto { get; set; }
+            public string dsFormaPgto { get; set; }
             public short? nrParcela { get; set; }
             public short? qtDias { get; set; }
             public decimal txPercentual { get; set; }
-            public int? idFormaPgto { get; set; }
-            public string dsFormaPgto { get; set; }
         }
 
         [Display(Name = "Data de cadastro")]

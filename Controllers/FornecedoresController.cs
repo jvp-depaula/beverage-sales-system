@@ -119,5 +119,13 @@ namespace Sistema.Controllers
 
             return Json(list);
         }
+
+        public JsonResult JsFornecedor(int idFornecedor)
+        {
+            DAOFornecedores dAOFornecedores = new();
+            Fornecedores forn = daoFornecedores.GetFornecedor(idFornecedor);
+
+            return Json(forn);
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Sistema.Models
         [Display(Name = "Condicao Pgto.")]
         [Required(ErrorMessage = "Selecione a condição de Pgto!")]
         public int idCondicaoPgto { get; set; }
+        public string dsCondicaoPgto { get; set; }
         public IEnumerable<SelectListItem> ListaCondicoesPgto { get; set; }
 
         // CONTATO
