@@ -37,8 +37,23 @@ namespace Sistema.Controllers
         [HttpPost]
         public ActionResult Create(Sistema.Models.CondicaoPgto model)
         {
-            daoCondicaoPgto = new DAOCondicaoPgto();
-            daoCondicaoPgto.Insert(model);
+            decimal percentualParcelas = 0;
+
+            foreach (var item in model.ListCondicao)
+            {
+                percentualParcelas += item.txPercentual;
+            }
+
+            if (percentualParcelas == (decimal)100)
+            {
+                daoCondicaoPgto = new DAOCondicaoPgto();
+                daoCondicaoPgto.Insert(model);
+            } 
+            else
+            {
+                throw new Exception("Percentual das parcelas não fecha 100%");
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -50,8 +65,22 @@ namespace Sistema.Controllers
         [HttpPost]
         public ActionResult Edit(Sistema.Models.CondicaoPgto model)
         {
-            daoCondicaoPgto = new DAOCondicaoPgto();
-            daoCondicaoPgto.Update(model);
+            decimal percentualParcelas = 0;
+
+            foreach (var item in model.ListCondicao)
+            {
+                percentualParcelas += item.txPercentual;
+            }
+
+            if (percentualParcelas == (decimal)100)
+            {
+                daoCondicaoPgto = new DAOCondicaoPgto();
+                daoCondicaoPgto.Insert(model);
+            }
+            else
+            {
+                throw new Exception("Percentual das parcelas não fecha 100%");
+            }
             return RedirectToAction("Index");
         }
 
