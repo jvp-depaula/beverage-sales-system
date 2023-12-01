@@ -45,6 +45,44 @@ namespace Sistema.DAO
             }
         }
 
+        public List<CondicaoPgto.CondicaoPgtoVM> GetParcelas(int idCondicaoPgto)
+        {
+            try
+            {
+                var sql = this.SearchParcelas(idCondicaoPgto);
+                OpenConnection();
+                SqlQuery = new SqlCommand(sql, con);
+                reader = SqlQuery.ExecuteReader();
+                var list = new List<CondicaoPgto.CondicaoPgtoVM>();
+
+                while (reader.Read())
+                {
+                    var parcela = new CondicaoPgto.CondicaoPgtoVM
+                    {
+                        idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
+                        dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]),
+                        idFormaPgto = Convert.ToInt32(reader["idFormaPgto"]),
+                        dsFormaPgto = Convert.ToString(reader["dsFormaPgto"]),
+                        nrParcela = Convert.ToInt32(reader["nrParcela"]),
+                        qtDias = Convert.ToInt32(reader["qtDias"]),
+                        txPercentual = Convert.ToDecimal(reader["txPercentual"])
+                    };
+
+                    list.Add(parcela);
+                }
+
+                return list;
+            }
+            catch (Exception error)
+            {
+                throw new Exception(error.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+
         public void Insert(Models.CondicaoPgto condicaoPgto)
         {
             try
@@ -304,7 +342,7 @@ namespace Sistema.DAO
                     FROM tbParcelas
                     INNER JOIN tbCondicaoPgto ON tbParcelas.idCondicaoPgto = tbCondicaoPgto.idCondicaoPgto
                     INNER JOIN tbFormaPgto ON tbParcelas.idFormaPgto = tbFormaPgto.idFormaPgto
-                    WHERE tbParcelas.idCondicaoPgto = " + id;
+                    WHERE tbParcelas.idCondicaoPgto = " + id + " ORDER BY nrParcela ASC";
 
             return sql;
         }

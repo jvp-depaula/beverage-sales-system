@@ -170,6 +170,7 @@
 
     <div class="col-md-3">
         @Html.LabelFor(e => e.idCondicaoPgto, new { @class = "form-label" })
+        @Html.HiddenFor(e => e.idCondicaoPgto)
         @Html.TextBoxFor(model => model.dsCondicaoPgto, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
     </div>
 

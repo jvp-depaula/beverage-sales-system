@@ -131,8 +131,18 @@ $(document).ready(function () {
         data: $("#jsParcelas").val() != "" ? JSON.parse($("#jsParcelas").val()) : "",
         columns: [
             { data: "nrParcela" },
-            { data: "vlParcela" },
-            { data: "dtVencimento" },
+            {
+                data: "vlParcela",
+                mRender: function (data) {
+                    return data.toFixed(2);
+                }
+            },
+            {
+                data: "dtVencimento",
+                mRender: function (data) {
+                    return data;
+                }
+            },
             {
                 data: "idFormaPgto",
                 bVisible: false
@@ -149,6 +159,7 @@ $(document).ready(function () {
                 },
                 success: function (result) {
                     if (result) {
+                        $("#idCondicaoPgto").val(result.idCondicaoPgto);                        
                         $("#dsCondicaoPgto").val(result.dsCondicaoPgto);                        
                     }
                 }
@@ -192,7 +203,19 @@ $(document).ready(function () {
     });
 
     $("#btnGeraParcelas").on('click', function () {
-
+        $.ajax({
+            url: "/Compras/MontaParcelas",
+            data: {
+                dtEmissao: $("#dtEmissao").val(),
+                vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", ""),
+                idCondicaoPgto: $("#idCondicaoPgto").val()
+            },
+            success: function (result) {
+                tableParcelas.clear().draw();
+                tableParcelas.rows.add(result);
+                tableParcelas.draw();
+            }
+        });
     });
 
 // ------------------------ FORNECEDORES ------------------------

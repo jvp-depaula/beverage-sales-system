@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
 using Sistema.Util;
+using System.Globalization;
+using static Sistema.Models.CondicaoPgto;
 
 namespace Sistema.Controllers
 {
@@ -77,13 +79,13 @@ namespace Sistema.Controllers
         {
             return this.GetView(idFornecedor, nrModelo, nrSerie, nrNota);
         }
-        public ActionResult Cancelar(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
+        public ActionResult Delete(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
         {
             return this.GetView(idFornecedor, nrModelo, nrSerie, nrNota);
         }
 
         [HttpPost]
-        public ActionResult Cancelar(int idFornecedor, string nrModelo, string nrSerie, int nrNota, Models.Compras model)
+        public ActionResult Delete(int idFornecedor, string nrModelo, string nrSerie, int nrNota, Models.Compras model)
         {
             try
             {
@@ -134,6 +136,41 @@ namespace Sistema.Controllers
                 this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
                 return View();
             }
+        }
+
+        public JsonResult MontaParcelas(string dtEmissao, decimal vlTotal, int idCondicaoPgto)
+        {
+            var cultureInfo = new CultureInfo("pt-BR");
+            var data = DateTime.Parse(dtEmissao, cultureInfo);
+
+            DAOCondicaoPgto daoCondicaoPgto = new();
+            List<CondicaoPgto.CondicaoPgtoVM> parcelas = daoCondicaoPgto.GetParcelas(idCondicaoPgto);
+            List<Parcelas> parcelasCompra = new ();
+            decimal aux = vlTotal;
+            CondicaoPgtoVM Last = parcelas.Last();
+
+            foreach (var item in parcelas)
+            {
+                Parcelas parcelaCompra = new()
+                {
+                    idFormaPgto = item.idFormaPgto,
+                    dsFormaPgto = item.dsFormaPgto,
+                    nrParcela = item.nrParcela,
+                    vlParcela = Math.Round((vlTotal * item.txPercentual / 100), 2),
+                    dtVencimento = Convert.ToDateTime(data.AddDays((double)item.qtDias).ToString("dd/MM/yyyy")),                    
+                };
+
+                aux -= parcelaCompra.vlParcela;
+
+                if (item.Equals(Last)) 
+                {
+                    parcelaCompra.vlParcela += aux;        
+                }
+
+                parcelasCompra.Add(parcelaCompra);
+            }
+
+            return Json(parcelasCompra);
         }
     }
 }
