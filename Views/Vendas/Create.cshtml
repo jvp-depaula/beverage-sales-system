@@ -27,7 +27,7 @@
                         <partial name="~/Views/Shared/Vendas/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <button type="button" id="btnSubmit" class="btn btn-success" disabled="disabled">Salvar</button>
                             <a href="@Url.Action("Index", "Vendas")" class="btn btn-primary">
                                 Cancelar
                             </a>
@@ -42,5 +42,6 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script type="text/javascript" src="@Url.Content("~/js/Scripts/Vendas/Form.js")"></script>
     }
 }

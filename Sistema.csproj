@@ -15,6 +15,7 @@
   <ItemGroup>
     <Content Remove="Views\Shared\Produtos\AddProdutos.cshtml" />
     <Content Remove="wwwroot\js\Scripts\CondicaoPgto\Form.js" />
+    <Content Remove="wwwroot\js\Scripts\Vendas\Form.js" />
   </ItemGroup>
 	
   <ItemGroup>
@@ -39,6 +40,7 @@
     <None Include="wwwroot\js\Scripts\Produtos\Form.js" />
     <None Include="wwwroot\js\Scripts\Produtos\Index.js" />
     <None Include="wwwroot\js\Scripts\Unidades\Index.js" />
+    <None Include="wwwroot\js\Scripts\Vendas\Form.js" />
     <None Include="wwwroot\js\Scripts\Vendas\Index.js" />
   </ItemGroup>  
 

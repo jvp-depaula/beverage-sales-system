@@ -1,22 +1,39 @@
-var tableFornecedores = null;
+var tableFuncionarios = null;
+var tableClientes = null;
 var tableProdutos = null;
-var tableItensCompra = null;
-var tableParcelas = null;
+var tableItensVenda = null;
 var vlTotal = null;
 $(document).ready(function () {
 
-    tableFornecedores = $("#tbFornecedores").DataTable({
+    tableFuncionarios = $("#tbFuncionarios").DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
         },
         columns: [
-            { data: "nmFornecedor" },
-            { data: "nrCNPJ" },
+            { data: "nmFuncionario" },
+            { data: "nrCPF" },
             {
                 data: null,
                 className: "text-center",
                 mRender: function (data) {
-                    return '<button type="button" class="btn btn-primary text-center selectFornecedor-btn" data-id="' + data.id + '">Selecionar</button>'
+                    return '<button type="button" class="btn btn-primary text-center selectFuncionario-btn" data-id="' + data.id + '">Selecionar</button>'
+                }
+            }
+        ]
+    });
+
+    tableClientes = $("#tbClientes").DataTable({
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
+        },
+        columns: [
+            { data: "nmCliente" },
+            { data: "nrCPFCNPJ" },
+            {
+                data: null,
+                className: "text-center",
+                mRender: function (data) {
+                    return '<button type="button" class="btn btn-primary text-center selectCliente-btn" data-id="' + data.id + '">Selecionar</button>'
                 }
             }
         ]
@@ -26,6 +43,7 @@ $(document).ready(function () {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
         },
+        data: $("#jsProdutos").val() != "" ? JSON.parse($("#jsProdutos").val()) : "",
         columns: [
             {
                 data: "idProduto",
@@ -53,7 +71,7 @@ $(document).ready(function () {
         ]
     });
 
-    tableItensCompra = $("#listaCompra").DataTable({
+    tableItensVenda = $("#listaVenda").DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
         },
@@ -75,7 +93,7 @@ $(document).ready(function () {
                 }
             },
             {
-                data: "vlCompra",
+                data: "vlVenda",
                 mRender: function (data) {
                     return "R$ " + parseFloat(data).toFixed(2).replace(".", ",");
                 }
@@ -94,7 +112,7 @@ $(document).ready(function () {
             },
             {
                 data: null,
-                mRender: function() {
+                mRender: function () {
                     return '<a href="#" class="btn btn-sm"><i class="btn btn-danger btn-sm fa fa-trash"></i></a>';
                 }
             }
@@ -122,12 +140,9 @@ $(document).ready(function () {
             $("#vlTotal").val(novoTotal);
             $("#vlTotal").change();
             if (total > 0) {
-                $(".divfinalizar").css("display", "");                
+                $(".divfinalizar").css("display", "");
             } else {
                 $("#observacao").val("");
-                $("#vlFrete").val("");
-                $("#vlSeguro").val("");
-                $("#vlDespesas").val("");
                 tableParcelas.clear().draw();
                 $(".divfinalizar").css("display", "none");
             }
@@ -156,127 +171,60 @@ $(document).ready(function () {
             {
                 data: "idFormaPgto",
                 bVisible: false
-            },            
-            { data: "dsFormaPgto" }            
+            },
+            { data: "dsFormaPgto" }
         ]
     });
 
-    $("#idFornecedor").on('change select', function () {
-        if ($("#idFornecedor").val()) {
+    $("#idCliente").on('change select', function () {
+        if ($("#idCliente").val()) {
             $.ajax({
-                url: "/Fornecedores/JsFornecedor",
+                url: "/Clientes/JsCliente",
                 data: {
-                    idFornecedor: $("#idFornecedor").val()
+                    idCliente: $("#idCliente").val()
                 },
                 success: function (result) {
                     if (result) {
-                        $("#idCondicaoPgto").val(result.idCondicaoPgto);                        
-                        $("#dsCondicaoPgto").val(result.dsCondicaoPgto);                        
+                        $("#idCondicaoPgto").val(result.idCondicaoPgto);
+                        $("#dsCondicaoPgto").val(result.dsCondicaoPgto);
                     }
                 }
             });
-        }        
-    });
 
-    $("#idFornecedor").change();
-
-    $("#btnValidaNF").on('click', function () {
-        if (!$("#nrModelo").val()) {
-            alert("Preencha o número do modelo da nota!");
-        } else if (!$("#nrSerie").val()) {
-            alert("Preencha o número de série da nota!");
-        } else if (!$("#nrNota").val()) {
-            alert("Preencha o número da nota!");
-        } else if (!$("#idFornecedor").val()) {
-            alert("Preencha fornecedor da nota!");
+            if ($("#idFuncionario").val()) {
+                $(".Corpo").css('display', "");
+            }
         } else {
-            $.ajax({
-                url: "/Compras/VerificaNota",
-                data: {
-                    idFornecedor: $("#idFornecedor").val(),
-                    nrModelo: $("#nrModelo").val(),
-                    nrSerie: $("#nrSerie").val(),
-                    nrNota: $("#nrNota").val()
-                },
-                success: function (result) {
-                    if (result.type == "success") {
-                        $(".Corpo").css("display", "");
-                        $("#btnValidaNF").css('display', "none");
-                        $("#btnCancelaNF").css('display', "");
-
-                        $("#nrModelo").attr('readonly', 'readonly').css('background-color', "#e9ecef");
-                        $("#nrSerie").attr('readonly', 'readonly').css('background-color', "#e9ecef");
-                        $("#nrNota").attr('readonly', 'readonly').css('background-color', "#e9ecef");
-                        $("#idFornecedor").prop('disabled', true);
-                        $("#btnAbreModalFornecedor").prop('disabled', true);
-
-                    } else {
-                        $(".Corpo").css("display", "none");
-                        $("#btnValidaNF").css('display', "");
-                        $("#btnCancelaNF").css('display', "none");
-                        alert(result.msg);
-                    };
-                }
-            });
+            tableProdutos.clear().draw();
+            tableParcelas.clear().draw();
+            $(".Corpo").css('display', "none");
         }
-    })
-
-    $("#btnCancelaNF").on('click', function () {
-        $(".Corpo").css("display", "none");
-        $("#btnValidaNF").css('display', "");
-        $("#btnCancelaNF").css('display', "none");
-
-        location.reload();
     });
 
-    $("#dtEmissao").on('keyup change', function () {
-        $(this).mask("99/99/9999");
-    });
-
-    $("#dtEntrega").on('keyup change', function () {
-        $(this).mask("99/99/9999");
-    });
+    $("#idCliente").change();
 
     $("#vlTotal").on('change', function () {
         $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "")).toFixed(2)) : $(this).val(0);
-        Compras.VerificaTotal();
-    });
-
-    $("#vlFrete").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
-        Compras.VerificaTotal();
-    });
-
-    $("#vlSeguro").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
-        Compras.VerificaTotal();
-    });
-
-    $("#vlDespesas").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
-        Compras.VerificaTotal();
+        Vendas.VerificaTotal();
     });
 
     $("#vlTotal").on('change', function () {
         if (parseFloat(vlTotal) > 0) {
-            $("#btnGeraParcelas").prop('disabled', false);            
+            $("#btnGeraParcelas").prop('disabled', false);
         } else {
-            $("#btnGeraParcelas").prop('disabled', true);            
+            $("#btnGeraParcelas").prop('disabled', true);
         }
     });
 
     $("#btnGeraParcelas").on('click', function () {
-        if (!$("#dtEmissao").val()) {
-            alert("Informe a data de emissão da nota!");
-        } else if (!$("#listaCompra").DataTable().rows().data().toArray().length > 0) {
-            alert("Informe pelo menos um produto a comprar!");
+        if (!$("#listaVenda").DataTable().rows().data().toArray().length > 0) {
+            alert("Informe pelo menos um produto a vender!");
         } else if (!$("#idCondicaoPgto").val()) {
-            alert("Preencha o Fornecedor para que seja carregado a condição de pagamento!");
+            alert("Preencha o Cliente para que seja carregado a condição de pagamento!");
         } else {
             $.ajax({
-                url: "/Compras/MontaParcelas",
+                url: "/Vendas/MontaParcelas",
                 data: {
-                    dtEmissao: $("#dtEmissao").val(),
                     vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", ""),
                     idCondicaoPgto: $("#idCondicaoPgto").val()
                 },
@@ -291,37 +239,50 @@ $(document).ready(function () {
                         $("#btnSubmit").prop('disabled', true);
                     }
 
-                    $("#jsProdutos").val(JSON.stringify($("#listaCompra").DataTable().rows().data().toArray()));
+                    $("#jsProdutos").val(JSON.stringify($("#listaVenda").DataTable().rows().data().toArray()));
                     $("#jsParcelas").val(JSON.stringify($("#tbParcelas").DataTable().rows().data().toArray()));
                 }
-            });            
-        }      
+            });
+        }
     });
 
     $("#btnSubmit").on('click', function () {
-        $("#vlFrete").val($("#vlFrete").val().replace("R$", "").replace(",", "."));
-        $("#vlSeguro").val($("#vlSeguro").val().replace("R$", "").replace(",", "."));
-        $("#vlDespesas").val($("#vlDespesas").val().replace("R$", "").replace(",", "."));
         $("#vlTotal").val($("#vlTotal").val().replace("R$", "").replace(",", "."));
-        $("#idFornecedor").prop('disabled', false);
         $('#formSubmit').submit();
     })
 
-// ------------------------ FORNECEDORES ------------------------
-    $("#modalFornecedor").on('show.bs.modal', function () {
-        Fornecedores.SelecionarFornecedores(true);
-        Fornecedores.CarregaLista();
+    // ------------------------ FUNCIONARIOS ------------------------
+    $("#modalFuncionario").on('show.bs.modal', function () {
+        Funcionarios.SelecionarFuncionarios(true);
+        Funcionarios.CarregaLista();
     });
 
     // SELECIONAR   
-    $(document).on('click', '.selectFornecedor-btn', function () {
+    $(document).on('click', '.selectFuncionario-btn', function () {
         var id = $(this).data('id');
-        $("#idFornecedor").val(id);
-        $("#btnFecharModalFornecedor").click();
+        $("#idFuncionario").val(id);
+        $("#btnFecharModalFuncionario").click();
     });
 
-    $('#modalFornecedor').on('hide.bs.modal', function (e) {
-        Fornecedores.SelecionarFornecedores(false);
+    $('#modalFuncionario').on('hide.bs.modal', function (e) {
+        Funcionarios.SelecionarFuncionarios(false);
+    });
+
+    // ------------------------ CLIENTES ------------------------
+    $("#modalCliente").on('show.bs.modal', function () {
+        Clientes.SelecionarCliente(true);
+        Clientes.CarregaLista();
+    });
+
+    // SELECIONAR   
+    $(document).on('click', '.selectCliente-btn', function () {
+        var id = $(this).data('id');
+        $("#idCliente").val(id);
+        $("#btnFecharModalFuncionario").click();
+    });
+
+    $('#modalFuncionario').on('hide.bs.modal', function (e) {
+        Clientes.SelecionarClientes(false);
     });
 
     // ------------------------ PRODUTOS ------------------------
@@ -350,6 +311,7 @@ $(document).ready(function () {
             success: function (result) {
                 $("#idUnidade").val(result.idUnidade);
                 $("#dsUnidade").val(result.dsUnidade);
+                $("#qtdEstoque").val(result.qtdEstoque);
             }
         });
     });
@@ -357,15 +319,13 @@ $(document).ready(function () {
     // SELECIONAR   
     $(document).on('click', '.selectProduto-btn', function () {
         var id = $(this).data('id');
-        var estoque = $(this).data('qtdestoque');
-        $("#idProduto").val(id);
-        $("#vlMaxEstoque").val(estoque);
+        $("#idProduto").val(id);        
         Produtos.AddProdutos(true);
-        Produtos.SelecionarProdutos(false);         
+        Produtos.SelecionarProdutos(false);
     });
 
     $('#modalProdutos').on('hide.bs.modal', function (e) {
-        Compras.limpaForm();
+        Vendas.limpaForm();
     });
 
     $("#btnConfirmaProd").on('click', function () {
@@ -375,40 +335,40 @@ $(document).ready(function () {
             let idUnidade = $("#idUnidade").val();
             let dsUnidade = $("#dsUnidade").val();
             let quantidade = parseFloat($("#Produto_qtdProduto").val().replace(",", "."));
-            let vlCompraUnitario = parseFloat($("#Produto_vlVenda").val().replace(",", "."));
+            let vlVenda = parseFloat($("#Produto_vlVenda").val().replace(",", "."));
             let txDesconto = $("#Produto_txDesconto").val() != "" ? parseFloat($("#Produto_txDesconto").val().replace(",", ".")) : 0;
 
-            var subTotal = quantidade * vlCompraUnitario;
+            var subTotal = quantidade * vlVenda;
             var vlTotal = subTotal - subTotal * txDesconto / 100;
 
-            let produtoCompra = {
+            let produtoVenda = {
                 idProduto: idProduto,
                 dsProduto: dsProduto,
                 idUnidade: idUnidade,
                 dsUnidade: dsUnidade,
                 qtdProduto: quantidade,
-                vlCompra: vlCompraUnitario,
+                vlVenda: vlVenda,
                 txDesconto: txDesconto != "" ? txDesconto : 0,
-                idFornecedor: $("#idFornecedor").val(),
-                nmFornecedor: $("#idFornecedor option:selected").text(),
+                idCliente: $("#idCliente").val(),
+                nmCliente: $("#idCliente option:selected").text(),
                 vlTotal: vlTotal
             }
 
-            tableItensCompra.row.add(produtoCompra);
-            tableItensCompra.draw();             
+            tableItensVenda.row.add(produtoVenda);
+            tableItensVenda.draw();
         };
 
         $("#btnFechaProd").click();
     });
 
-    $("#listaCompra").on('click', '.fa-trash', function () {
-        tableItensCompra.row($(this).parents('tr')).remove().draw(false);            
+    $("#listaVenda").on('click', '.fa-trash', function () {
+        tableItensVenda.row($(this).parents('tr')).remove().draw(false);
     });
 });
 
 var Produtos = {
     AddProdutos(mostra) {
-        if (mostra) 
+        if (mostra)
             $(".addProduto").css('display', "");
         else
             $(".addProduto").css('display', "none");
@@ -419,7 +379,7 @@ var Produtos = {
             $(".SelecionaProduto").css("display", "");
         else
             $(".SelecionaProduto").css("display", "none");
-    }, 
+    },
 
     CarregaLista() {
         $.ajax({
@@ -448,28 +408,49 @@ var Produtos = {
     }
 };
 
-var Fornecedores = {
-    SelecionarFornecedores(mostra) {
+var Funcionarios = {
+    SelecionarFuncionarios(mostra) {
         if (mostra)
-            $(".SelecionaFornecedor").css("display", "");
+            $(".SelecionaFuncionario").css("display", "");
         else
-            $(".SelecionaFornecedor").css("display", "none");
+            $(".SelecionaFuncionario").css("display", "none");
     },
 
     CarregaLista() {
-        let url = "/Fornecedores/JsSearch";
+        let url = "/Funcionarios/JsSearch";
         $.ajax({
             url: url,
             success: function (result) {
-                tableFornecedores.clear().draw();
-                tableFornecedores.rows.add(result);
-                tableFornecedores.draw();
+                tableFuncionarios.clear().draw();
+                tableFuncionarios.rows.add(result);
+                tableFuncionarios.draw();
             }
         });
     },
 };
 
-var Compras = {
+var Clientes = {
+    SelecionarClientes(mostra) {
+        if (mostra)
+            $(".SelecionaCliente").css("display", "");
+        else
+            $(".SelecionaCliente").css("display", "none");
+    },
+
+    CarregaLista() {
+        let url = "/Clientes/JsSearch";
+        $.ajax({
+            url: url,
+            success: function (result) {
+                tableClientes.clear().draw();
+                tableClientes.rows.add(result);
+                tableClientes.draw();
+            }
+        });
+    },
+}
+
+var Vendas = {
     limpaForm() {
         $("#idProduto").val("");
         $("#idUnidade").val("");
@@ -479,13 +460,7 @@ var Compras = {
     },
 
     VerificaTotal() {
-        
-        vlFrete = $("#vlFrete").val() != "" ? parseFloat($("#vlFrete").val()) : 0;
-        vlSeguro = $("#vlSeguro").val() != "" ? parseFloat($("#vlSeguro").val()) : 0;
-        vlDespesas = $("#vlDespesas").val() != "" ? parseFloat($("#vlDespesas").val()) : 0;
-
-        let novoTotal = vlTotal + vlFrete + vlSeguro + vlDespesas;
-
+        let novoTotal = vlTotal;
         $("#vlTotal").val("R$ " + parseFloat(novoTotal).toFixed(2).replace(".", ","));
     }
 }

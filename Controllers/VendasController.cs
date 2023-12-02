@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
 using Sistema.Util;
+using System.Globalization;
 using System.Reflection;
+using static Sistema.Models.CondicaoPgto;
 
 namespace Sistema.Controllers
 {
@@ -120,6 +122,42 @@ namespace Sistema.Controllers
                 this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
                 return View();
             }
+        }
+
+        public JsonResult MontaParcelas(decimal vlTotal, int idCondicaoPgto)
+        {
+            var dataVenda = DateTime.Now.ToString("dd/MM/yyyy");
+            var cultureInfo = new CultureInfo("pt-BR");
+            var data = DateTime.Parse(dataVenda, cultureInfo);
+
+            DAOCondicaoPgto daoCondicaoPgto = new();
+            List<CondicaoPgto.CondicaoPgtoVM> parcelas = daoCondicaoPgto.GetParcelas(idCondicaoPgto);
+            List<Parcelas> parcelasCompra = new();
+            decimal aux = vlTotal;
+            CondicaoPgtoVM Last = parcelas.Last();
+
+            foreach (var item in parcelas)
+            {
+                Parcelas parcelaCompra = new()
+                {
+                    idFormaPgto = item.idFormaPgto,
+                    dsFormaPgto = item.dsFormaPgto,
+                    nrParcela = item.nrParcela,
+                    vlParcela = Math.Round((vlTotal * item.txPercentual / 100), 2),
+                    dtVencimento = Convert.ToDateTime(data.AddDays((double)item.qtDias).ToString("dd/MM/yyyy")),
+                };
+
+                aux -= parcelaCompra.vlParcela;
+
+                if (item.Equals(Last))
+                {
+                    parcelaCompra.vlParcela += aux;
+                }
+
+                parcelasCompra.Add(parcelaCompra);
+            }
+
+            return Json(parcelasCompra);
         }
     }
 }

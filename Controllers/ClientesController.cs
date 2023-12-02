@@ -114,5 +114,21 @@ namespace Sistema.Controllers
             });
             return View(model);
         }
+
+        public JsonResult JsSearch()
+        {
+            DAOClientes daoClientes = new();
+            List<Models.Clientes> list = daoClientes.GetClientes();
+
+            return Json(list);
+        }
+
+        public JsonResult JsCliente(int idCliente)
+        {
+            DAOClientes daoCliente = new();
+            Clientes cliente = daoCliente.GetCliente(idCliente);
+
+            return Json(cliente);
+        }
     }
 }

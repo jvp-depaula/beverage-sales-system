@@ -96,5 +96,21 @@ namespace Sistema.Controllers
             });            
             return View(model);
         }
+
+        public JsonResult JsSearch()
+        {
+            DAOFuncionarios daoFuncionarios = new();
+            List<Models.Funcionarios> list = daoFuncionarios.GetFuncionarios();
+
+            return Json(list);
+        }
+
+        public JsonResult JsFuncionario(int idFuncionario)
+        {
+            DAOFuncionarios daoFuncionario = new();
+            Funcionarios func = daoFuncionario.GetFuncionario(idFuncionario);
+
+            return Json(func);
+        }
     }
 }

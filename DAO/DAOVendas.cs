@@ -223,7 +223,6 @@ namespace Sistema.DAO
 	                    tbVendas.idVenda AS idVenda,
 	                    tbVendas.flSituacao AS flSituacao,
 	                    tbVendas.dtVenda AS dtVenda,
-	                    tbVendas.nrModelo AS nrModelo,
 	                    tbVendas.idFuncionario AS idFuncionario,
 	                    tbFuncionarios.nmFuncionario AS nmFuncionario,
 	                    tbVendas.idCliente AS idCliente,

@@ -1,5 +1,6 @@
 ﻿using Sistema.Models;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace Sistema.DAO
 {
@@ -35,7 +36,7 @@ namespace Sistema.DAO
                         dsBairro = Convert.ToString(reader["dsBairro"]),
                         dsComplemento = Convert.ToString(reader["dsComplemento"]),
                         idCidade = Convert.ToInt32(reader["idCidade"]),
-                        dtNasc = Convert.ToDateTime(reader["dtNasc"]),
+                        dtNasc = Convert.ToDateTime(reader["dtNasc"]),                        
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]),                        
                     };
@@ -79,7 +80,7 @@ namespace Sistema.DAO
                     cliente.dsBairro,
                     cliente.dsComplemento,
                     Convert.ToInt32(cliente.idCidade),
-                    Convert.ToDateTime(cliente.dtNasc),
+                    Convert.ToDateTime(cliente.dtNasc),                    
                     Util.Util.FormatDate(DateTime.Now),
                     Util.Util.FormatDate(DateTime.Now)
                 );
@@ -155,6 +156,7 @@ namespace Sistema.DAO
                         model.id = Convert.ToInt32(reader["idCliente"]);
                         model.flTipo = Convert.ToString(reader["flTipo"]);
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
+                        model.dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]);
                         model.nmCliente = Convert.ToString(reader["nmCliente"]);
                         model.nmFantasia = Convert.ToString(reader["nmFantasia"]);
                         model.nrCPFCNPJ = Convert.ToString(reader["nrCPFCNPJ"]);

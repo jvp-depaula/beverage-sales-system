@@ -8,6 +8,7 @@ namespace Sistema.Models
 {
     public class Vendas
     {
+        [Display(Name = "Código")]
         public int idVenda { get; set; }
         [Display(Name = "Data da venda")]
         public DateTime? dtVenda { get; set; }
@@ -22,10 +23,19 @@ namespace Sistema.Models
         public string nmCliente { get; set; }
         public IEnumerable<SelectListItem> ListClientes { get; set; }
 
-        [Display(Name = "Produto")]
-        public int idProduto { get; set; }
-        public string dsProduto { get; set; }
         public IEnumerable<SelectListItem> ListProdutos { get; set; }
+        [Display(Name = "Produto")]
+        public int? idProduto { get; set; }
+        public string dsProduto { get; set; }
+        [Display(Name = "Qtd. Produto")]
+        public decimal? Produto_qtdProduto { get; set; }
+        [Display(Name = "Unidade")]
+        public int? Produto_idUnidade { get; set; }
+        public string Produto_dsUnidade { get; set; }
+        [Display(Name = "Valor Unitário")]
+        public decimal? Produto_vlVenda { get; set; }
+        [Display(Name = "tx Desconto")]
+        public decimal? Produto_txDesconto { get; set; }
 
         [Display(Name = "Condição Pgto")]
         public int idCondicaoPgto { get; set; }
@@ -38,6 +48,7 @@ namespace Sistema.Models
         [Display(Name = "Situação")]
         public string flSituacao { get; set; }
         public decimal? vlTotal { get; set; }
+        [Display(Name = "Nrº Modelo")]
         public string nrModelo { get; set; }
         public class ProdutosVM
         {
