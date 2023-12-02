@@ -121,6 +121,18 @@ $(document).ready(function () {
 
             $("#vlTotal").val(novoTotal);
             $("#vlTotal").change();
+            if (total > 0) {
+                $(".divfinalizar").css("display", "");
+                $("#btnSubmit").prop('disabled', false);
+            } else {
+                $("#observacao").val("");
+                $("#vlFrete").val("");
+                $("#vlSeguro").val("");
+                $("#vlDespesas").val("");
+                tableParcelas.clear().draw();
+                $(".divfinalizar").css("display", "none");
+                $("#btnSubmit").prop('disabled', true);
+            }
         }
     });
 
@@ -140,7 +152,7 @@ $(document).ready(function () {
             {
                 data: "dtVencimento",
                 mRender: function (data) {
-                    return data;
+                    return data.substring(0, 10).split("-").reverse().join("/")
                 }
             },
             {
@@ -150,6 +162,7 @@ $(document).ready(function () {
             { data: "dsFormaPgto" }            
         ]
     });
+
     $("#idFornecedor").on('change', function () {
         if ($("#idFornecedor").val()) {
             $.ajax({
@@ -169,6 +182,36 @@ $(document).ready(function () {
 
     $("#idFornecedor").change();
 
+    $("#btnValidaNF").on('click', function () {
+        if (!$("#nrModelo").val()) {
+            alert("Preencha o número do modelo da nota!");
+        } else if (!$("#nrSerie").val()) {
+            alert("Preencha o número de série da nota!");
+        } else if (!$("#nrNota").val()) {
+            alert("Preencha o número da nota!");
+        } else if (!$("#idFornecedor").val()) {
+            alert("Preencha fornecedor da nota!");
+        } else {
+            $.ajax({
+                url: "/Compras/VerificaNota",
+                data: {
+                    idFornecedor: $("#idFornecedor").val(),
+                    nrModelo: $("#nrModelo").val(),
+                    nrSerie: $("#nrSerie").val(),
+                    nrNota: $("#nrNota").val()
+                },
+                success: function (result) {
+                    if (result.type == "success") {
+                        $(".Corpo").css("display", "");
+                    } else {
+                        $(".Corpo").css("display", "none");
+                        alert(result.msg);
+                    };
+                }
+            });
+        }
+    })
+
     $("#dtEmissao").on('keyup change', function () {
         $(this).mask("99/99/9999");
     });
@@ -177,18 +220,23 @@ $(document).ready(function () {
         $(this).mask("99/99/9999");
     });
 
+    $("#vlTotal").on('change', function () {
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "")).toFixed(2)) : $(this).val(0);
+        Compras.VerificaTotal();
+    });
+
     $("#vlFrete").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val()).toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
     });
 
     $("#vlSeguro").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val()).toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
     });
 
     $("#vlDespesas").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val()).toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
     });
 
@@ -203,20 +251,45 @@ $(document).ready(function () {
     });
 
     $("#btnGeraParcelas").on('click', function () {
-        $.ajax({
-            url: "/Compras/MontaParcelas",
-            data: {
-                dtEmissao: $("#dtEmissao").val(),
-                vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", ""),
-                idCondicaoPgto: $("#idCondicaoPgto").val()
-            },
-            success: function (result) {
-                tableParcelas.clear().draw();
-                tableParcelas.rows.add(result);
-                tableParcelas.draw();
-            }
-        });
+        if (!$("#dtEmissao").val()) {
+            alert("Informe a data de emissão da nota!");
+        } else if (!$("#listaCompra").DataTable().rows().data().toArray().length > 0) {
+            alert("Informe pelo menos um produto a comprar!");
+        } else if (!$("#idCondicaoPgto").val()) {
+            alert("Preencha o Fornecedor para que seja carregado a condição de pagamento!");
+        } else {
+            $.ajax({
+                url: "/Compras/MontaParcelas",
+                data: {
+                    dtEmissao: $("#dtEmissao").val(),
+                    vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", ""),
+                    idCondicaoPgto: $("#idCondicaoPgto").val()
+                },
+                success: function (result) {
+                    tableParcelas.clear().draw();
+                    tableParcelas.rows.add(result);
+                    tableParcelas.draw();
+
+                    if ($("#tbParcelas").DataTable().rows().data().toArray().length > 0) {
+                        $("#btnSubmit").prop('disabled', false);
+                    } else {
+                        $("#btnSubmit").prop('disabled', true);
+                    }
+
+                    $("#jsProdutos").val(JSON.stringify($("#listaCompra").DataTable().rows().data().toArray()));
+                    $("#jsParcelas").val(JSON.stringify($("#tbParcelas").DataTable().rows().data().toArray()));
+                }
+            });            
+        }      
     });
+
+    $("#btnSubmit").on('click', function () {
+        $("#vlFrete").val($("#vlFrete").val().replace("R$", "").replace(",", "."));
+        $("#vlSeguro").val($("#vlSeguro").val().replace("R$", "").replace(",", "."));
+        $("#vlDespesas").val($("#vlDespesas").val().replace("R$", "").replace(",", "."));
+        $("#vlTotal").val($("#vlTotal").val().replace("R$", "").replace(",", "."));
+        $('form').submit();
+    })
 
 // ------------------------ FORNECEDORES ------------------------
     $("#modalFornecedor").on('show.bs.modal', function () {
@@ -287,7 +360,7 @@ $(document).ready(function () {
             let dsUnidade = $("#dsUnidade").val();
             let quantidade = parseFloat($("#Produto_qtdProduto").val().replace(",", "."));
             let vlCompraUnitario = parseFloat($("#Produto_vlVenda").val().replace(",", "."));
-            let txDesconto = parseFloat($("#Produto_txDesconto").val().replace(",", "."));
+            let txDesconto = $("#Produto_txDesconto").val() != "" ? parseFloat($("#Produto_txDesconto").val().replace(",", ".")) : 0;
 
             var subTotal = quantidade * vlCompraUnitario;
             var vlTotal = subTotal - subTotal * txDesconto / 100;
@@ -299,7 +372,7 @@ $(document).ready(function () {
                 dsUnidade: dsUnidade,
                 qtdProduto: quantidade,
                 vlCompra: vlCompraUnitario,
-                txDesconto: txDesconto ?? 0,
+                txDesconto: txDesconto != "" ? txDesconto : 0,
                 idFornecedor: $("#idFornecedor").val(),
                 nmFornecedor: $("#idFornecedor option:selected").text(),
                 vlTotal: vlTotal
@@ -391,9 +464,9 @@ var Compras = {
 
     VerificaTotal() {
         
-        vlFrete = $("#vlFrete").val() != "" ? parseFloat($("#vlFrete").val().replace("R$", "").replace(",", ".")) : 0;
-        vlSeguro = $("#vlSeguro").val() != "" ? parseFloat($("#vlSeguro").val().replace("R$", "").replace(",", ".")) : 0;
-        vlDespesas = $("#vlDespesas").val() != "" ? parseFloat($("#vlDespesas").val().replace("R$", "").replace(",", ".")) : 0;
+        vlFrete = $("#vlFrete").val() != "" ? parseFloat($("#vlFrete").val()) : 0;
+        vlSeguro = $("#vlSeguro").val() != "" ? parseFloat($("#vlSeguro").val()) : 0;
+        vlDespesas = $("#vlDespesas").val() != "" ? parseFloat($("#vlDespesas").val()) : 0;
 
         let novoTotal = vlTotal + vlFrete + vlSeguro + vlDespesas;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sistema.DAO;
 using Sistema.Models;
 using Sistema.Util;
@@ -171,6 +172,30 @@ namespace Sistema.Controllers
             }
 
             return Json(parcelasCompra);
+        }
+
+        public JsonResult VerificaNota(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
+        {
+            DAOCompras daoCompras = new DAOCompras();
+            var validNF = daoCompras.validNota(idFornecedor, nrModelo, nrSerie, nrNota);
+            var type = string.Empty;
+            var msg = string.Empty;
+            if (validNF)
+            {
+                type = "success";
+                msg = "Nota Fiscal válida!";
+            }
+            else
+            {
+                type = "danger";
+                msg = "Já existe uma Nota Fiscal registrada com esse número e fornecedor, verifique!";
+            }
+            var result = new
+            {
+                type = type,
+                msg = msg
+            };
+            return Json(result);
         }
     }
 }
