@@ -60,9 +60,9 @@ $(document).ready(function () {
             var jsItens = JSON.stringify($("#tbParcelas").DataTable().rows().data().toArray());
             $("#jsItens").val(jsItens);
 
-            $("#vlMulta").val(parseFloat($("#vlMulta").val()));
-            $("#vlDesconto").val(parseFloat($("#vlDesconto").val()));
-            $("#vlJuros").val(parseFloat($("#vlJuros").val()));
+            $("#txMulta").val(parseFloat($("#txMulta").val()));
+            $("#txDesconto").val(parseFloat($("#txDesconto").val()));
+            $("#txJuros").val(parseFloat($("#txJuros").val()));
 
             $("form").submit();
         }

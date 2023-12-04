@@ -107,7 +107,7 @@ $(document).ready(function () {
             {
                 data: "vlTotal",
                 mRender: function (data) {
-                    return "R$ " + parseFloat(data).toFixed(2).replace(".", ",");
+                    return "R$ " + parseFloat(data).toFixed(2).replace(".", ",").trim();
                 }
             },
             {
@@ -204,16 +204,14 @@ $(document).ready(function () {
     $("#idCliente").change();
 
     $("#vlTotal").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "")).toFixed(2)) : $(this).val(0);
-        Vendas.VerificaTotal();
-    });
-
-    $("#vlTotal").on('change', function () {
         if (parseFloat(vlTotal) > 0) {
             $("#btnGeraParcelas").prop('disabled', false);
         } else {
             $("#btnGeraParcelas").prop('disabled', true);
         }
+
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "")).trim().toFixed(2)) : $(this).val(0);
+        Vendas.VerificaTotal();
     });
 
     $("#btnGeraParcelas").on('click', function () {
@@ -225,7 +223,7 @@ $(document).ready(function () {
             $.ajax({
                 url: "/Vendas/MontaParcelas",
                 data: {
-                    vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", ""),
+                    vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", "").trim(),
                     idCondicaoPgto: $("#idCondicaoPgto").val()
                 },
                 success: function (result) {
@@ -247,7 +245,7 @@ $(document).ready(function () {
     });
 
     $("#btnSubmit").on('click', function () {
-        $("#vlTotal").val($("#vlTotal").val().replace("R$", "").replace(",", "."));
+        $("#vlTotal").val($("#vlTotal").val().replace("R$", "").replace(",", ".").trim());
         $('#formSubmit').submit();
     })
 
@@ -461,6 +459,6 @@ var Vendas = {
 
     VerificaTotal() {
         let novoTotal = vlTotal;
-        $("#vlTotal").val("R$ " + parseFloat(novoTotal).toFixed(2).replace(".", ","));
+        $("#vlTotal").val("R$" + parseFloat(novoTotal).toFixed(2).replace(".", ",").trim());
     }
 }

@@ -108,6 +108,7 @@
                     <th width="10%">Unidade</th>
                     <th width="10%">Quant</th>
                     <th width="10%">Vl. compra</th>
+                    <th width="10%">Vl. venda</th>
                     <th width="10%">Desconto</th>
                     <th width="10%">Total</th>
                     <th width="5%"></th>
@@ -115,12 +116,13 @@
             </thead>
             <tfoot>
                 <tr>
-                    <td id="ftp" colspan="8" style="text-align:right"></td>
+                    <td id="ftp" colspan="9" style="text-align:right"></td>
                 </tr>
             </tfoot>
         </table>
         @Html.Hidden("idUnidade")
         @Html.Hidden("dsUnidade")
+        @Html.Hidden("vlVenda")
         <hr />        
     </div>
 </div>
@@ -175,6 +177,9 @@
     <div class="col-md-3">
         @Html.LabelFor(e => e.idCondicaoPgto, new { @class = "form-label" })
         @Html.HiddenFor(e => e.idCondicaoPgto)
+        @Html.Hidden("CondicaoPagamento_txJuros")
+        @Html.Hidden("CondicaoPagamento_txMulta")
+        @Html.Hidden("CondicaoPagamento_txDesconto")
         @Html.TextBoxFor(model => model.dsCondicaoPgto, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
     </div>
 

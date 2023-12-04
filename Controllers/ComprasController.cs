@@ -21,8 +21,7 @@ namespace Sistema.Controllers
             }
             catch (Exception ex)
             {
-                this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                return View();
+                throw new Exception(ex.Message);
             }
         }
         public ActionResult Create()
@@ -67,13 +66,11 @@ namespace Sistema.Controllers
             {
                 DAOCompras daoCompra = new();
                 daoCompra.Insert(model);
-                this.AddFlashMessage(AlertMessage.INSERT_SUCESS);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                return View(model);
+                throw new Exception(ex.Message);
             }
         }
         public ActionResult Details(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
@@ -128,8 +125,43 @@ namespace Sistema.Controllers
         {
             try
             {
-                var daoCompra = new DAOCompras();
+                var daoCompra = new DAOCompras();                
                 var model = daoCompra.GetCompra(null, idFornecedor, nrModelo, nrSerie, nrNota);
+
+                DAOFornecedores daoFornecedores = new();
+                DAOProdutos daoProdutos = new();
+                DAOCondicaoPgto daoCondicaoPgto = new();
+
+                List<Fornecedores> list = daoFornecedores.GetFornecedores();
+                List<Produtos> listProd = daoProdutos.GetProdutos();
+                List<CondicaoPgto> listCond = daoCondicaoPgto.GetCondicoesPgto();
+
+                var lista = new Compras
+                {
+                    ListFornecedores = list.Select(u => new SelectListItem
+                    {
+                        Value = u.id.ToString(),
+                        Text = u.nmFornecedor.ToString(),
+                        Selected = false
+                    }),
+                    ListProdutos = listProd.Select(u => new SelectListItem
+                    {
+                        Value = u.idProduto.ToString(),
+                        Text = u.dsProduto.ToString() + " - " + Convert.ToInt32(u.qtdEstoque).ToString(),
+                        Selected = false
+                    }),
+                    ListCondicaoPagamento = listCond.Select(u => new SelectListItem
+                    {
+                        Value = u.idCondicaoPgto.ToString(),
+                        Text = u.dsCondicaoPgto.ToString(),
+                        Selected = false
+                    })
+                };
+
+                model.ListCondicaoPagamento = lista.ListFornecedores;
+                model.ListProdutos = lista.ListProdutos;
+                model.ListCondicaoPagamento = lista.ListCondicaoPagamento;
+
                 return View(model);
             }
             catch (Exception ex)

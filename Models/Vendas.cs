@@ -41,8 +41,8 @@ namespace Sistema.Models
         public int idCondicaoPgto { get; set; }
         public string dsCondicaoPgto { get; set; }
         public decimal? txJuros { get; set; }
-        public decimal? vlMulta { get; set; }
-        public decimal? vlDesconto { get; set; }
+        public decimal? txMulta { get; set; }
+        public decimal? txDesconto { get; set; }
         public IEnumerable<SelectListItem> ListCondicaoPgto { get; set; }
 
         [Display(Name = "Situação")]

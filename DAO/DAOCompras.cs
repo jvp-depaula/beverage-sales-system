@@ -77,7 +77,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbCompras ( idFornecedor, nrModelo, nrSerie, nrNota, dtEmissao, dtEntrega, chaveNFe, observacao, dtCadastro, flSituacao, idCondicaoPgto, vlFrete, vlFeguro, vlDespesas ) VALUES ({0}, '{1}', '{2}', {3}, {4}, {5}, '{6}', '{7}', {8}, '{9}', {10}, {11}, {12}, {13} ); ",
+                var sql = string.Format("INSERT INTO tbCompras ( idFornecedor, nrModelo, nrSerie, nrNota, dtEmissao, dtEntrega, chaveNFe, observacao, dtCadastro, flSituacao, idCondicaoPgto, vlFrete, vlSeguro, vlDespesas ) VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, {13} ); ",
                     compra.idFornecedor,
                     compra.nrModelo,
                     compra.nrSerie,
@@ -85,7 +85,7 @@ namespace Sistema.DAO
                     compra.dtEmissao != null ? Convert.ToDateTime(compra.dtEmissao) : null,
                     compra.dtEntrega != null ? Convert.ToDateTime(compra.dtEntrega) : null,
                     compra.chaveNFe,
-                    compra.observacao.Trim(),
+                    compra.observacao != null ? compra.observacao.Trim() : null,
                     DateTime.Now,
                     "N",
                     compra.idCondicaoPgto,
@@ -94,8 +94,8 @@ namespace Sistema.DAO
                     compra.vlDespesas != null ? this.FormatDecimal(compra.vlDespesas).ToString() : null
                     );
                 string sqlProduto = "INSERT INTO tbProdutosCompra (idProduto, nrModelo, nrSerie, nrNota, idFornecedor, qtdProduto, vlCompra, txDesconto, vlVenda) VALUES ( {0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8})";
-                string sqlParcela = "INSERT INTO tbContasPagar (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela, dtEmissao, dtVencimento, vlParcela, idFormaPgto, dtPgto, flSituacao, vlJuros, vlMulta, vlDesconto) VALUES ({0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8}, {9}, '{10}', {11}, {12}, {13})";
-                string sqlUpdateProduto = "UPDATE tbProdutos set qtdEstoque += {0}, vlUltCompra = {1}, dtUltAlteracao = {2} WHERE idProduto = {3}";
+                string sqlParcela = "INSERT INTO tbContasPagar (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela, dtEmissao, dtVencimento, vlParcela, idFormaPgto, vlPago, dtPgto, flSituacao, txJuros, txMulta, txDesconto) VALUES ({0}, '{1}', '{2}', {3}, {4}, '{5}', '{6}', {7}, {8}, {9}, '{10}', '{11}', {12}, {13}, {14})";
+                string sqlUpdateProduto = "UPDATE tbProdutos set qtdEstoque += {0}, vlUltCompra = {1}, dtUltAlteracao = '{2}' WHERE idProduto = {3}";
                 using (con)
                 {
                     OpenConnection();
@@ -109,18 +109,18 @@ namespace Sistema.DAO
                         command.ExecuteNonQuery();
                         foreach (var item in compra.ProdutosCompra)
                         {
-                            var Item = string.Format(sqlProduto, item.idProduto, compra.nrModelo, compra.nrSerie, compra.nrNota, compra.idFornecedor, this.FormatDecimal(item.qtdEstoque), this.FormatDecimal(item.vlCompra), this.FormatDecimal(item.txDesconto), this.FormatDecimal(item.vlVenda));
+                            var Item = string.Format(sqlProduto, item.idProduto, compra.nrModelo, compra.nrSerie, compra.nrNota, compra.idFornecedor, this.FormatDecimal(item.qtdProduto), this.FormatDecimal(item.vlCompra), this.FormatDecimal(item.txDesconto), this.FormatDecimal(item.vlVenda));
                             command.CommandText = Item;
                             command.ExecuteNonQuery();
 
-                            var upProd = string.Format(sqlUpdateProduto, this.FormatDecimal(item.qtdEstoque), this.FormatDecimal(item.vlCompra), DateTime.Now, item.idProduto);
+                            var upProd = string.Format(sqlUpdateProduto, this.FormatDecimal(item.qtdProduto), this.FormatDecimal(item.vlCompra), DateTime.Now, item.idProduto);
                             command.CommandText = upProd;
                             command.ExecuteNonQuery();
                         }
 
                         foreach (var item in compra.ParcelasCompra)
                         {
-                            var parcela = string.Format(sqlParcela, compra.idFornecedor, compra.nrModelo, compra.nrSerie, compra.nrNota, item.nrParcela, compra.dtEmissao, item.dtVencimento, this.FormatDecimal(item.vlParcela), item.idFormaPgto, item.dtPagamento, "P", compra.CondicaoPagamento_txJuros, compra.CondicaoPagamento_vlMulta, compra.CondicaoPagamento_vlDesconto);
+                            var parcela = string.Format(sqlParcela, compra.idFornecedor, compra.nrModelo, compra.nrSerie, compra.nrNota, item.nrParcela, compra.dtEmissao, item.dtVencimento, this.FormatDecimal(item.vlParcela), item.idFormaPgto, Convert.ToDecimal(0), item.dtPagamento, "P", compra.CondicaoPagamento_txJuros, compra.CondicaoPagamento_txMulta, compra.CondicaoPagamento_txDesconto);
                             command.CommandText = parcela;
                             command.ExecuteNonQuery();
                         }
@@ -193,9 +193,9 @@ namespace Sistema.DAO
                         {
                             idProduto = Convert.ToInt32(reader["idProduto"]),
                             dsProduto = Convert.ToString(reader["dsProduto"]),
-                            idUnidade = Convert.ToInt32(reader["idUnidade"]),  
+                            idUnidade = Convert.ToInt32(reader["idUnidade"]),
                             dsUnidade = Convert.ToString(reader["dsUnidade"]),
-                            qtdEstoque = Convert.ToDecimal(reader["qtdProduto"]),
+                            qtdProduto = Convert.ToDecimal(reader["qtdProduto"]),
                             vlCompra = Convert.ToDecimal(reader["vlCompra"]),
                             txDesconto = Convert.ToDecimal(reader["txDesconto"]),
                             vlVenda = Convert.ToDecimal(reader["vlVenda"]),
@@ -313,7 +313,7 @@ namespace Sistema.DAO
 	                    tbProdutosCompra.vlVenda AS vlVenda
                     FROM tbProdutosCompra
                     INNER JOIN tbProdutos on tbProdutosCompra.idProduto = tbProdutos.idProduto
-                    INNER JOIN tbUnidades on tbProdutosCompra.idUnidade = tbUnidade.idUnidade
+                    INNER JOIN tbUnidades on tbProdutosCompra.idUnidade = tbUnidades.idUnidade
                     WHERE tbProdutosCompra.nrModelo = '" + nrModelo + "' AND tbProdutosCompra.nrSerie = '" + nrSerie + "' AND tbProdutosCompra.nrNota = " + nrNota + " AND tbProdutosCompra.idFornecedor = " + idFornecedor + ";"
             ;
             return sql;
@@ -333,7 +333,7 @@ namespace Sistema.DAO
 	                    tbContasPagar.nrParcela AS nrParcela,
 	                    tbContasPagar.vlParcela AS vlParcela,
 	                    tbContasPagar.dtVencimento AS dtVencimento,
-                        tbContasPagar.flSituacao AS flSituacao,
+                        tbContasPagar.flSituacao AS flSituacao
                     FROM tbContasPagar
                     INNER JOIN tbFormaPgto on tbContasPagar.idFormaPgto = tbFormaPgto.idFormaPgto
                     WHERE tbContasPagar.nrModelo = '" + nrModelo + "' AND tbContasPagar.nrSerie = '" + nrSerie + "' AND tbContasPagar.nrNota = " + nrNota + " AND tbContasPagar.idFornecedor = " + idFornecedor;

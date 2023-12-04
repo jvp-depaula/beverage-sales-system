@@ -37,8 +37,18 @@ $(document).ready(function () {
                 bVisible: false
             },
             { data: "dsUnidade" },
-            { data: "qtdEstoque" },
-            { data: "vlVenda" },
+            {
+                data: "qtdEstoque",
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? data.toFixed(1).replace(".", ",") : data;
+                }
+            },
+            {
+                data: "vlVenda",
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? parseFloat(data).toFixed(2).replace(".", ",") : data;
+                }
+            },
             {
                 data: "idFornecedor",
                 bVisible: false
@@ -70,26 +80,30 @@ $(document).ready(function () {
             { data: "dsUnidade" },
             {
                 data: "qtdProduto",
-                mRender: function (data) {
-                    return parseFloat(data).toFixed(1).replace(".", ",");
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? parseFloat(data).toFixed(1).replace(".", ",") : data;
                 }
             },
             {
                 data: "vlCompra",
-                mRender: function (data) {
-                    return "R$ " + parseFloat(data).toFixed(2).replace(".", ",");
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? "R$ " + parseFloat(data).toFixed(2).replace(".", ",") : data;
                 }
             },
             {
+                data: "vlVenda",
+                bVisible: false                
+            },
+            {
                 data: "txDesconto",
-                mRender: function (data) {
-                    return parseFloat(data).toFixed(2).replace(".", ",") + "%"
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? parseFloat(data).toFixed(2).replace(".", ",") + "%" : data;
                 }
             },
             {
                 data: "vlTotal",
-                mRender: function (data) {
-                    return "R$ " + parseFloat(data).toFixed(2).replace(".", ",");
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? "R$ " + parseFloat(data).toFixed(2).replace(".", ",") : data;
                 }
             },
             {
@@ -112,7 +126,7 @@ $(document).ready(function () {
             };
 
             // Total over all pages
-            total = api.column(7).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+            total = api.column(8).data().reduce((a, b) => intVal(a) + intVal(b), 0);
             vlTotal = total;
 
             let novoTotal = 'R$ ' + total.toFixed(2).replace(".", ",");
@@ -143,8 +157,8 @@ $(document).ready(function () {
             { data: "nrParcela" },
             {
                 data: "vlParcela",
-                mRender: function (data) {
-                    return data.toFixed(2);
+                mRender: function (data, type, row, meta) {
+                    return type === 'display' ? "R$ " + data.toFixed(2).replace(".", ",") : data;
                 }
             },
             {
@@ -171,7 +185,8 @@ $(document).ready(function () {
                 success: function (result) {
                     if (result) {
                         $("#idCondicaoPgto").val(result.idCondicaoPgto);                        
-                        $("#dsCondicaoPgto").val(result.dsCondicaoPgto);                        
+                        $("#dsCondicaoPgto").val(result.dsCondicaoPgto);   
+                        $("#idCondicaoPgto").change();
                     }
                 }
             });
@@ -179,6 +194,25 @@ $(document).ready(function () {
     });
 
     $("#idFornecedor").change();
+
+    $("#idCondicaoPgto").on('change', function () {
+        if ($("#idCondicaoPgto").val()) {
+            $.ajax({
+                url: "/CondicaoPgto/JsGetCondicao",
+                data: {
+                    idCondicaoPgto: $("#idCondicaoPgto").val()
+                },
+                success: function (result) {
+                    if (result) {
+                        $("#CondicaoPagamento_txJuros").val(result.txJuros);
+                        $("#CondicaoPagamento_txMulta").val(result.txMulta);
+                        $("#CondicaoPagamento_txDesconto").val(result.txDesconto);
+                    }
+                }
+            });
+        }
+        
+    });
 
     $("#btnValidaNF").on('click', function () {
         if (!$("#nrModelo").val()) {
@@ -238,31 +272,29 @@ $(document).ready(function () {
     });
 
     $("#vlTotal").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "")).toFixed(2)) : $(this).val(0);
+        if (parseFloat(vlTotal) > 0) {
+            $("#btnGeraParcelas").prop('disabled', false);
+        } else {
+            $("#btnGeraParcelas").prop('disabled', true);
+        }
+
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "").trim()).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
     });
 
     $("#vlFrete").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").trim()).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
     });
 
     $("#vlSeguro").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").trim()).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
     });
 
     $("#vlDespesas").on('change', function () {
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".")).toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").trim()).toFixed(2)) : $(this).val(0);
         Compras.VerificaTotal();
-    });
-
-    $("#vlTotal").on('change', function () {
-        if (parseFloat(vlTotal) > 0) {
-            $("#btnGeraParcelas").prop('disabled', false);            
-        } else {
-            $("#btnGeraParcelas").prop('disabled', true);            
-        }
     });
 
     $("#btnGeraParcelas").on('click', function () {
@@ -277,7 +309,7 @@ $(document).ready(function () {
                 url: "/Compras/MontaParcelas",
                 data: {
                     dtEmissao: $("#dtEmissao").val(),
-                    vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", ""),
+                    vlTotal: $("#vlTotal").val().replace(",", ".").replace("R$", "").trim(),
                     idCondicaoPgto: $("#idCondicaoPgto").val()
                 },
                 success: function (result) {
@@ -302,7 +334,7 @@ $(document).ready(function () {
         $("#vlFrete").val($("#vlFrete").val().replace("R$", "").replace(",", "."));
         $("#vlSeguro").val($("#vlSeguro").val().replace("R$", "").replace(",", "."));
         $("#vlDespesas").val($("#vlDespesas").val().replace("R$", "").replace(",", "."));
-        $("#vlTotal").val($("#vlTotal").val().replace("R$", "").replace(",", "."));
+        $("#vlTotal").val($("#vlTotal").val().replace("R$", "").replace(",", ".").trim());
         $("#idFornecedor").prop('disabled', false);
         $('#formSubmit').submit();
     })
@@ -350,6 +382,7 @@ $(document).ready(function () {
             success: function (result) {
                 $("#idUnidade").val(result.idUnidade);
                 $("#dsUnidade").val(result.dsUnidade);
+                $("#vlVenda").val(result.vlVenda);
             }
         });
     });
@@ -377,6 +410,7 @@ $(document).ready(function () {
             let quantidade = parseFloat($("#Produto_qtdProduto").val().replace(",", "."));
             let vlCompraUnitario = parseFloat($("#Produto_vlVenda").val().replace(",", "."));
             let txDesconto = $("#Produto_txDesconto").val() != "" ? parseFloat($("#Produto_txDesconto").val().replace(",", ".")) : 0;
+            let vlVenda = parseFloat($("#vlVenda").val().replace(",", ".").trim()).toFixed(2);
 
             var subTotal = quantidade * vlCompraUnitario;
             var vlTotal = subTotal - subTotal * txDesconto / 100;
@@ -388,6 +422,7 @@ $(document).ready(function () {
                 dsUnidade: dsUnidade,
                 qtdProduto: quantidade,
                 vlCompra: vlCompraUnitario,
+                vlVenda: vlVenda,
                 txDesconto: txDesconto != "" ? txDesconto : 0,
                 idFornecedor: $("#idFornecedor").val(),
                 nmFornecedor: $("#idFornecedor option:selected").text(),

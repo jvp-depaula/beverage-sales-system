@@ -14,15 +14,15 @@ namespace Sistema.Models
 
         [Required(ErrorMessage = "Informe a multa!")]
         [Display(Name = "% Multa")]
-        public decimal vlMulta { get; set; }
+        public decimal txMulta { get; set; }
 
         [Required(ErrorMessage = "Informe o desconto!")]
         [Display(Name = "% Desconto")]
-        public decimal vlDesconto { get; set; }
+        public decimal txDesconto { get; set; }
 
         [Required(ErrorMessage = "Informe o nome juros!")]
         [Display(Name = "% Juros")]
-        public decimal vlJuros { get; set; }
+        public decimal txJuros { get; set; }
 
         [Display(Name = "Forma de Pgto.")]
         [Required(ErrorMessage = "Selecione a forma de Pgto!")]

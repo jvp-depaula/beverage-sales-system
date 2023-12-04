@@ -64,9 +64,9 @@ $(document).ready(function () {
         columns: [
             { data: "idCondicaoPgto" },
             { data: "dsCondicaoPgto" },
-            { data: "vlMulta" },
-            { data: "vlDesconto" },
-            { data: "vlJuros" },
+            { data: "txMulta" },
+            { data: "txDesconto" },
+            { data: "txJuros" },
             {
                 data: null,
                 className: "text-center",
@@ -385,9 +385,9 @@ $(document).ready(function () {
                 url: "/CondicaoPgto/JsAddCondicao",
                 data: {
                     dsCondicaoPgto: $("#dsCondicaoPgto").val(),
-                    vlMulta: $("#vlMulta").val(),
-                    vlDesconto: $("#vlDesconto").val(),
-                    vlJuros: $("#vlJuros").val(),
+                    txMulta: $("#txMulta").val(),
+                    txDesconto: $("#txDesconto").val(),
+                    txJuros: $("#txJuros").val(),
                 },
                 success: function (result) {
                     if (result.success) {
@@ -664,13 +664,13 @@ var CondicoesPgto = {
         if (!$("#dsCondicaoPgto").val()) {
             alert("Digite a descrição da Condição de Pgto!");
             return false;
-        } else if (!$("#vlMulta").val()) {
+        } else if (!$("#txMulta").val()) {
             alert("Digite o valor da multa!");
             return false;
-        } else if (!$("#vlDesconto").val()) {
+        } else if (!$("#txDesconto").val()) {
             alert("Digite o valor do desconto!");
             return false;
-        } else if (!$("#vlJuros").val()) {
+        } else if (!$("#txJuros").val()) {
             alert("Digite o valor do juros!");
             return false;
         } else
@@ -679,9 +679,9 @@ var CondicoesPgto = {
 
     limpaForm() {
         $("#dsCondicaoPgto").val("");
-        $("#vlMulta").val("");
-        $("#vlDesconto").val("");
-        $("#vlJuros").val("");
+        $("#txMulta").val("");
+        $("#txDesconto").val("");
+        $("#txJuros").val("");
     },
 
     CarregaLista() {

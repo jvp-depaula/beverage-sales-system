@@ -129,16 +129,24 @@ namespace Sistema.Controllers
 
             return Json(list);
         }       
+
+        public JsonResult JsGetCondicao(int idCondicaoPgto)
+        {
+            DAOCondicaoPgto daoCondicaoPgto = new();
+            CondicaoPgto cond = daoCondicaoPgto.GetCondicaoPgto(idCondicaoPgto);
+
+            return Json(cond);
+        }
         
-        public JsonResult JsAddCondicao(string dscondicaoPgto, decimal vlMulta, decimal vlDesconto, decimal vlJuros)
+        public JsonResult JsAddCondicao(string dscondicaoPgto, decimal txMulta, decimal txDesconto, decimal txJuros)
         {
             DAOCondicaoPgto dao = new();
             var obj = new Models.CondicaoPgto()
             {
                 dsCondicaoPgto = dscondicaoPgto,
-                vlMulta = vlMulta,
-                vlDesconto= vlDesconto,
-                vlJuros = vlJuros
+                txMulta = txMulta,
+                txDesconto= txDesconto,
+                txJuros = txJuros
             };
             dao.Insert(obj);
 

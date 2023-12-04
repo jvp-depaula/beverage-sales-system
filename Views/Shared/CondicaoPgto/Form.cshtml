@@ -20,28 +20,28 @@
 </div>
 
 <div class="col-md-4">
-    @Html.LabelFor(e => e.vlMulta, new { @class = "form-label" })
+    @Html.LabelFor(e => e.txMulta, new { @class = "form-label" })
     @(disabled ?
-        @Html.TextBoxFor(model => model.vlMulta, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.vlMulta, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
+        @Html.TextBoxFor(model => model.txMulta, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.txMulta, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
         )
-    @Html.ValidationMessageFor(model => model.vlMulta, null, new { @class = "help-block" })
+    @Html.ValidationMessageFor(model => model.txMulta, null, new { @class = "help-block" })
 </div>
 <div class="col-md-4">
-    @Html.LabelFor(e => e.vlDesconto, new { @class = "form-label" })
+    @Html.LabelFor(e => e.txDesconto, new { @class = "form-label" })
     @(disabled ?
-        @Html.TextBoxFor(model => model.vlDesconto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.vlDesconto, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
+        @Html.TextBoxFor(model => model.txDesconto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.txDesconto, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
         )
-    @Html.ValidationMessageFor(model => model.vlDesconto, null, new { @class = "help-block" })
+    @Html.ValidationMessageFor(model => model.txDesconto, null, new { @class = "help-block" })
 </div>
 <div class="col-md-4">
-    @Html.LabelFor(e => e.vlJuros, new { @class = "form-label" })
+    @Html.LabelFor(e => e.txJuros, new { @class = "form-label" })
     @(disabled ?
-        @Html.TextBoxFor(model => model.vlJuros, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
-        @Html.TextBoxFor(model => model.vlJuros, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
+        @Html.TextBoxFor(model => model.txJuros, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.txJuros, new { @class = "form-control", maxlength = "150", @placeholder = "%" })
         )
-    @Html.ValidationMessageFor(model => model.vlJuros, null, new { @class = "help-block" })
+    @Html.ValidationMessageFor(model => model.txJuros, null, new { @class = "help-block" })
 </div>
 
 <hr />

@@ -26,7 +26,6 @@ namespace Sistema.Models
         public string chaveNFe { get; set; }
         public IEnumerable<SelectListItem> ListFornecedores { get; set; }
         [Display(Name = "Fornecedor")]
-        public int? idFornecedorAux { get; set; }
         public string nmFornecedor { get; set; }
         public IEnumerable<SelectListItem> ListCondicaoPagamento { get; set; }
         [Display(Name = "Condição de Pgto")]
@@ -35,9 +34,9 @@ namespace Sistema.Models
         [Display(Name = "tx. Juros")]
         public decimal? CondicaoPagamento_txJuros { get; set; }
         [Display(Name = "Multa")]
-        public decimal? CondicaoPagamento_vlMulta { get; set; }
+        public decimal? CondicaoPagamento_txMulta { get; set; }
         [Display(Name = "Desconto")]
-        public decimal? CondicaoPagamento_vlDesconto { get; set; }
+        public decimal? CondicaoPagamento_txDesconto { get; set; }
         public IEnumerable<SelectListItem> ListProdutos { get; set; }
         [Display(Name = "Produto")]
         public int? idProduto { get; set; }
@@ -74,7 +73,7 @@ namespace Sistema.Models
             public string dsProduto { get; set; }
             public int? idUnidade { get; set; }
             public string dsUnidade { get; set; }
-            public decimal? qtdEstoque { get; set; }
+            public decimal? qtdProduto { get; set; }
             public decimal? vlVenda { get; set; }
             public decimal? vlCompra { get; set; }
             public decimal? txDesconto { get; set; }

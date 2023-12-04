@@ -23,9 +23,9 @@ namespace Sistema.DAO
                     {
                         idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
                         dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]),
-                        vlJuros = Convert.ToDecimal(reader["vlJuros"]),
-                        vlMulta = Convert.ToDecimal(reader["vlMulta"]),
-                        vlDesconto = Convert.ToDecimal(reader["vlDesconto"]),
+                        txJuros = Convert.ToDecimal(reader["txJuros"]),
+                        txMulta = Convert.ToDecimal(reader["txMulta"]),
+                        txDesconto = Convert.ToDecimal(reader["txDesconto"]),
                         dtCadastro = Convert.ToDateTime(reader["dtCadastro"]),
                         dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"])
                     };
@@ -87,11 +87,11 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, vlMulta, vlJuros, vlDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, {5}); SELECT SCOPE_IDENTITY()",
+                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, txMulta, txJuros, txDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, {5}); SELECT SCOPE_IDENTITY()",
                     condicaoPgto.dsCondicaoPgto,
-                    this.FormatDecimal(condicaoPgto.vlDesconto),
-                    this.FormatDecimal(condicaoPgto.vlJuros),
-                    this.FormatDecimal(condicaoPgto.vlMulta),
+                    this.FormatDecimal(condicaoPgto.txDesconto),
+                    this.FormatDecimal(condicaoPgto.txJuros),
+                    this.FormatDecimal(condicaoPgto.txMulta),
                     Util.Util.FormatDate(DateTime.Now),
                     Util.Util.FormatDate(DateTime.Now)
                 );
@@ -144,11 +144,11 @@ namespace Sistema.DAO
             {
                 var sqlParcelasRemove = "DELETE FROM tbParcelas WHERE idCondicaoPgto = " + condicaoPgto.idCondicaoPgto;
 
-                var sql = String.Format("UPDATE tbCondicaoPgto SET dsCondicaoPgto = '{0}', vlMulta = '{1}', vlDesconto = '{2}', vlJuros = '{3}', dtUltAlteracao = '{4}' WHERE idCondicaoPgto = '{5}'",
+                var sql = String.Format("UPDATE tbCondicaoPgto SET dsCondicaoPgto = '{0}', txMulta = '{1}', txDesconto = '{2}', txJuros = '{3}', dtUltAlteracao = '{4}' WHERE idCondicaoPgto = '{5}'",
                     condicaoPgto.dsCondicaoPgto,
-                    condicaoPgto.vlMulta,
-                    condicaoPgto.vlDesconto,
-                    condicaoPgto.vlJuros,
+                    condicaoPgto.txMulta,
+                    condicaoPgto.txDesconto,
+                    condicaoPgto.txJuros,
                     Util.Util.FormatDate(DateTime.Now),
                     condicaoPgto.idCondicaoPgto
                 );
@@ -219,9 +219,9 @@ namespace Sistema.DAO
                     {
                         model.idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]);
                         model.dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]);
-                        model.vlMulta = Convert.ToDecimal(reader["vlMulta"]);
-                        model.vlJuros = Convert.ToDecimal(reader["vlJuros"]);
-                        model.vlDesconto = Convert.ToDecimal(reader["vlDesconto"]);
+                        model.txMulta = Convert.ToDecimal(reader["txMulta"]);
+                        model.txJuros = Convert.ToDecimal(reader["txJuros"]);
+                        model.txDesconto = Convert.ToDecimal(reader["txDesconto"]);
                         model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
                         model.dtUltAlteracao = Convert.ToDateTime(reader["dtUltAlteracao"]);
                     };
@@ -317,9 +317,9 @@ namespace Sistema.DAO
                     SELECT
                         tbCondicaoPgto.idcondicaoPgto AS idcondicaoPgto,
                         tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto,
-                        tbCondicaoPgto.vlMulta AS vlMulta,
-                        tbCondicaoPgto.vlDesconto AS vlDesconto,
-                        tbCondicaoPgto.vlJuros AS vlJuros,
+                        tbCondicaoPgto.txMulta AS txMulta,
+                        tbCondicaoPgto.txDesconto AS txDesconto,
+                        tbCondicaoPgto.txJuros AS txJuros,
                         tbCondicaoPgto.dtCadastro AS dtCadastro,
                         tbCondicaoPgto.dtUltAlteracao AS dtUltAlteracao
                     FROM tbCondicaoPgto" + swhere;

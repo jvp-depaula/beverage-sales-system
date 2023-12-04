@@ -37,11 +37,9 @@ namespace Sistema.Models
         [Display(Name = "Situação")]
         public string flSituacao { get; set; }
         [Display(Name = "Juros")]
-        public decimal vlJuros { get; set; }
+        public decimal txJuros { get; set; }
         [Display(Name = "Multa")]
-        public decimal vlMulta { get; set; }
-        [Display(Name = "Desconto")]
-        public decimal vlDesconto { get; set; }
+        public decimal txMulta { get; set; }
         [Display(Name = "Taxa Desconto")]
         public decimal txDesconto { get; set; }
         [Display(Name = "Cliente")]
