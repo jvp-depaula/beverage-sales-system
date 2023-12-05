@@ -187,6 +187,7 @@ $(document).ready(function () {
                     if (result) {
                         $("#idCondicaoPgto").val(result.idCondicaoPgto);
                         $("#dsCondicaoPgto").val(result.dsCondicaoPgto);
+                        $("#idCondicaoPgto").change();
                     }
                 }
             });
@@ -203,6 +204,25 @@ $(document).ready(function () {
 
     $("#idCliente").change();
 
+    $("#idCondicaoPgto").on('change', function () {
+        if ($("#idCondicaoPgto").val()) {
+            $.ajax({
+                url: "/CondicaoPgto/JsGetCondicao",
+                data: {
+                    idCondicaoPgto: $("#idCondicaoPgto").val()
+                },
+                success: function (result) {
+                    if (result) {
+                        $("#txJuros").val(result.txJuros);
+                        $("#txMulta").val(result.txMulta);
+                        $("#txDesconto").val(result.txDesconto);
+                    }
+                }
+            });
+        }
+
+    });
+
     $("#vlTotal").on('change', function () {
         if (parseFloat(vlTotal) > 0) {
             $("#btnGeraParcelas").prop('disabled', false);
@@ -210,7 +230,7 @@ $(document).ready(function () {
             $("#btnGeraParcelas").prop('disabled', true);
         }
 
-        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "")).trim().toFixed(2)) : $(this).val(0);
+        $(this).val() != "" ? $(this).val(parseFloat($(this).val().replace(",", ".").replace("R$", "").trim()).toFixed(2)) : $(this).val(0);
         Vendas.VerificaTotal();
     });
 
@@ -310,6 +330,7 @@ $(document).ready(function () {
                 $("#idUnidade").val(result.idUnidade);
                 $("#dsUnidade").val(result.dsUnidade);
                 $("#qtdEstoque").val(result.qtdEstoque);
+                $("#Produto_vlVenda").val("R$ " + parseFloat(result.vlVenda).toFixed(2).replace(".", ","));
             }
         });
     });
@@ -333,7 +354,7 @@ $(document).ready(function () {
             let idUnidade = $("#idUnidade").val();
             let dsUnidade = $("#dsUnidade").val();
             let quantidade = parseFloat($("#Produto_qtdProduto").val().replace(",", "."));
-            let vlVenda = parseFloat($("#Produto_vlVenda").val().replace(",", "."));
+            let vlVenda = parseFloat($("#Produto_vlVenda").val().replace(",", ".").replace("R$", "").trim());
             let txDesconto = $("#Produto_txDesconto").val() != "" ? parseFloat($("#Produto_txDesconto").val().replace(",", ".")) : 0;
 
             var subTotal = quantidade * vlVenda;

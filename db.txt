@@ -206,6 +206,7 @@ CREATE TABLE tbVendas (
 	idCliente INT NOT NULL,
 	idCondicaoPgto INT NOT NULL,
 	flSituacao VARCHAR(1) NOT NULL,
+	nrModelo VARCHAR(3) NOT NULL,
 	dtVenda DATETIME NOT NULL,	
 	CONSTRAINT PK_Vendas PRIMARY KEY (idVenda),
 	CONSTRAINT FK_Vendas_Funcionario FOREIGN KEY (idFuncionario) REFERENCES tbFuncionarios (idFuncionario),
@@ -216,11 +217,13 @@ CREATE TABLE tbVendas (
 CREATE TABLE tbProdutosVenda (
 	idVenda INT NOT NULL,
 	idProduto INT NOT NULL,
+	idUnidade INT NOT NULL,
 	qtdProduto DECIMAL(18, 2) NOT NULL,
 	vlProduto DECIMAL (18, 2) NOT NULL,
 	txDesconto DECIMAL (18, 2) NOT NULL
 	CONSTRAINT PK_tbProdutosVenda PRIMARY KEY (idVenda, idProduto),
 	CONSTRAINT FK_tbProdutosVenda_Vendas FOREIGN KEY (idVenda) REFERENCES tbVendas (idVenda),
+	CONSTRAINT FK_tbProdutosVenda_Unidades FOREIGN KEY (idUnidade) REFERENCES tbUnidades (idUnidade),
 	CONSTRAINT FK_tbProdutosVenda_Produtos FOREIGN KEY (idProduto) REFERENCES tbProdutos (idProduto),
 );
 
@@ -236,8 +239,8 @@ CREATE TABLE tbProdutosCompra (
 	txDesconto DECIMAL (18, 2) NOT NULL,
 	vlVenda DECIMAL (18, 2) NOT NULL,
 	CONSTRAINT PK_ProdutosCompra PRIMARY KEY (idProduto, nrModelo, nrSerie, nrNota, idFornecedor),
-	CONSTRAINT FK_ProdutosCompra_Produto FOREIGN KEY (idProduto) REFERENCES tbProdutos (idProduto),
-	CONSTAINT FK_ProdutosCompra_Unidade FOREIGN KEY (idUnidade) REFERENCES tbUnidades (idUnidade),
+	CONSTRAINT FK_ProdutosCompra_Produtos FOREIGN KEY (idProduto) REFERENCES tbProdutos (idProduto),
+	CONSTRAINT FK_ProdutosCompra_Unidades FOREIGN KEY (idUnidade) REFERENCES tbUnidades (idUnidade),
 	CONSTRAINT FK_ProdutosCompra_Compras FOREIGN KEY (idFornecedor, nrModelo, nrSerie, nrNota) REFERENCES tbCompras (idFornecedor, nrModelo, nrSerie, nrNota),	
 );
 
@@ -252,7 +255,7 @@ CREATE TABLE tbContasPagar (
 	vlParcela DECIMAL (9,2) NOT NULL,
 	idFormaPgto INT NOT NULL,
 	vlPago DECIMAL (9,2) NOT NULL,
-	dtPgto DATETIME NOT NULL,
+	dtPgto DATETIME,
 	flSituacao VARCHAR(255) NOT NULL,
 	txJuros DECIMAL (9,2) NOT NULL,
 	txMulta DECIMAL (9,2) NOT NULL,

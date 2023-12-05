@@ -26,6 +26,7 @@ namespace Sistema.DAO
                         dtVenda = Convert.ToDateTime(reader["dtVenda"]),
                         idFuncionario = Convert.ToInt32(reader["idFuncionario"]),
                         idCliente = Convert.ToInt32(reader["idCliente"]),
+                        nmCliente = Convert.ToString(reader["nmCliente"]),
                         idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"])
                     };
                     list.Add(Venda);
@@ -46,16 +47,16 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbVendas (flSituacao, dtVenda, idFuncionario, idCliente, idCondicaoPgto, nrModelo) VALUES ( '{0}', {1}, {2}, {3}, {4}, '{5}'); SELECT SCOPE_IDENTITY()",
+                var sql = string.Format("INSERT INTO tbVendas (flSituacao, dtVenda, idFuncionario, idCliente, idCondicaoPgto, nrModelo) VALUES ( '{0}', '{1}', {2}, {3}, {4}, '{5}'); SELECT SCOPE_IDENTITY()",
                     "N",
                     DateTime.Now,
                     venda.idFuncionario,
                     venda.idCliente,
                     venda.idCondicaoPgto,
-                    venda.nrModelo
+                    "55"
                     );
                 string sqlProduto = "INSERT INTO tbProdutosVenda (idVenda, idProduto, idUnidade, qtdProduto, vlProduto, txDesconto) VALUES ({0}, {1}, {2}, {3}, {4}, {5})";
-                string sqlParcela = "INSERT INTO tbContasReceber (idVenda, idFormaPgto, nrParcela, vlParcela, dtVencimento, flSituacao, idCliente, txJuros, txMulta, txDesconto) VALUES ({0}, {1}, {2}, {3}, {4}, '{5}', {6}, {7}, {8}, {9} )";
+                string sqlParcela = "INSERT INTO tbContasReceber (idVenda, idFormaPgto, nrParcela, vlParcela, dtVencimento, flSituacao, idCliente, txJuros, txMulta, txDesconto) VALUES ({0}, {1}, {2}, {3}, '{4}', '{5}', {6}, {7}, {8}, {9} )";
                 string sqlProdutoEstoque = "UPDATE tbProdutos set qtdEstoque -= {0} WHERE tbProdutos.idProduto = {1}";
                 using (con)
                 {
@@ -228,7 +229,8 @@ namespace Sistema.DAO
 	                    tbVendas.idCliente AS idCliente,
 	                    tbClientes.nmCliente AS nmCliente,
 	                    tbVendas.idCondicaoPgto AS idCondicaoPgto,
-	                    tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto
+	                    tbCondicaoPgto.dsCondicaoPgto AS dsCondicaoPgto,
+                        tbVendas.nrModelo AS nrModelo
                     FROM tbvendas
                     INNER JOIN tbFuncionarios ON tbVendas.idFuncionario = tbFuncionarios.idFuncionario
                     INNER JOIN tbClientes ON tbVendas.idCliente = tbClientes.idCliente
