@@ -68,7 +68,7 @@ namespace Sistema.DAO
                     cliente.nmCliente,
                     cliente.flTipo,
                     cliente.idCondicaoPgto,
-                    cliente.nmFantasia,
+                    cliente.nmFantasia != null ? cliente.nmFantasia : "",
                     Util.Util.Unmask(cliente.nrCPFCNPJ),
                     Util.Util.Unmask(cliente.nrRG_IE),
                     Util.Util.Unmask(cliente.nrTelefoneCelular),
@@ -78,7 +78,7 @@ namespace Sistema.DAO
                     cliente.dsLogradouro,
                     Convert.ToInt32(cliente.nrEndereco),
                     cliente.dsBairro,
-                    cliente.dsComplemento,
+                    cliente.dsComplemento != null ? cliente.dsComplemento : "",
                     Convert.ToInt32(cliente.idCidade),
                     Convert.ToDateTime(cliente.dtNasc),                    
                     Util.Util.FormatDate(DateTime.Now),
@@ -120,11 +120,11 @@ namespace Sistema.DAO
                     "dtNasc = '{15}'," +
                     "dtUltAlteracao = '{16}' WHERE idCliente = '{17}'", 
                     cliente.nmCliente, cliente.flTipo, cliente.idCondicaoPgto,
-                    cliente.nmFantasia, Util.Util.Unmask(cliente.nrCPFCNPJ), 
+                    cliente.nmFantasia != null ? cliente.nmFantasia : "", Util.Util.Unmask(cliente.nrCPFCNPJ), 
                     Util.Util.Unmask(cliente.nrRG_IE), Util.Util.Unmask(cliente.nrTelefoneCelular),
                     Util.Util.Unmask(cliente.nrTelefoneFixo), cliente.dsEmail, 
                     Util.Util.Unmask(cliente.nrCEP), cliente.dsLogradouro, cliente.nrEndereco,
-                    cliente.dsBairro, cliente.dsComplemento, cliente.idCidade,
+                    cliente.dsBairro, cliente.dsComplemento != null ? cliente.dsComplemento : "", cliente.idCidade,
                     Util.Util.FormatDate(cliente.dtNasc), Util.Util.FormatDate(DateTime.Now), cliente.id);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);

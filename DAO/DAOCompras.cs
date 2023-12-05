@@ -1,4 +1,5 @@
-﻿using Sistema.Models;
+﻿using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Sistema.Models;
 using System.Data.SqlClient;
 
 namespace Sistema.DAO
@@ -149,13 +150,53 @@ namespace Sistema.DAO
 
         public void CancelarCompra(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
         {
-            throw new Exception("Não implementado!");
-            /*try
+            try
             {
-                var sqlContasPagar = "DELETE FROM tbContasPagar WHERE idFornecedor = " + idFornecedor + " nrModelo = " + nrModelo + " nrSerie = " + nrSerie + " nrNota = " + nrNota + ";";
-                var sqlProdutosCompra = "Delete FROM tbProdutosCompra WHERE  idFornecedor = " + idFornecedor + " nrModelo = " + nrModelo + " nrSerie = " + nrSerie + " nrNota = " + nrNota + ";";
-                var sqlCompra = "DELETE FROM tbCompras WHERE idFornecedor = " + idFornecedor + " nrModelo = " + nrModelo + " nrSerie = " + nrSerie + " nrNota = " + nrNota + ";";
-                var sqlProduto = "UPDATE tbProdutos SET "
+                using (con)
+                {
+                    OpenConnection();
+                    var sqlUltCompra = String.Format("SELECT idProduto, qtdProduto FROM tbProdutosCompra WHERE idFornecedor = {0} AND nrModelo = '{1}' AND nrSerie = '{2}' AND nrNota = {3};",
+                                                  idFornecedor, nrModelo, nrSerie, nrNota);
+                    decimal estoqueUltCompra = 0;
+                    decimal idProduto = 0;
+                    SqlQuery = new SqlCommand(sqlUltCompra, con);
+                    reader = SqlQuery.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        idProduto = Convert.ToInt32(reader["idProduto"]);
+                        estoqueUltCompra = Convert.ToDecimal(reader["qtdProduto"]);
+                    }
+
+                    reader.Close();
+
+                    var sqlContasPagar = String.Format("DELETE FROM tbContasPagar WHERE idFornecedor = {0} AND nrModelo = '{1}' AND nrSerie = '{2}' AND nrNota = {3};",
+                                                        idFornecedor, nrModelo, nrSerie, nrNota);
+                    var sqlProdutosCompra = String.Format("DELETE FROM tbProdutosCompra WHERE idFornecedor = {0} AND nrModelo = '{1}' AND nrSerie = '{2}' AND nrNota = {3};",
+                                                           idFornecedor, nrModelo, nrSerie, nrNota);
+                    var sqlCompra = String.Format("DELETE FROM tbCompras WHERE idFornecedor = {0} AND nrModelo = '{1}' AND nrSerie = '{2}' AND nrNota = {3};",
+                                                   idFornecedor, nrModelo, nrSerie, nrNota);
+
+                    string sqlUpdateProduto = String.Format("UPDATE tbProdutos set qtdEstoque -= {0}, dtUltAlteracao = '{1}' WHERE idProduto = {2}", estoqueUltCompra, DateTime.Now, idProduto);
+
+                    SqlTransaction sqlTrans = con.BeginTransaction();
+                    SqlCommand command = con.CreateCommand();
+                    command.Transaction = sqlTrans;
+                    try
+                    {
+                        command.CommandText = (sqlContasPagar + sqlProdutosCompra + sqlCompra + sqlUpdateProduto);
+                        command.ExecuteNonQuery();
+                        sqlTrans.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        sqlTrans.Rollback();
+                        throw new Exception(e.Message);
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+                }
             }
             catch (Exception error)
             {
@@ -164,7 +205,7 @@ namespace Sistema.DAO
             finally
             {
                 CloseConnection();
-            }*/
+            }
         }
 
         public Compras GetCompra(string filter, int idFornecedor, string nrModelo, string nrSerie, int nrNota)

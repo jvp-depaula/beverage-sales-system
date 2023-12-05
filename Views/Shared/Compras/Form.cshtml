@@ -20,7 +20,7 @@
     <div class="col-md-2">
         @Html.LabelFor(e => e.nrModelo, new { @class = "form-label" })
         @(disabled ?
-            @Html.TextBoxFor(model => model.nrModelo, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.TextBoxFor(model => model.nrModelo, new { @class = "form-control", autofocus = "autofocus", @readonly = "readonly", @style = "background-color: #e9ecef" }) :
             @Html.TextBoxFor(model => model.nrModelo, new { @class = "form-control", maxlength = "150", @placeholder = "" })
             )
         @Html.ValidationMessageFor(model => model.nrModelo, null, new { @class = "help-block" })
@@ -29,7 +29,7 @@
     <div class="col-md-2">
         @Html.LabelFor(e => e.nrSerie, new { @class = "form-label" })
         @(disabled ?
-            @Html.TextBoxFor(model => model.nrSerie, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.TextBoxFor(model => model.nrSerie, new { @class = "form-control", autofocus = "autofocus", @readonly = "readonly", @style = "background-color: #e9ecef" }) :
             @Html.TextBoxFor(model => model.nrSerie, new { @class = "form-control", maxlength = "150", @placeholder = "" })
             )
         @Html.ValidationMessageFor(model => model.nrSerie, null, new { @class = "help-block" })
@@ -38,7 +38,7 @@
     <div class="col-md-2">
         @Html.LabelFor(e => e.nrNota, new { @class = "form-label" })
         @(disabled ?
-            @Html.TextBoxFor(model => model.nrNota, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.TextBoxFor(model => model.nrNota, new { @class = "form-control", autofocus = "autofocus", @readonly = "readonly", @style = "background-color: #e9ecef" }) :
             @Html.TextBoxFor(model => model.nrNota, new { @class = "form-control", maxlength = "150", @placeholder = "" })
             )
         @Html.ValidationMessageFor(model => model.nrNota, null, new { @class = "help-block" })
@@ -48,7 +48,7 @@
         @Html.LabelFor(e => e.idFornecedor, new { @class = "form-label" })
         <div class="input-group mb-3">
             @(disabled ?
-                @Html.TextBoxFor(model => model.idFornecedor, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+                @Html.TextBoxFor(model => model.idFornecedor, new { @class = "form-control", autofocus = "autofocus", @readonly = "readonly", @style = "background-color: #e9ecef" }) :
                 @Html.DropDownListFor(model => model.idFornecedor, Model.ListFornecedores, new { @class = "form-control" })
                 )
             @if (pageType == "Create" || pageType == "Edit")

@@ -58,7 +58,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, idUnidade, idMarca, cdNCM, vlVenda, qtdEstoque, vlCusto, vlUltCompra, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, '{5}', {6}, {7}, {8}, {9}, '{10}', {11}, {12})",
+                var sql = string.Format("INSERT INTO tbProdutos (dsProduto, idFornecedor, idCategoria, idUnidade, idMarca, cdNCM, vlVenda, qtdEstoque, vlCusto, vlUltCompra, observacao, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, '{5}', {6}, {7}, {8}, {9}, '{10}', '{11}', '{12}')",
                                         produto.dsProduto,
                                         produto.idFornecedor,
                                         Convert.ToInt32(produto.idCategoria),

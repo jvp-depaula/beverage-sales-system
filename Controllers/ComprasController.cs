@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sistema.DAO;
 using Sistema.Models;
-using Sistema.Util;
 using System.Globalization;
 using static Sistema.Models.CondicaoPgto;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sistema.Controllers
 {
@@ -84,19 +81,17 @@ namespace Sistema.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int idFornecedor, string nrModelo, string nrSerie, int nrNota, Models.Compras model)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
         {
             try
             {
                 DAOCompras daoCompra = new ();
                 daoCompra.CancelarCompra(idFornecedor, nrModelo, nrSerie, nrNota);
-                // this.AddFlashMessage("Registro cancelado com sucesso!");                
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
-            {
-                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                // return this.GetView(idFornecedor, nrModelo, nrSerie, nrNota);
+            {                
                 throw new Exception(ex.Message);
             }
         }

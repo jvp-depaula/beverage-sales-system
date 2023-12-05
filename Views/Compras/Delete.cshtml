@@ -23,12 +23,12 @@
                         ViewBag.disabledForm = true;
                     }
 
-                    @using (Html.BeginForm("Delete", "Compras", FormMethod.Post, new { @class = "row g-3" }))
+                    @using (Html.BeginForm("Delete", "Compras", FormMethod.Post, new { @class = "row g-3", @id = "formSubmit" }))
                     {
                         <partial name="~/Views/Shared/Compras/Form.cshtml" model="Model"></partial>
 
                         <div class="col-12 mt-10">
-                            <button type="submit" class="btn btn-danger">Excluir</button>
+                            <button type="button" id="btnSubmit" class="btn btn-danger">Excluir</button>
                             <a href="@Url.Action("Index", "Compras")" class="btn btn-primary">
                                 Cancelar
                             </a>
@@ -39,3 +39,9 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script type="text/javascript" src="@Url.Content("~/js/Scripts/Compras/Form.js")"></script>
+    }
+}

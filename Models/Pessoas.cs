@@ -10,7 +10,7 @@ namespace Sistema.Models
         [DisplayName("Código")]
         public int id { get; set; }
 
-        [Display(Name = "Condicao Pgto.")]
+        [Display(Name = "Condição Pgto.")]
         [Required(ErrorMessage = "Selecione a condição de Pgto!")]
         public int idCondicaoPgto { get; set; }
         public string dsCondicaoPgto { get; set; }
@@ -43,8 +43,7 @@ namespace Sistema.Models
         [Display(Name = "Bairro")]
         [Required(ErrorMessage = "Informe o bairro!")]
         public string dsBairro { get; set; }
-        [Display(Name = "Complemento")]
-        [Required(ErrorMessage = "Informe o complemento!")]
+        [Display(Name = "Complemento")]        
         public string dsComplemento { get; set; }
         [Display(Name = "Cidade")]
         [Required(ErrorMessage = "Selecione a Cidade!")]

@@ -286,11 +286,12 @@ CREATE TABLE tbContasReceber (
 );
 
 CREATE TABLE tbFichaEstoque (
+	data DATETIME NOT NULL,
 	idProduto INT NOT NULL,
+	operacao VARCHAR(1) NOT NULL,
 	qtdEstoque INT,
-	vlCustoMedio DECIMAL(9,2)
-	CONSTRAINT PK_tbFichaEstoque PRIMARY KEY (idProduto),
+	vlCusto DECIMAL(9,2) NOT NULL,
+	vlCustoCompra DECIMAL(9,2) NOT NULL,
+	CONSTRAINT PK_tbFichaEstoque PRIMARY KEY (data, idProduto),
 	CONSTRAINT FK_tbFichaEstoque_Produtos FOREIGN KEY (idProduto) REFERENCES tbProdutos (idProduto)
 );
-
-// CRIAR TRIGGER
