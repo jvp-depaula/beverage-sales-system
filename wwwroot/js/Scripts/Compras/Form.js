@@ -67,6 +67,7 @@ $(document).ready(function () {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
         },
+        data: $("#jsProdutos").val() != "" ? JSON.parse($("#jsProdutos").val()) : null,
         columns: [
             {
                 data: "idProduto",

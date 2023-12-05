@@ -93,7 +93,7 @@ namespace Sistema.DAO
                     compra.vlSeguro != null ? this.FormatDecimal(compra.vlSeguro).ToString() : null,
                     compra.vlDespesas != null ? this.FormatDecimal(compra.vlDespesas).ToString() : null
                     );
-                string sqlProduto = "INSERT INTO tbProdutosCompra (idProduto, nrModelo, nrSerie, nrNota, idFornecedor, qtdProduto, vlCompra, txDesconto, vlVenda) VALUES ( {0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8})";
+                string sqlProduto = "INSERT INTO tbProdutosCompra (idProduto, nrModelo, nrSerie, nrNota, idFornecedor, qtdProduto, vlCompra, txDesconto, vlVenda, idUnidade) VALUES ( {0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8}, {9})";
                 string sqlParcela = "INSERT INTO tbContasPagar (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela, dtEmissao, dtVencimento, vlParcela, idFormaPgto, vlPago, dtPgto, flSituacao, txJuros, txMulta, txDesconto) VALUES ({0}, '{1}', '{2}', {3}, {4}, '{5}', '{6}', {7}, {8}, {9}, '{10}', '{11}', {12}, {13}, {14})";
                 string sqlUpdateProduto = "UPDATE tbProdutos set qtdEstoque += {0}, vlUltCompra = {1}, dtUltAlteracao = '{2}' WHERE idProduto = {3}";
                 using (con)
@@ -109,7 +109,7 @@ namespace Sistema.DAO
                         command.ExecuteNonQuery();
                         foreach (var item in compra.ProdutosCompra)
                         {
-                            var Item = string.Format(sqlProduto, item.idProduto, compra.nrModelo, compra.nrSerie, compra.nrNota, compra.idFornecedor, this.FormatDecimal(item.qtdProduto), this.FormatDecimal(item.vlCompra), this.FormatDecimal(item.txDesconto), this.FormatDecimal(item.vlVenda));
+                            var Item = string.Format(sqlProduto, item.idProduto, compra.nrModelo, compra.nrSerie, compra.nrNota, compra.idFornecedor, this.FormatDecimal(item.qtdProduto), this.FormatDecimal(item.vlCompra), this.FormatDecimal(item.txDesconto), this.FormatDecimal(item.vlVenda), Convert.ToInt32(item.idUnidade));
                             command.CommandText = Item;
                             command.ExecuteNonQuery();
 
@@ -149,7 +149,22 @@ namespace Sistema.DAO
 
         public void CancelarCompra(int idFornecedor, string nrModelo, string nrSerie, int nrNota)
         {
-            throw new Exception("Não implementado");
+            throw new Exception("Não implementado!");
+            /*try
+            {
+                var sqlContasPagar = "DELETE FROM tbContasPagar WHERE idFornecedor = " + idFornecedor + " nrModelo = " + nrModelo + " nrSerie = " + nrSerie + " nrNota = " + nrNota + ";";
+                var sqlProdutosCompra = "Delete FROM tbProdutosCompra WHERE  idFornecedor = " + idFornecedor + " nrModelo = " + nrModelo + " nrSerie = " + nrSerie + " nrNota = " + nrNota + ";";
+                var sqlCompra = "DELETE FROM tbCompras WHERE idFornecedor = " + idFornecedor + " nrModelo = " + nrModelo + " nrSerie = " + nrSerie + " nrNota = " + nrNota + ";";
+                var sqlProduto = "UPDATE tbProdutos SET "
+            }
+            catch (Exception error)
+            {
+                throw new Exception(error.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }*/
         }
 
         public Compras GetCompra(string filter, int idFornecedor, string nrModelo, string nrSerie, int nrNota)
@@ -177,6 +192,7 @@ namespace Sistema.DAO
                     model.dtEmissao = Convert.ToDateTime(reader["dtEmissao"]);
                     model.dtEntrega = Convert.ToDateTime(reader["dtEntrega"]);
                     model.dtCadastro = Convert.ToDateTime(reader["dtCadastro"]);
+                    model.chaveNFe = Convert.ToString(reader["chaveNFe"]);
                     model.observacao = Convert.ToString(reader["observacao"]);
                     model.vlFrete = !string.IsNullOrEmpty(reader["vlFrete"].ToString()) ? Convert.ToDecimal(reader["vlFrete"]) : (decimal?)null;
                     model.vlSeguro = !string.IsNullOrEmpty(reader["vlSeguro"].ToString()) ? Convert.ToDecimal(reader["vlSeguro"]) : (decimal?)null;
@@ -277,6 +293,7 @@ namespace Sistema.DAO
 	                    tbCompras.nrNota AS nrNota,
 	                    tbCompras.dtEmissao AS dtEmissao,
 	                    tbCompras.dtEntrega AS dtEntrega,
+                        tbCompras.chaveNFe AS chaveNFe,
 	                    tbCompras.observacao AS observacao,
 	                    tbCompras.dtCadastro AS dtCadastro,
 	                    tbCompras.vlFrete AS vlFrete,

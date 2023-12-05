@@ -3,6 +3,7 @@
 @{
     var disabled = Convert.ToBoolean(ViewBag.disabledForm);
     var pageType = Convert.ToString(ViewBag.pageType);
+    var style = pageType == "Create" || pageType == "Edit" ? "display: none" : "";
 }
 
 @if (pageType != "Create")
@@ -47,7 +48,7 @@
         @Html.LabelFor(e => e.idFornecedor, new { @class = "form-label" })
         <div class="input-group mb-3">
             @(disabled ?
-                @Html.DropDownListFor(model => model.idFornecedor, Model.ListFornecedores, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+                @Html.TextBoxFor(model => model.idFornecedor, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
                 @Html.DropDownListFor(model => model.idFornecedor, Model.ListFornecedores, new { @class = "form-control" })
                 )
             @if (pageType == "Create" || pageType == "Edit")
@@ -57,17 +58,21 @@
         </div>
         @Html.ValidationMessageFor(model => model.idFornecedor, null, new { @class = "help-block" })
     </div>
-    <div class="col-md-1">
-        <button type="button" id="btnValidaNF" class="btn btn-primary" style="margin-top: 32px; white-space: nowrap"> Validar NF </button>
-        <button type="button" id="btnCancelaNF" class="btn btn-danger" style="margin-top: 32px; white-space: nowrap; display: none;"> Cancelar </button>
-    </div>
+    @if (pageType == "Create" || pageType == "Edit")
+    {
+        <div class="col-md-1">
+            <button type="button" id="btnValidaNF" class="btn btn-primary" style="margin-top: 32px; white-space: nowrap"> Validar NF </button>
+            <button type="button" id="btnCancelaNF" class="btn btn-danger" style="margin-top: 32px; white-space: nowrap; display: none;"> Cancelar </button>
+        </div>
+    }
 </div>
 
 <br />
 <hr />
 <br />
 
-<div class="Corpo row g-3" style="display: none">
+
+<div class="Corpo row g-3" @style>
     <div class="col-md-4">
         @Html.LabelFor(e => e.dtEmissao, new { @class = "form-label" })
         @(disabled ?
@@ -96,7 +101,12 @@
     </div>
 
     <div class="bs-callout bs-callout-primary row g-3">
-        <button class="btn btn-primary" disabled="@disabled" type="button" id="btnAdcProdutos" data-bs-toggle="modal" data-bs-target="#modalProdutos">Adicionar Produto</button>
+
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-primary" disabled="@disabled" type="button" id="btnAdcProdutos" data-bs-toggle="modal" data-bs-target="#modalProdutos">Adicionar Produto</button>            
+        }
+
 
         @Html.HiddenFor(model => model.jsProdutos)
         <table id="listaCompra" class="table table-striped table-bordered" style="width:100%">
@@ -127,7 +137,7 @@
     </div>
 </div>
 
-<div class="row g-3 divfinalizar" style="display: none">
+<div class="row g-3 divfinalizar" @style>
 
     <div class="col-md-12">
         @Html.LabelFor(e => e.observacao, new { @class = "form-label" })
@@ -182,8 +192,10 @@
         @Html.Hidden("CondicaoPagamento_txDesconto")
         @Html.TextBoxFor(model => model.dsCondicaoPgto, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
     </div>
-
-    <button class="btn btn-primary" disabled="disabled" type="button" id="btnGeraParcelas">Gerar Parcelas</button>
+    @if (pageType == "Create" || pageType == "Edit")
+    {
+        <button class="btn btn-primary" disabled="disabled" type="button" id="btnGeraParcelas">Gerar Parcelas</button>
+    }    
 
     <div id="divParcelas">
         @Html.HiddenFor(model => model.jsParcelas)
@@ -226,8 +238,18 @@
                     <div class="col-md-6">
                         @Html.Label("dsProduto", "Produto", new { @class = "form-label" })
                         <div class="input-group mb-3">
-                            @Html.DropDownList("idProduto", Model.ListProdutos, new { @class = "form-control" })
-                            <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarProdutos"><i class="fas fa-search"></i></button>
+                            @(disabled ?
+                                Html.TextBox("idProduto", new { @class = "form-control", @disabled = "disabled" }) :
+                                @Html.DropDownList("idProduto", Model.ListProdutos, new { @class = "form-control" })
+                            )
+                            @if (disabled)
+                            {
+                                <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarProdutos" disabled="disabled"><i class="fas fa-search"></i></button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarProdutos"><i class="fas fa-search"></i></button>                                
+                            }
                         </div>
                     </div>
 

@@ -226,6 +226,7 @@ CREATE TABLE tbProdutosVenda (
 
 CREATE TABLE tbProdutosCompra (
 	idProduto INT NOT NULL,
+	idUnidade INT NOT NULL,
 	nrModelo VARCHAR(3) NOT NULL,
 	nrSerie VARCHAR(3) NOT NULL, 
 	nrNota INT NOT NULL,
@@ -236,6 +237,7 @@ CREATE TABLE tbProdutosCompra (
 	vlVenda DECIMAL (18, 2) NOT NULL,
 	CONSTRAINT PK_ProdutosCompra PRIMARY KEY (idProduto, nrModelo, nrSerie, nrNota, idFornecedor),
 	CONSTRAINT FK_ProdutosCompra_Produto FOREIGN KEY (idProduto) REFERENCES tbProdutos (idProduto),
+	CONSTAINT FK_ProdutosCompra_Unidade FOREIGN KEY (idUnidade) REFERENCES tbUnidades (idUnidade),
 	CONSTRAINT FK_ProdutosCompra_Compras FOREIGN KEY (idFornecedor, nrModelo, nrSerie, nrNota) REFERENCES tbCompras (idFornecedor, nrModelo, nrSerie, nrNota),	
 );
 
@@ -278,4 +280,17 @@ CREATE TABLE tbContasReceber (
 	CONSTRAINT FK_tbContasReceber_Vendas FOREIGN KEY (idVenda) REFERENCES tbVendas (idVenda),
 	CONSTRAINT FK_tbContasReceber_Clientes FOREIGN KEY (idCliente) REFERENCES tbClientes (idCliente),
 	CONSTRAINT FK_tbContasReceber_FormaPgto FOREIGN KEY (idFormaPgto) REFERENCES tbFormaPgto (idFormaPgto),
+);
+
+CREATE TABLE tbFichaEstoque (
+	idProduto INT NOT NULL,
+	data DATETIME NOT NULL,
+	qtdEntrada DECIMAL(9,2) NOT NULL,
+	vlTotalEntrada DECIMAL(9,2) NOT NULL,
+	qtdSaida DECIMAL(9,2) NOT NULL,
+	vlTotalSaida DECIMAL(9,2) NOT NULL,
+	vlCustoMedio DECIMAL(9,2) NOT NULL,
+	vlSaldo DECIMAL(9,2) NOT NULL,
+	CONSTRAINT PK_tbFichaEstoque PRIMARY KEY (idProduto, data),
+	CONSTRAINT FK_tbFichaEstoque_Produtos FOREIGN KEY (idProduto) REFERENCES tbProdutos (idProduto)
 );

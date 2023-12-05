@@ -21,8 +21,9 @@ namespace Sistema.Controllers
             }
             catch (Exception ex)
             {
-                this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                return View();
+                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
+                // return View();
+                throw new Exception(ex.Message);
             }
         }
         public ActionResult Create()
@@ -75,13 +76,14 @@ namespace Sistema.Controllers
             {
                 DAOVendas daoVenda = new();
                 daoVenda.Insert(model);
-                this.AddFlashMessage(AlertMessage.INSERT_SUCESS);
+                // this.AddFlashMessage(AlertMessage.INSERT_SUCESS);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                return View(model);
+                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
+                // return View(model);
+                throw new Exception(ex.Message);
             }
         }
         public ActionResult Details(int idVenda, string nrModelo)
@@ -100,13 +102,14 @@ namespace Sistema.Controllers
             {
                 DAOVendas daoVendas = new ();
                 daoVendas.CancelarVenda(idVenda);
-                this.AddFlashMessage("Registro cancelado com sucesso!");
+                // this.AddFlashMessage("Registro cancelado com sucesso!");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                return this.GetView(idVenda, nrModelo);
+                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
+                // return this.GetView(idVenda, nrModelo);
+                throw new Exception(ex.Message);
             }
         }
         private ActionResult GetView(int idVenda, string nrModelo)
@@ -119,8 +122,9 @@ namespace Sistema.Controllers
             }
             catch (Exception ex)
             {
-                this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                return View();
+                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
+                // return View();
+                throw new Exception(ex.Message);
             }
         }
 
