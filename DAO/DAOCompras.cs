@@ -217,7 +217,7 @@ namespace Sistema.DAO
                             vlVenda = Convert.ToDecimal(reader["vlVenda"]),
                         };
                         var txDesc = (produto.vlCompra * produto.txDesconto) / 100;
-                        var vlTotal = produto.vlCompra - txDesc;
+                        var vlTotal = (produto.vlCompra - txDesc) * produto.qtdProduto;
                         produto.vlTotal = vlTotal;
                         listProdutos.Add(produto);
                     }

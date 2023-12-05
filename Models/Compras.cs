@@ -35,7 +35,7 @@ namespace Sistema.Models
         public decimal? CondicaoPagamento_txJuros { get; set; }
         [Display(Name = "Multa")]
         public decimal? CondicaoPagamento_txMulta { get; set; }
-        [Display(Name = "Desconto")]
+        [Display(Name = "Desconto")]        
         public decimal? CondicaoPagamento_txDesconto { get; set; }
         public IEnumerable<SelectListItem> ListProdutos { get; set; }
         [Display(Name = "Produto")]
