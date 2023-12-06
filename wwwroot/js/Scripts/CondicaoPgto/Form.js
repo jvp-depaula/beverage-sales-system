@@ -23,7 +23,7 @@ $(document).ready(function () {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json',
         },
-        data: $("#jsItens").val() != "" ? JSON.parse($("#jsItens").val()) : null,
+        data: $("#jsParcelas").val() != "" ? JSON.parse($("#jsParcelas").val()) : null,
         columns: [
             { data: "nrParcela" },
             { data: "qtDias" },
@@ -57,8 +57,8 @@ $(document).ready(function () {
         if (parseFloat(txPercentual) != parseFloat(100)) {
             alert("A quantidade das parcelas não fecham 100%");
         } else {
-            var jsItens = JSON.stringify($("#tbParcelas").DataTable().rows().data().toArray());
-            $("#jsItens").val(jsItens);
+            var jsParcelas = JSON.stringify($("#tbParcelas").DataTable().rows().data().toArray());
+            $("#jsParcelas").val(jsParcelas);
 
             $("#txMulta").val(parseFloat($("#txMulta").val()));
             $("#txDesconto").val(parseFloat($("#txDesconto").val()));

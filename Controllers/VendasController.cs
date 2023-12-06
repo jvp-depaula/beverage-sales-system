@@ -135,10 +135,10 @@ namespace Sistema.Controllers
             var data = DateTime.Parse(dataVenda, cultureInfo);
 
             DAOCondicaoPgto daoCondicaoPgto = new();
-            List<CondicaoPgto.CondicaoPgtoVM> parcelas = daoCondicaoPgto.GetParcelas(idCondicaoPgto);
+            List<CondicaoPgto> parcelas = daoCondicaoPgto.GetParcelas(idCondicaoPgto);
             List<Parcelas> parcelasCompra = new();
             decimal aux = vlTotal;
-            CondicaoPgtoVM Last = parcelas.Last();
+            CondicaoPgto Last = parcelas.Last();
 
             foreach (var item in parcelas)
             {

@@ -45,7 +45,7 @@ namespace Sistema.DAO
             }
         }
 
-        public List<CondicaoPgto.CondicaoPgtoVM> GetParcelas(int idCondicaoPgto)
+        public List<CondicaoPgto> GetParcelas(int idCondicaoPgto)
         {
             try
             {
@@ -53,11 +53,11 @@ namespace Sistema.DAO
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 reader = SqlQuery.ExecuteReader();
-                var list = new List<CondicaoPgto.CondicaoPgtoVM>();
+                var list = new List<CondicaoPgto>();
 
                 while (reader.Read())
                 {
-                    var parcela = new CondicaoPgto.CondicaoPgtoVM
+                    var parcela = new CondicaoPgto
                     {
                         idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
                         dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]),
@@ -87,7 +87,7 @@ namespace Sistema.DAO
         {
             try
             {
-                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, txMulta, txJuros, txDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, {4}, {5}); SELECT SCOPE_IDENTITY()",
+                var sql = string.Format("INSERT INTO tbCondicaoPgto (dsCondicaoPgto, txMulta, txJuros, txDesconto, dtCadastro, dtUltAlteracao) VALUES ('{0}', {1}, {2}, {3}, '{4}', '{5}'); SELECT SCOPE_IDENTITY()",
                     condicaoPgto.dsCondicaoPgto,
                     this.FormatDecimal(condicaoPgto.txDesconto),
                     this.FormatDecimal(condicaoPgto.txJuros),
@@ -109,7 +109,7 @@ namespace Sistema.DAO
                     {
                         command.CommandText = sql;
                         var idCondicaoPgto = Convert.ToInt32(command.ExecuteScalar());
-                        foreach (var item in condicaoPgto.ListCondicao)
+                        foreach (var item in condicaoPgto.ListParcelas)
                         {
                             var Item = string.Format(sqlParcela, idCondicaoPgto, item.idFormaPgto, item.nrParcela, item.qtDias, item.txPercentual.ToString().Replace(",", "."));
                             command.CommandText = Item;
@@ -170,7 +170,7 @@ namespace Sistema.DAO
                         command.CommandText = sql;
                         command.ExecuteNonQuery();
 
-                        foreach (var item in condicaoPgto.ListCondicao)
+                        foreach (var item in condicaoPgto.ListParcelas)
                         {
                             var Item = string.Format(sqlParcela, condicaoPgto.idCondicaoPgto, item.idFormaPgto, item.nrParcela, item.qtDias, item.txPercentual.ToString().Replace(",", "."));
                             command.CommandText = Item;
@@ -211,7 +211,7 @@ namespace Sistema.DAO
                     OpenConnection();
                     var sql = this.Search(idcondicaoPgto, null);
                     var sqlParcelas = this.SearchParcelas(idcondicaoPgto);
-                    var lista = new List<CondicaoPgto.CondicaoPgtoVM>();
+                    var lista = new List<Parcelas>();
                     SqlQuery = new SqlCommand(sql + sqlParcelas, con);
                     reader = SqlQuery.ExecuteReader();
 
@@ -230,7 +230,7 @@ namespace Sistema.DAO
                     {
                         while (reader.Read())
                         {
-                            var item = new CondicaoPgto.CondicaoPgtoVM()
+                            var item = new Parcelas()
                             {
                                 idCondicaoPgto = Convert.ToInt32(reader["idCondicaoPgto"]),
                                 dsCondicaoPgto = Convert.ToString(reader["dsCondicaoPgto"]),
@@ -244,7 +244,7 @@ namespace Sistema.DAO
                             lista.Add(item);
                         }
                     }
-                    model.ListCondicao = lista;
+                    model.ListParcelas = lista;
                 }
                 return model;
             }

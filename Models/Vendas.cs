@@ -55,8 +55,10 @@ namespace Sistema.Models
             public int? idProduto { get; set; }
             public string dsProduto { get; set; }
             public int idUnidade { get; set; }
+            public string dsUnidade { get ; set; }
             public decimal qtdProduto { get; set; }
             public decimal vlVenda { get; set; }
+            public decimal vlCompra { get; set; }
             public decimal? txDesconto { get; set; }
             public decimal vlTotal { get; set; }
         }

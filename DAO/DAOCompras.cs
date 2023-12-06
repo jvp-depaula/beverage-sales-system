@@ -54,8 +54,7 @@ namespace Sistema.DAO
                                         dsFormaPgto = Convert.ToString(detReader["dsFormaPgto"]),
                                         nrParcela = Convert.ToDouble(detReader["nrParcela"]),
                                         vlParcela = Convert.ToDecimal(detReader["vlParcela"]),
-                                        dtVencimento = Convert.ToDateTime(detReader["dtVencimento"]),
-                                        flSituacao = Convert.ToString(detReader["flSituacao"])
+                                        dtVencimento = Convert.ToDateTime(detReader["dtVencimento"]),                                        
                                     };
                                     listComp.Add(parcela);
                                 }
@@ -274,8 +273,7 @@ namespace Sistema.DAO
                             dsFormaPgto = Convert.ToString(reader["dsFormaPgto"]),
                             nrParcela = Convert.ToDouble(reader["nrParcela"]),
                             vlParcela = Convert.ToDecimal(reader["vlParcela"]),
-                            dtVencimento = Convert.ToDateTime(reader["dtVencimento"]),
-                            flSituacao = Util.FormatFlag.Situacao(Convert.ToString(reader["flSituacao"]))
+                            dtVencimento = Convert.ToDateTime(reader["dtVencimento"]),                            
                         };
                         listParcelas.Add(parcela);
                     }

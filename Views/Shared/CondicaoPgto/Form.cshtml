@@ -82,7 +82,7 @@
 
 </div>
 
-@Html.HiddenFor(model => model.jsItens)
+@Html.HiddenFor(model => model.jsParcelas)
 
 <div class="bs-callout bs-callout-primary row g-3">
     <button class="btn btn-primary" disabled="@disabled" type="button" id="btnAdcParcela">Adicionar Parcela</button>
@@ -98,7 +98,7 @@
             </tr>
         </thead>
     </table>
-    @Html.ValidationMessageFor(model => model.ListCondicao, null, new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.ListParcelas, null, new { @class = "text-danger" })
 </div>
 
 <div class="modal fade" tabindex="-1" id="modalFormaPgto">

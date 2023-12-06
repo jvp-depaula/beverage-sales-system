@@ -152,6 +152,7 @@ namespace Sistema.DAO
                             idProduto = Convert.ToInt32(reader["idProduto"]),
                             dsProduto = Convert.ToString(reader["dsProduto"]),
                             idUnidade = Convert.ToInt32(reader["idUnidade"]),
+                            dsUnidade = Convert.ToString(reader["dsUnidade"]),
                             qtdProduto = Convert.ToDecimal(reader["qtdProduto"]),
                             vlVenda = Convert.ToDecimal(reader["vlVenda"]),
                             txDesconto = Convert.ToDecimal(reader["txDesconto"])
@@ -177,8 +178,7 @@ namespace Sistema.DAO
                             dsFormaPgto = Convert.ToString(reader["dsFormaPgto"]),
                             nrParcela = Convert.ToDouble(reader["nrParcela"]),
                             vlParcela = Convert.ToDecimal(reader["vlParcela"]),
-                            dtVencimento = Convert.ToDateTime(reader["dtVencimento"]),
-                            flSituacao = Util.FormatFlag.Situacao(Convert.ToString(reader["flSituacao"])),
+                            dtVencimento = Convert.ToDateTime(reader["dtVencimento"]),                            
                         };
                         listParcelas.Add(parcela);
                     }

@@ -39,7 +39,7 @@ namespace Sistema.Controllers
         {
             decimal percentualParcelas = 0;
 
-            foreach (var item in model.ListCondicao)
+            foreach (var item in model.ListParcelas)
             {
                 percentualParcelas += item.txPercentual;
             }
@@ -67,7 +67,7 @@ namespace Sistema.Controllers
         {
             decimal percentualParcelas = 0;
 
-            foreach (var item in model.ListCondicao)
+            foreach (var item in model.ListParcelas)
             {
                 percentualParcelas += item.txPercentual;
             }

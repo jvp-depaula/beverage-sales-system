@@ -27,6 +27,7 @@ namespace Sistema.Models
         [Display(Name = "Forma de Pgto.")]
         [Required(ErrorMessage = "Selecione a forma de Pgto!")]
         public int idFormaPgto { get; set; }
+        public string dsFormaPgto { get; set; }
         public IEnumerable<SelectListItem> ListaFormaPgto { get; set; }
 
         [Display(Name = "Dias")]
@@ -35,37 +36,24 @@ namespace Sistema.Models
 
         [Display(Name = "Percentual")]
         [Required(ErrorMessage = "Informe o percentual da parcela!")]
-        public int txPercentual { get; set; }
+        public decimal txPercentual { get; set; }
 
         [Display(Name = "Número da Parcela")]        
         public int nrParcela { get; set; }
-
-
-        public string jsItens { get; set; }
-        public List<CondicaoPgtoVM> ListCondicao
+        public string jsParcelas { get; set; }
+        public List<Parcelas> ListParcelas
         {
             get
             {
-                if (string.IsNullOrEmpty(jsItens))
-                    return new List<CondicaoPgtoVM>();
-                return JsonConvert.DeserializeObject<List<CondicaoPgtoVM>>(jsItens);
+                if (string.IsNullOrEmpty(jsParcelas))
+                    return new List<Parcelas>();
+                return JsonConvert.DeserializeObject<List<Parcelas>>(jsParcelas);
             }
             set
             {
-                jsItens = JsonConvert.SerializeObject(value);
+                jsParcelas = JsonConvert.SerializeObject(value);
             }
-        }
-
-        public class CondicaoPgtoVM
-        {
-            public int? idCondicaoPgto { get; set; }
-            public string dsCondicaoPgto { get; set; }
-            public int? idFormaPgto { get; set; }
-            public string dsFormaPgto { get; set; }
-            public int? nrParcela { get; set; }
-            public int? qtDias { get; set; }
-            public decimal txPercentual { get; set; }
-        }
+        }       
 
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
