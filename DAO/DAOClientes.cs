@@ -247,7 +247,7 @@ namespace Sistema.DAO
                         tbClientes.dtUltAlteracao AS dtUltAlteracao
                     FROM tbClientes
                     INNER JOIN tbCidades ON tbClientes.idCidade = tbCidades.idCidade
-                    INNER JOIN tbCondicaoPgto ON tbCondicaoPgto.idCondicaoPgto = tbCondicaoPgto.idCondicaoPgto" + swhere;
+                    INNER JOIN tbCondicaoPgto ON tbClientes.idCondicaoPgto = tbCondicaoPgto.idCondicaoPgto" + swhere;
             return sql;
         }
     }

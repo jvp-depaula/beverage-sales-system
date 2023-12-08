@@ -88,6 +88,8 @@ namespace Sistema.Controllers
         }
 
         [HttpPost]
+        [ActionName("Delete")]
+
         public ActionResult DeleteConfirmed(int idVenda)
         {
             try

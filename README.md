@@ -1,1 +1,1 @@
-# Sistema
+# Sistema desenvolvido para o projeto de Prática Profissional orientado pelo professor Carlos Eduardo Massami Kaneko.

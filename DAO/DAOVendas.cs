@@ -111,9 +111,64 @@ namespace Sistema.DAO
             }
         }
 
-        public void CancelarVenda(int? idVenda)
+        public void CancelarVenda(int idVenda)
         {
-            throw new Exception("Não implementado");
+            try
+            {
+                using (con)
+                {
+                    OpenConnection();
+                    var sqlUltVenda = String.Format("SELECT idProduto, qtdProduto FROM tbProdutosVenda WHERE idVenda = {0};",
+                                                  idVenda);
+                    decimal estoqueUltCompra = 0;
+                    decimal idProduto = 0;
+                    SqlQuery = new SqlCommand(sqlUltVenda, con);
+                    reader = SqlQuery.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        idProduto = Convert.ToInt32(reader["idProduto"]);
+                        estoqueUltCompra = Convert.ToDecimal(reader["qtdProduto"]);
+                    }
+
+                    reader.Close();
+
+                    var sqlContasReceber = String.Format("DELETE FROM tbContasReceber WHERE idVenda = {0};",
+                                                        idVenda);
+                    var sqlProdutosVenda = String.Format("DELETE FROM tbProdutosVenda WHERE idVenda = {0};",
+                                                           idVenda);
+                    var sqlVenda = String.Format("DELETE FROM tbVendas WHERE idvenda = {0};",
+                                                   idVenda);
+
+                    string sqlUpdateProduto = String.Format("UPDATE tbProdutos set qtdEstoque += {0}, dtUltAlteracao = '{1}' WHERE idProduto = {2};", estoqueUltCompra, DateTime.Now, idProduto);
+
+                    SqlTransaction sqlTrans = con.BeginTransaction();
+                    SqlCommand command = con.CreateCommand();
+                    command.Transaction = sqlTrans;
+                    try
+                    {
+                        command.CommandText = (sqlContasReceber + sqlProdutosVenda + sqlVenda + sqlUpdateProduto);
+                        command.ExecuteNonQuery();
+                        sqlTrans.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        sqlTrans.Rollback();
+                        throw new Exception(e.Message);
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                throw new Exception(error.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
         }
 
         public Vendas GetVenda(int idVenda)
