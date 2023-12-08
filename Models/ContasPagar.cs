@@ -9,6 +9,7 @@ namespace Sistema.Models
         [Column(Order = 0)]
         [Display(Name = "Fornecedor")]
         public int idFornecedor { get; set; }
+        public string nmFornecedor { get; set; }
         [Key]
         [Column(Order = 1)]
         [Display(Name = "Nrº Modelo")]
@@ -33,6 +34,7 @@ namespace Sistema.Models
         public decimal vlParcela { get; set; }
         [Display(Name = "Forma Pgto")]
         public int idFormaPgto { get; set; }
+        public string dsFormaPgto { get; set; }
         [Display(Name = "Valor Pago")]
         public decimal vlPago { get; set; }
         [Display(Name = "Data Pgto")]

@@ -341,40 +341,6 @@ $(document).ready(function () {
         $("#idCondicaoPgto").val(id);
         CondicoesPgto.fechaModal();
     });
-
-    // ADICIONAR
-    $("#btnSalvarAddCondicao").on('click', function () {
-        if (CondicoesPgto.validaForm()) {
-            $.ajax({
-                url: "/CondicaoPgto/JsAddCondicao",
-                data: {
-                    dsCondicaoPgto: $("#dsCondicaoPgto").val(),
-                    txMulta: $("#txMulta").val(),
-                    txDesconto: $("#txDesconto").val(),
-                    txJuros: $("#txJuros").val(),
-                },
-                success: function (result) {
-                    if (result.success) {
-
-                        var options = result.novaListaCondicoes.map(function (el, i) {
-                            return $("<option></option>").val(el.idCondicaoPgto).text(el.dsCondicaoPgto)
-                        });
-
-                        $('#idCondicaoPgto').html(options);
-                        CondicoesPgto.CarregaLista($("#modalCondicoes"));
-                        CondicoesPgto.limpaForm();
-                    }
-                }
-            });
-        };
-        CondicoesPgto.fechaAddCondicoes();
-    });
-    $("#btnAddCondicao").on('click', function () {
-        CondicoesPgto.mostraAddCondicoes();
-    });
-    $("#btnEscondeAddCondicao").on('click', function () {
-        CondicoesPgto.fechaAddCondicoes();
-    });
 });
 
 var Cidades = {
@@ -604,47 +570,11 @@ var Endereco = {
 
 var CondicoesPgto = {
     mostraSelecionarCondicoes() {
-        $(".AddCondicoes").css("display", "none");
-        $(".SelecionaCondicoes").css("display", "");
-    },
-
-    mostraAddCondicoes() {
-        $(".AddCondicoes").css("display", "");
-        $(".SelecionaCondicoes").css("display", "none");
-    },
-
-    fechaAddCondicoes() {
-        CondicoesPgto.limpaForm();
-        $(".AddCondicoes").css("display", "none");
         $(".SelecionaCondicoes").css("display", "");
     },
 
     fechaModal() {
         $("#btnFechaModalCondicao").click();
-    },
-
-    validaForm() {
-        if (!$("#dsCondicaoPgto").val()) {
-            alert("Digite a descrição da Condição de Pgto!");
-            return false;
-        } else if (!$("#txMulta").val()) {
-            alert("Digite o valor da multa!");
-            return false;
-        } else if (!$("#txDesconto").val()) {
-            alert("Digite o valor do desconto!");
-            return false;
-        } else if (!$("#txJuros").val()) {
-            alert("Digite o valor do juros!");
-            return false;
-        } else
-            return true;
-    },
-
-    limpaForm() {
-        $("#dsCondicaoPgto").val("");
-        $("#txMulta").val("");
-        $("#txDesconto").val("");
-        $("#txJuros").val("");
     },
 
     CarregaLista() {
@@ -659,6 +589,5 @@ var CondicoesPgto = {
                 alert("Houve um erro na busca das Condições de Pgto");
             }
         });
-
     },
 };

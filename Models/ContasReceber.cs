@@ -6,34 +6,20 @@ namespace Sistema.Models
 {
     public class ContasReceber
     {
-        [Key]
-        [Column(Order = 0)]
-        [Display(Name = "Nrº Modelo")]
-        public string nrModelo { get; set; }
-        [Key]
-        [Column(Order = 1)]
-        [Display(Name = "Nrº Série")]
-        public string nrSerie { get; set; }
-        [Key]
-        [Column(Order = 2)]
-        [Display(Name = "Nrº Nota")]
-        public int nrNota { get; set; }
-        [Key]
-        [Column(Order = 3)]
+        public int idContasReceber { get; set; }
         [Display(Name = "Nrº Parcela")]
         public int nrParcela { get; set; }
-        [Display(Name = "Data de Emissão")]
-        public DateTime dtEmissao { get; set; }
         [Display(Name = "Data de Vencimento")]
         public DateTime dtVencimento { get; set; }
         [Display(Name = "Valor Parcela")]
         public decimal vlParcela { get; set; }
         [Display(Name = "Forma Pgto")]
         public int idFormaPgto { get; set; }
-        [Display(Name = "Valor Pago")]
-        public decimal vlPago { get; set; }
+        public string dsFormaPgto { get; set; }
+        [Display(Name = "Venda")]
+        public int idVenda { get; set; }
         [Display(Name = "Data Pgto")]
-        public DateTime dtPgto { get; set; }
+        public DateTime? dtPgto { get; set; }
         [Display(Name = "Situação")]
         public string flSituacao { get; set; }
         [Display(Name = "Juros")]
@@ -44,6 +30,7 @@ namespace Sistema.Models
         public decimal txDesconto { get; set; }
         [Display(Name = "Cliente")]
         public int idCliente { get; set; }
+        public string nmCliente { get; set; }
         [Display(Name = "Data de cadastro")]
         public DateTime? dtCadastro { get; set; }
 

@@ -14,11 +14,15 @@
 	
   <ItemGroup>
     <Content Remove="Views\Shared\Produtos\AddProdutos.cshtml" />
+    <Content Remove="wwwroot\js\Scripts\ContasReceber\Index.js" />
+    <Content Remove="wwwroot\js\Scripts\ContasPagar\Index.js" />
     <Content Remove="wwwroot\js\Scripts\CondicaoPgto\Form.js" />
     <Content Remove="wwwroot\js\Scripts\Vendas\Form.js" />
   </ItemGroup>
 	
   <ItemGroup>
+    <None Include="wwwroot\js\Scripts\ContasReceber\Index.js" />
+    <None Include="wwwroot\js\Scripts\ContasPagar\Index.js" />
     <None Include="wwwroot\js\Scripts\Categorias\Index.js" />
     <None Include="wwwroot\js\Scripts\Cidades\Form.js" />
     <None Include="wwwroot\js\Scripts\Cidades\Index.js" />

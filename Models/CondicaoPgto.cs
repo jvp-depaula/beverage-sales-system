@@ -31,11 +31,9 @@ namespace Sistema.Models
         public IEnumerable<SelectListItem> ListaFormaPgto { get; set; }
 
         [Display(Name = "Dias")]
-        [Required(ErrorMessage = "Descreva os dias!")]
         public int qtDias { get; set; }
 
         [Display(Name = "Percentual")]
-        [Required(ErrorMessage = "Informe o percentual da parcela!")]
         public decimal txPercentual { get; set; }
 
         [Display(Name = "Número da Parcela")]        

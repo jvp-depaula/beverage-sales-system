@@ -111,8 +111,6 @@ $(document).ready(function () {
     $("#nrRG_IE").on('keyup change', function () {
         if ($("#flTipo").val() == "F")
             $("#nrRG_IE").mask("99.999.999-9");
-        else
-            $("#nrRG_IE").mask("");
     });
 
     $("#nrCEP").on('keyup change', function () {
@@ -645,43 +643,8 @@ var CondicoesPgto = {
         $(".SelecionaCondicoes").css("display", "");
     },
 
-    mostraAddCondicoes() {
-        $(".AddCondicoes").css("display", "");
-        $(".SelecionaCondicoes").css("display", "none");
-    },
-
-    fechaAddCondicoes() {
-        CondicoesPgto.limpaForm();
-        $(".AddCondicoes").css("display", "none");
-        $(".SelecionaCondicoes").css("display", "");
-    },
-
     fechaModal() {
         $("#btnFechaModalCondicao").click();
-    },
-
-    validaForm() {
-        if (!$("#dsCondicaoPgto").val()) {
-            alert("Digite a descrição da Condição de Pgto!");
-            return false;
-        } else if (!$("#txMulta").val()) {
-            alert("Digite o valor da multa!");
-            return false;
-        } else if (!$("#txDesconto").val()) {
-            alert("Digite o valor do desconto!");
-            return false;
-        } else if (!$("#txJuros").val()) {
-            alert("Digite o valor do juros!");
-            return false;
-        } else
-            return true;
-    },
-
-    limpaForm() {
-        $("#dsCondicaoPgto").val("");
-        $("#txMulta").val("");
-        $("#txDesconto").val("");
-        $("#txJuros").val("");
     },
 
     CarregaLista() {

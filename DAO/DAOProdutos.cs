@@ -189,8 +189,13 @@ namespace Sistema.DAO
             var swhere = string.Empty;
             if (id != null && idFornecedor != null)
                 swhere = " WHERE tbProdutos.idProduto = " + id + " AND tbProdutos.idFornecedor = " + idFornecedor + ";";
-            else if (idFornecedor != null)
-                swhere = " WHERE tbProdutos.idFornecedor = " + idFornecedor + ";";
+            else if (id != null)
+            {
+                if (idFornecedor != null)
+                    swhere = " WHERE tbProdutos.idProduto = " + id + " AND tbProdutos.idFornecedor = " + idFornecedor + ";";
+                else
+                    swhere = " WHERE tbProdutos.idProduto = " + id + ";";
+            }            
 
             sql = @"
                     SELECT

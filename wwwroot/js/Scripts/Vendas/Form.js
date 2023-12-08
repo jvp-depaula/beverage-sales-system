@@ -327,10 +327,15 @@ $(document).ready(function () {
                 idProduto: $("#idProduto").val()
             },
             success: function (result) {
-                $("#idUnidade").val(result.idUnidade);
-                $("#dsUnidade").val(result.dsUnidade);
-                $("#qtdEstoque").val(result.qtdEstoque);
-                $("#Produto_vlVenda").val("R$ " + parseFloat(result.vlVenda).toFixed(2).replace(".", ","));
+                if (result.qtdEstoque > 0) {
+                    $("#qtdEstoque").val(result.qtdEstoque);
+                    $("#idUnidade").val(result.idUnidade);
+                    $("#dsUnidade").val(result.dsUnidade);
+                    $("#Produto_vlVenda").val("R$ " + parseFloat(result.vlVenda).toFixed(2).replace(".", ","));
+                } else {
+                    alert("Produto não disponível em estoque!");
+                    $("#idProduto").val("");
+                }
             }
         });
     });
