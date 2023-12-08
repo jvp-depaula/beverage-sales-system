@@ -273,7 +273,7 @@ CREATE TABLE tbContasReceber (
 	vlParcela DECIMAL (9,2) NOT NULL,
 	idFormaPgto INT NOT NULL,
 	idVenda INT NOT NULL,
-	dtPgto DATETIME NOT NULL, 
+	dtPgto DATETIME, 
 	flSituacao VARCHAR(255) NOT NULL,
 	idCliente INT NOT NULL, 
 	txJuros DECIMAL (9,2) NOT NULL,

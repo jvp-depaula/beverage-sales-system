@@ -6,11 +6,11 @@ namespace Sistema.DAO
 {
     public class DAOVendas : DAO
     {
-        public List<Vendas> GetVendas(string nrModelo)
+        public List<Vendas> GetVendas(int? idVenda)
         {
             try
             {
-                var sql = this.Search(null, null, nrModelo);
+                var sql = this.Search(null);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 reader = SqlQuery.ExecuteReader();
@@ -116,18 +116,19 @@ namespace Sistema.DAO
             throw new Exception("Não implementado");
         }
 
-        public Vendas GetVenda(int idVenda, string nrModelo)
+        public Vendas GetVenda(int idVenda)
         {
             try
             {
                 var model = new Models.Vendas();
                 OpenConnection();
-                var sql = this.Search(idVenda, null, nrModelo);
+                var sql = this.Search(idVenda);
                 var sqlProdutos = this.SearchProdutos(idVenda);
                 var sqlParcelas = this.SearchParcelas(idVenda);
                 var listProdutos = new List<Vendas.ProdutosVM>();
                 var listParcelas = new List<Parcelas>();
 
+                SqlQuery = new SqlCommand(sql + sqlProdutos + sqlParcelas, con);
                 reader = SqlQuery.ExecuteReader();
                 while (reader.Read())
                 {
@@ -154,7 +155,7 @@ namespace Sistema.DAO
                             idUnidade = Convert.ToInt32(reader["idUnidade"]),
                             dsUnidade = Convert.ToString(reader["dsUnidade"]),
                             qtdProduto = Convert.ToDecimal(reader["qtdProduto"]),
-                            vlVenda = Convert.ToDecimal(reader["vlVenda"]),
+                            vlVenda = Convert.ToDecimal(reader["vlProduto"]),
                             txDesconto = Convert.ToDecimal(reader["txDesconto"])
                         };
                         if (produto.txDesconto != null && produto.txDesconto != 0)
@@ -197,28 +198,13 @@ namespace Sistema.DAO
             }
         }
 
-        private string Search(int? idVenda, string filter, string nrModelo)
+        private string Search(int? idVenda)
         {
             var sql = string.Empty;
             var swhere = string.Empty;
             if (idVenda != null)
-            {
-                swhere = " AND (tbVendas.idVenda = " + idVenda + ") ";
-            }
-            if (!string.IsNullOrEmpty(nrModelo))
-            {
-                swhere += " AND (tbVendas.nrModelo = '" + nrModelo + "') ";
-            }
-            if (!string.IsNullOrEmpty(filter))
-            {
-                var filterQ = filter.Split(' ');
-                foreach (var word in filterQ)
-                {
-                    swhere += " OR tbClientes.nmCliente LIKE'%" + word + "%'";
-                }
-            }
-            if (!string.IsNullOrEmpty(swhere))
-                swhere = " WHERE " + swhere.Remove(0, 4);
+                swhere = " WHERE tbVendas.idVenda = " + idVenda + ";";
+            
             sql = @"
                     SELECT
 	                    tbVendas.idVenda AS idVenda,
@@ -272,12 +258,12 @@ namespace Sistema.DAO
 	                    tbContasReceber.vlParcela AS vlParcela,
 	                    tbContasReceber.dtVencimento AS dtVencimento,
 	                    tbContasReceber.flSituacao AS flSituacao,
-	                    tbContasReceber.dtPagamento AS dtPagamento,
+	                    tbContasReceber.dtPgto AS dtPgto,
 	                    tbContasReceber.idFormaPgto AS idFormaPgto,
 	                    tbFormaPgto.dsFormaPgto AS dsFormaPgto,
 	                    tbContasReceber.idVenda AS idVenda
                     FROM tbContasReceber
-                    INNER JOIN tbformapagamento ON tbContasReceber.idFormaPgto = tbFormaPgto.idFormaPgto
+                    INNER JOIN tbFormaPgto ON tbContasReceber.idFormaPgto = tbFormaPgto.idFormaPgto
                     WHERE tbContasReceber.idVenda = " + idVenda
             ;
             return sql;

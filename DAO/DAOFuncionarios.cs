@@ -61,13 +61,13 @@ namespace Sistema.DAO
                                                                     "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade," +
                                                                     "dtNasc," + "dtCadastro, dtUltAlteracao) " +
                                                                     "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
-                                                                    "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}')",
+                                                                    "'{9}', '{10}', '{11}', {12}, '{13}', '{14}', '{15}')",
                     func.nmFuncionario,
                     func.dsApelido,
                     Util.Util.Unmask(func.nrCPF),
                     Util.Util.Unmask(func.nrRG),
-                    Util.Util.Unmask(func.nrTelefoneCelular),
-                    Util.Util.Unmask(func.nrTelefoneFixo),
+                    !String.IsNullOrEmpty(func.nrTelefoneCelular) ? Util.Util.Unmask(func.nrTelefoneCelular) : null,
+                    !String.IsNullOrEmpty(func.nrTelefoneFixo) ? Util.Util.Unmask(func.nrTelefoneFixo) : null,
                     func.dsEmail,
                     Util.Util.Unmask(func.nrCEP),
                     func.dsLogradouro,

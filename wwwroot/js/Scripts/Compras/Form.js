@@ -191,6 +191,21 @@ $(document).ready(function () {
                     }
                 }
             });
+
+            $.ajax({
+                url: "/Produtos/JsSearch",
+                data: {
+                    idFornecedor: $("#idFornecedor").val()
+                },
+                success: function (result) {
+                    if (result) {
+                        var options = result.map(function (el, i) {
+                            return $("<option></option>").val(el.idProduto).text(el.dsProduto + " - " + el.qtdEstoque);
+                        });
+                        $('#idProduto').html(options);
+                    }
+                }
+            });
         }        
     });
 

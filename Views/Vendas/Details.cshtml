@@ -38,3 +38,9 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script type="text/javascript" src="@Url.Content("~/js/Scripts/Vendas/Form.js")"></script>
+    }
+}

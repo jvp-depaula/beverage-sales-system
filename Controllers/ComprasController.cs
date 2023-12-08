@@ -29,7 +29,7 @@ namespace Sistema.Controllers
             DAOCondicaoPgto daoCondicaoPgto = new();
 
             List<Fornecedores> list = daoFornecedores.GetFornecedores();
-            List<Produtos> listProd = daoProdutos.GetProdutos();
+            List<Produtos> listProd = daoProdutos.GetProdutos(null);
             List<CondicaoPgto> listCond = daoCondicaoPgto.GetCondicoesPgto();
 
             var lista = new Compras
@@ -129,8 +129,6 @@ namespace Sistema.Controllers
             }
             catch (Exception ex)
             {
-                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                // return View();
                 throw new Exception(ex.Message);
             }
         }

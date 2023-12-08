@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Sistema.Controllers
 {
@@ -13,7 +12,7 @@ namespace Sistema.Controllers
         public ActionResult Index()
         {
             var daoProdutos = new DAOProdutos();
-            List<Models.Produtos> list = daoProdutos.GetProdutos();
+            List<Models.Produtos> list = daoProdutos.GetProdutos(null);
             return View(list);
         }
 
@@ -140,10 +139,10 @@ namespace Sistema.Controllers
             return View(model);
         }
 
-        public JsonResult JsSearch()
+        public JsonResult JsSearch(int? idFornecedor)
         {
             DAOProdutos daoProdutos = new();
-            List<Models.Produtos> list = daoProdutos.GetProdutos();
+            List<Models.Produtos> list = daoProdutos.GetProdutos(idFornecedor);
             return Json(list);
         }
         

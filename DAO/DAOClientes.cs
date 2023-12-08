@@ -1,6 +1,5 @@
 ﻿using Sistema.Models;
 using System.Data.SqlClient;
-using System.Reflection;
 
 namespace Sistema.DAO
 {
@@ -64,7 +63,7 @@ namespace Sistema.DAO
                                                                 "nrCEP, dsLogradouro, nrEndereco, dsBairro, dsComplemento, idCidade, dtNasc," +
                                                                 "dtCadastro, dtUltAlteracao) " +
                                                                 "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', " +
-                                                                "'{9}', '{10}', '{11}', '{12}', '{13}', '{14}', '{15}', '{16}', '{17}')",
+                                                                "'{9}', '{10}', '{11}', '{12}', '{13}', {14}, '{15}', '{16}', '{17}')",
                     cliente.nmCliente,
                     cliente.flTipo,
                     cliente.idCondicaoPgto,

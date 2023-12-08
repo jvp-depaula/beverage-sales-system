@@ -60,7 +60,6 @@
                     @Html.DisplayFor(modelItem => item.dtEntrega)
                 </td>
                 <td style="text-align: center; width: 200px">
-                    <a asp-action="Edit" asp-route-id="@item"><i class="btn btn-warning btn-sm fa fa-edit"></i></a>
                     @Html.ActionLink("", "Details", new { idFornecedor = item.idFornecedor, nrModelo = item.nrModelo, nrSerie = item.nrSerie, nrNota = item.nrNota }, new { @class = "btn btn-success btn-sm fa fa-eye", @title = "Visualizar" })
                     @Html.ActionLink("", "Delete", new { idFornecedor = item.idFornecedor, nrModelo = item.nrModelo, nrSerie = item.nrSerie, nrNota = item.nrNota }, new { @class = "btn btn-danger btn-sm fa fa-trash", @title = "Excluir" })
                 </td>

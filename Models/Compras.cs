@@ -18,9 +18,12 @@ namespace Sistema.Models
         public int nrNota { get; set; }
 
         [Display(Name = "Data de emissão")]
+        [Required(ErrorMessage = "Informe a data de emissão!")]
         public DateTime? dtEmissao { get; set; }
 
         [Display(Name = "Data de entrega")]
+
+        [Required(ErrorMessage = "Informe a data de entrega!")]
         public DateTime? dtEntrega { get; set; }
         [Display(Name = "Chave NFe")]
         public string chaveNFe { get; set; }

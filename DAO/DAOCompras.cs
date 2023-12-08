@@ -82,16 +82,16 @@ namespace Sistema.DAO
                     compra.nrModelo,
                     compra.nrSerie,
                     compra.nrNota,
-                    compra.dtEmissao != null ? Convert.ToDateTime(compra.dtEmissao) : null,
-                    compra.dtEntrega != null ? Convert.ToDateTime(compra.dtEntrega) : null,
+                    Convert.ToDateTime(compra.dtEmissao),
+                    Convert.ToDateTime(compra.dtEntrega),
                     compra.chaveNFe,
                     compra.observacao != null ? compra.observacao.Trim() : null,
                     DateTime.Now,
                     "N",
                     compra.idCondicaoPgto,
-                    compra.vlFrete != null ? this.FormatDecimal(compra.vlFrete).ToString() : null,
-                    compra.vlSeguro != null ? this.FormatDecimal(compra.vlSeguro).ToString() : null,
-                    compra.vlDespesas != null ? this.FormatDecimal(compra.vlDespesas).ToString() : null
+                    compra.vlFrete != null ? this.FormatDecimal(compra.vlFrete).ToString() : 0,
+                    compra.vlSeguro != null ? this.FormatDecimal(compra.vlSeguro).ToString() : 0,
+                    compra.vlDespesas != null ? this.FormatDecimal(compra.vlDespesas).ToString() : 0
                     );
                 string sqlProduto = "INSERT INTO tbProdutosCompra (idProduto, nrModelo, nrSerie, nrNota, idFornecedor, qtdProduto, vlCompra, txDesconto, vlVenda, idUnidade) VALUES ( {0}, '{1}', '{2}', {3}, {4}, {5}, {6}, {7}, {8}, {9})";
                 string sqlParcela = "INSERT INTO tbContasPagar (idFornecedor, nrModelo, nrSerie, nrNota, nrParcela, dtEmissao, dtVencimento, vlParcela, idFormaPgto, vlPago, dtPgto, flSituacao, txJuros, txMulta, txDesconto) VALUES ({0}, '{1}', '{2}', {3}, {4}, '{5}', '{6}', {7}, {8}, {9}, '{10}', '{11}', {12}, {13}, {14})";

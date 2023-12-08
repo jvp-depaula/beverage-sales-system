@@ -12,16 +12,12 @@
             @Html.LabelFor(e => e.idVenda, new { @class = "form-label" })
             @Html.TextBoxFor(model => model.idVenda, new { @class = "form-control", autofocus = "autofocus", disabled = "disabled" })
         </div>
-    </div>
 
-    <div class="row g-3">
         <div class="col-md-3">
             @Html.LabelFor(e => e.flSituacao, new { @class = "form-label" })
             @Html.TextBoxFor(model => model.flSituacao, new { @class = "form-control", autofocus = "autofocus", disabled = "disabled" })
         </div>
-    </div>
 
-    <div class="row g-3">
         <div class="col-md-3">
             @Html.LabelFor(e => e.dtVenda, new { @class = "form-label" })
             @Html.TextBoxFor(model => model.dtVenda, new { @class = "form-control", autofocus = "autofocus", disabled = "disabled" })
@@ -34,7 +30,7 @@
         @Html.LabelFor(e => e.idFuncionario, new { @class = "form-label" })
         <div class="input-group mb-3">
             @(disabled ?
-                @Html.DropDownListFor(model => model.idFuncionario, Model.ListFuncionarios, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+                @Html.TextBoxFor(model => model.idFuncionario, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
                 @Html.DropDownListFor(model => model.idFuncionario, Model.ListFuncionarios, new { @class = "form-control" })
                 )
             @if (pageType == "Create" || pageType == "Edit")
@@ -49,7 +45,7 @@
         @Html.LabelFor(e => e.idCliente, new { @class = "form-label" })
         <div class="input-group mb-3">
             @(disabled ?
-                @Html.DropDownListFor(model => model.idCliente, Model.ListClientes, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+                @Html.TextBoxFor(model => model.idCliente, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
                 @Html.DropDownListFor(model => model.idCliente, Model.ListClientes, new { @class = "form-control" })
                 )
             @if (pageType == "Create" || pageType == "Edit")
@@ -145,8 +141,18 @@
                     <div class="col-md-6">
                         @Html.Label("dsProduto", "Produto", new { @class = "form-label" })
                         <div class="input-group mb-3">
-                            @Html.DropDownList("idProduto", Model.ListProdutos, new { @class = "form-control" })
-                            <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarProdutos"><i class="fas fa-search"></i></button>
+                            @(disabled ?
+                                Html.TextBox("idProduto", new { @class = "form-control", @disabled = "disabled" }) :
+                                @Html.DropDownList("idProduto", Model.ListProdutos, new { @class = "form-control" })
+                                )
+                            @if (disabled)
+                            {
+                                <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarProdutos" disabled="disabled"><i class="fas fa-search"></i></button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarProdutos"><i class="fas fa-search"></i></button>
+                            }
                         </div>
                     </div>
 

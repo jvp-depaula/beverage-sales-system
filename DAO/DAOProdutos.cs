@@ -5,11 +5,11 @@ namespace Sistema.DAO
 {
     public class DAOProdutos : DAO
     {
-        public List<Produtos> GetProdutos()
+        public List<Produtos> GetProdutos(int? idFornecedor)
         {
             try
             {
-                var sql = this.Search(null, null);
+                var sql = this.Search(null, idFornecedor);
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 reader = SqlQuery.ExecuteReader();
@@ -183,23 +183,15 @@ namespace Sistema.DAO
             }
         }
 
-        private string Search(int? id, string filter)
+        private string Search(int? id, int? idFornecedor)
         {
             var sql = string.Empty;
             var swhere = string.Empty;
-            if (id != null)
-            {
-                swhere = " WHERE idProduto = " + id;
-            }
-            if (!string.IsNullOrEmpty(filter))
-            {
-                var filterQ = filter.Split(' ');
-                foreach (var word in filterQ)
-                {
-                    swhere += " OR tbProdutos.dsProduto LIKE'%" + word + "%'";
-                }
-                swhere = " WHERE " + swhere.Remove(0, 3);
-            }
+            if (id != null && idFornecedor != null)
+                swhere = " WHERE tbProdutos.idProduto = " + id + " AND tbProdutos.idFornecedor = " + idFornecedor + ";";
+            else if (idFornecedor != null)
+                swhere = " WHERE tbProdutos.idFornecedor = " + idFornecedor + ";";
+
             sql = @"
                     SELECT
                         tbProdutos.idProduto AS idProduto,

@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.DAO;
 using Sistema.Models;
-using Sistema.Util;
 using System.Globalization;
-using System.Reflection;
-using static Sistema.Models.CondicaoPgto;
 
 namespace Sistema.Controllers
 {
@@ -21,8 +18,6 @@ namespace Sistema.Controllers
             }
             catch (Exception ex)
             {
-                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                // return View();
                 throw new Exception(ex.Message);
             }
         }
@@ -34,7 +29,7 @@ namespace Sistema.Controllers
             DAOClientes daoClientes = new();
 
             List<Funcionarios> listFunc = daoFuncionarios.GetFuncionarios();
-            List<Produtos> listProd = daoProdutos.GetProdutos();
+            List<Produtos> listProd = daoProdutos.GetProdutos(null);
             List<CondicaoPgto> listCond = daoCondicaoPgto.GetCondicoesPgto();
             List<Clientes> listClientes = daoClientes.GetClientes();
 
@@ -76,54 +71,46 @@ namespace Sistema.Controllers
             {
                 DAOVendas daoVenda = new();
                 daoVenda.Insert(model);
-                // this.AddFlashMessage(AlertMessage.INSERT_SUCESS);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                // return View(model);
                 throw new Exception(ex.Message);
             }
         }
-        public ActionResult Details(int idVenda, string nrModelo)
+        public ActionResult Details(int idVenda)
         {
-            return this.GetView(idVenda, nrModelo);
+            return this.GetView(idVenda);
         }
-        public ActionResult Cancelar(int idVenda, string nrModelo)
+        public ActionResult Delete(int idVenda)
         {
-            return this.GetView(idVenda, nrModelo);
+            return this.GetView(idVenda);
         }
 
         [HttpPost]
-        public ActionResult Cancelar(int idVenda, string nrModelo, Models.Compras model)
+        public ActionResult DeleteConfirmed(int idVenda)
         {
             try
             {
                 DAOVendas daoVendas = new ();
                 daoVendas.CancelarVenda(idVenda);
-                // this.AddFlashMessage("Registro cancelado com sucesso!");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                // return this.GetView(idVenda, nrModelo);
                 throw new Exception(ex.Message);
             }
         }
-        private ActionResult GetView(int idVenda, string nrModelo)
+        private ActionResult GetView(int idVenda)
         {
             try
             {
                 DAOVendas daoVendas = new();
-                var model = daoVendas.GetVenda(idVenda, nrModelo);
+                var model = daoVendas.GetVenda(idVenda);
                 return View(model);
             }
             catch (Exception ex)
             {
-                // this.AddFlashMessage(ex.Message, FlashMessage.ERROR);
-                // return View();
                 throw new Exception(ex.Message);
             }
         }

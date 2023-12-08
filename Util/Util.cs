@@ -12,7 +12,10 @@ namespace Sistema.Util
 
         public static string Unmask(string str)
         {
-            return str.Replace(".", "").Replace("-", "").Replace("/", "").Replace("(", "").Replace(")", "").Replace(" ", "");
+            if (!String.IsNullOrEmpty(str))
+                return str.Replace(".", "").Replace("-", "").Replace("/", "").Replace("(", "").Replace(")", "").Replace(" ", "");
+            else
+                return "";
         }
 
         public static string FormatCPFCNPJ(string str)
@@ -25,10 +28,17 @@ namespace Sistema.Util
 
         public static string FormatTelefone(string str)
         {
-            if (str.Length == 11)
-                return Convert.ToUInt64(str).ToString(@"(00) 00000-0000");
+            if (!string.IsNullOrEmpty(str))
+            {
+                if (str.Length == 11)
+                    return Convert.ToUInt64(str).ToString(@"(00) 00000-0000");
+                else
+                    return Convert.ToUInt64(str).ToString(@"(00) 0000-0000");
+            }
             else
-                return Convert.ToUInt64(str).ToString(@"(00) 0000-0000");
+            {
+                return "";
+            }
         }        
     }
 

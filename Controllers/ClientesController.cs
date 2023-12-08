@@ -20,7 +20,7 @@ namespace Sistema.Controllers
             {
                 item.flTipo = item.flTipo == "F" ? "Física" : "Jurídica";
                 item.nrCPFCNPJ = Util.Util.FormatCPFCNPJ(item.nrCPFCNPJ);
-                item.nrTelefoneCelular = Util.Util.FormatTelefone(item.nrTelefoneCelular);
+                item.nrTelefoneCelular = !String.IsNullOrEmpty(item.nrTelefoneCelular) ? Util.Util.FormatTelefone(item.nrTelefoneCelular) : "";
             }
 
             return View(list);
