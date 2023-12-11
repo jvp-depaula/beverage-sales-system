@@ -44,6 +44,7 @@ namespace Sistema.DAO
         {
             try
             {
+                /*
                 var sql = string.Format("INSERT INTO tbCategorias (nmCategoria, dtCadastro, dtUltAlteracao) VALUES ('{0}', '{1}', '{2}')",
                     categoria.nmCategoria,
                     Util.Util.FormatDate(DateTime.Now),
@@ -53,6 +54,22 @@ namespace Sistema.DAO
                 OpenConnection();
                 SqlQuery = new SqlCommand(sql, con);
                 SqlQuery.ExecuteNonQuery();
+                */ 
+
+                // TESTE REQUISITADO PELO PROFESSOR EDUARDO RIBEIRO
+
+                OpenConnection();
+                string query = "INSERT INTO tbCategorias (nmCategoria, dtCadastro, dtUltAlteracao) VALUES (@nmCategoria, @dtCadastro, @dtUltAlteracao);";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@nmCategoria", categoria.nmCategoria);
+                    cmd.Parameters.AddWithValue("@dtCadastro", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@dtUltAlteracao", DateTime.Now);
+
+                    SqlQuery = cmd;
+                    SqlQuery.ExecuteNonQuery();
+                }
+                
             }
             catch (Exception error)
             {
