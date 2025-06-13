@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Sistema.Models.CondicaoPgto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+<p style="text-align: right">
+    <a asp-action="Create">Adicionar</a>
+</p>
+<table id="tbCondicaoPgto" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dsCondicaoPgto)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.txMulta)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.txDesconto)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.txJuros)
+            </th>           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dsCondicaoPgto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.txMulta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.txDesconto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.txJuros)
+                </td>
+                <td style="text-align: center; width: 200px">
+                    <a asp-action="Edit" asp-route-id="@item.idCondicaoPgto"><i class="btn btn-warning btn-sm fa fa-edit"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.idCondicaoPgto"><i class="btn btn-success btn-sm fa fa-eye"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.idCondicaoPgto"><i class="btn btn-danger btn-sm fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/CondicaoPgto/Index.js")"></script>
+}

@@ -1,0 +1,42 @@
+﻿@model Sistema.Models.Estados
+
+@{
+    ViewData["Title"] = "Estados";
+}
+
+
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Estados <small>Excluir</small></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Delete";
+                        ViewBag.disabledForm = true;
+                    }
+
+                    @using (Html.BeginForm("Delete", "Estados", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        <partial name="~/Views/Shared/Estados/Form.cshtml" model="Model"></partial>
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                            <a href="@Url.Action("Index", "Estados")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

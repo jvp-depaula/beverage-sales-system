@@ -1,0 +1,242 @@
+﻿@model Sistema.Models.Produtos
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.idProduto)
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsProduto, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsProduto, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsProduto, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsProduto, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-3">
+    @Html.LabelFor(e => e.idMarca, new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idMarca, Model.ListaMarcas, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idMarca, Model.ListaMarcas, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalMarca" data-bs-toggle="modal" data-bs-target="#modalMarca"><i class="fas fa-search"></i></button>
+        }
+    </div>
+    @Html.ValidationMessageFor(model => model.idMarca, null, new { @class = "help-block" })   
+</div>
+
+<div class="col-md-3">
+    @Html.LabelFor(e => e.idUnidade, new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idUnidade, Model.ListaUnidades, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idUnidade, Model.ListaUnidades, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalUnidade" data-bs-toggle="modal" data-bs-target="#modalUnidade"><i class="fas fa-search"></i></button>
+        }
+    </div>
+    @Html.ValidationMessageFor(model => model.idUnidade, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.Label("nmCategoria", "Categoria", new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idCategoria, Model.ListaCategorias, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idCategoria, Model.ListaCategorias, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalCategoria" data-bs-toggle="modal" data-bs-target="#modalCategoria"><i class="fas fa-search"></i></button>
+        }
+    </div>
+    @Html.ValidationMessageFor(model => model.idCategoria, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.vlVenda, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.vlVenda, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.vlVenda, new { @class = "form-control", @placeholder = "0,00" })
+        )
+    @Html.ValidationMessageFor(model => model.vlVenda, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-4">
+    @Html.LabelFor(e => e.cdNCM, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.cdNCM, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.cdNCM, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.cdNCM, null, new { @class = "help-block" })
+</div>
+
+@if (pageType != "Create")
+{
+    <div class="col-md-4">
+        @Html.LabelFor(e => e.qtdEstoque, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.qtdEstoque, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
+    </div>
+
+    <div class="col-md-4">
+        @Html.LabelFor(e => e.vlUltCompra, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.vlUltCompra, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
+    </div>
+    
+    <div class="col-md-4">
+        @Html.LabelFor(e => e.vlCusto, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.vlCusto, new { @class = "form-control", autofocus = "autofocus", @readonly = true })
+    </div>
+}
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.idFornecedor, new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idFornecedor, Model.ListaFornecedores, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idFornecedor, Model.ListaFornecedores, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModalFornecedor" data-bs-toggle="modal" data-bs-target="#modalFornecedor"><i class="fas fa-search"></i></button>
+        }
+    </div>
+    @Html.ValidationMessageFor(model => model.idFornecedor, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.observacao, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.observacao, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.observacao, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.observacao, null, new { @class = "help-block" })
+</div>
+
+<!-- MARCAS -->
+<div class="modal fade" tabindex="-1" id="modalMarca">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloMarca"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- SELECIONAR -->
+            <div class="modal-body SelecionaMarca" style="display: none">
+                <partial name="~/Views/Shared/Marcas/SelecionaMarca.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaMarca" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalMarca">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddMarca">Adicionar Marca</button>
+            </div>            
+
+            <!-- ADICIONAR -->
+            <div class="modal-body AddMarca" style="display: none">
+                <partial name="~/Views/Shared/Marcas/AddMarcas.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer AddMarca" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharAddMarca">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnSalvarMarca">Adicionar Marca</button>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<!-- UNIDADES -->
+<div class="modal fade" tabindex="-1" id="modalUnidade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloUnidade"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- SELECIONAR -->
+            <div class="modal-body SelecionaUnidade" style="display: none">
+                <partial name="~/Views/Shared/Unidades/SelecionaUnidade.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaUnidade" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalUnidade">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddUnidade">Adicionar Unidade</button>
+            </div>
+
+            <!-- ADICIONAR -->
+            <div class="modal-body AddUnidade" style="display: none">
+                <partial name="~/Views/Shared/Unidades/AddUnidades.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer AddUnidade" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharAddUnidade">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnSalvarUnidade">Adicionar Unidade</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CATEGORIAS -->
+<div class="modal fade" tabindex="-1" id="modalCategoria">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloCategoria"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!--SELECIONAR-->
+            <div class="modal-body SelecionaCategoria" style="display: none">
+                <partial name="~/Views/Shared/Categorias/SelecionaCategoria.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaCategoria" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalCategoria">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddCategoria">Adicionar Categoria</button>
+            </div>
+
+            <!--ADICIONAR-->
+            <div class="modal-body AddCategoria" style="display: none">
+                <partial name="~/Views/Shared/Categorias/AddCategorias.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer AddCategoria" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharAddCategoria">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnSalvarCategoria">Adicionar Categoria</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FORNECEDORES -->
+<div class="modal fade" tabindex="-1" id="modalFornecedor">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Selecionar Fornecedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- SELECIONAR -->
+            <div class="modal-body SelecionaFornecedor" style="display: none">
+                <partial name="~/Views/Shared/Fornecedores/SelecionaFornecedor.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaFornecedor" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalFornecedor">Fechar</button>                
+            </div>                        
+        </div>
+    </div>
+</div>

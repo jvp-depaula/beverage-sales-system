@@ -1,0 +1,47 @@
+﻿@model Sistema.Models.Clientes
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<section>
+    <div class="toolbar row">
+        <div class="col-sm-6 hidden-xs">
+            <div class="page-header">
+                <h1>Clientes <small>Editar</small></h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-white">
+                <div class="panel-body">
+
+                    @{
+                        ViewBag.pageType = "Edit";
+                    }
+
+                    @using (Html.BeginForm("Edit", "Clientes", FormMethod.Post, new { @class = "row g-3" }))
+                    {
+                        <partial name="~/Views/Shared/Clientes/Form.cshtml" model="Model"></partial>
+
+                        <div class="col-12 mt-10">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <a href="@Url.Action("Index", "Clientes")" class="btn btn-primary">
+                                Cancelar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript" src="@Url.Content("~/js/Scripts/Clientes/Form.js")"></script>
+}

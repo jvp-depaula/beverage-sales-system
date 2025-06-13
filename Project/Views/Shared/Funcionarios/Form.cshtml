@@ -1,0 +1,208 @@
+﻿@model Sistema.Models.Funcionarios
+
+@{
+    var disabled = Convert.ToBoolean(ViewBag.disabledForm);
+    var pageType = Convert.ToString(ViewBag.pageType);
+}
+
+@Html.HiddenFor(e => e.id)
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nmFuncionario, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nmFuncionario, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nmFuncionario, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nmFuncionario, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsApelido, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsApelido, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsApelido, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsApelido, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrCPF, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrCPF, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrCPF, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrRG, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrRG, new { @class = "form-control", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrRG, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-3">
+    @Html.LabelFor(e => e.dtNasc, new { @class = "form-label labelDtNasc" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dtNasc, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dtNasc, "{0:dd/MM/yyyy}", new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dtNasc, null, new { @class = "help-block" })
+</div>
+
+<hr />
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrTelefoneCelular, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrTelefoneCelular, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrTelefoneCelular, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrTelefoneFixo, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrTelefoneFixo, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrTelefoneFixo, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.dsEmail, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsEmail, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsEmail, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsEmail, null, new { @class = "help-block" })
+</div>
+
+<hr />
+
+<div class="col-md-3">
+    @Html.LabelFor(e => e.nrCEP, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrCEP, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.nrCEP, null, new { @class = "help-block" })
+</div>
+<div class="col-md-9"></div>
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsLogradouro, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsLogradouro, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsLogradouro, new { @class = "form-control", maxlength = "150" })
+        )
+    @Html.ValidationMessageFor(model => model.dsLogradouro, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.nrEndereco, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.nrEndereco, new { @class = "form-control", maxlength = "150" })
+        )
+    @Html.ValidationMessageFor(model => model.nrEndereco, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsBairro, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsBairro, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsBairro, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsBairro, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-6">
+    @Html.LabelFor(e => e.dsComplemento, new { @class = "form-label" })
+    @(disabled ?
+        @Html.TextBoxFor(model => model.dsComplemento, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+        @Html.TextBoxFor(model => model.dsComplemento, new { @class = "form-control", maxlength = "150", @placeholder = "" })
+        )
+    @Html.ValidationMessageFor(model => model.dsComplemento, null, new { @class = "help-block" })
+</div>
+
+<div class="col-md-12">
+    @Html.LabelFor(e => e.idCidade, new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @(disabled ?
+            @Html.DropDownListFor(model => model.idCidade, Model.ListaCidades, new { @class = "form-control", autofocus = "autofocus", @disabled = "disabled" }) :
+            @Html.DropDownListFor(model => model.idCidade, Model.ListaCidades, new { @class = "form-control" })
+            )
+        @if (pageType == "Create" || pageType == "Edit")
+        {
+            <button class="btn btn-outline-secondary" type="button" id="btnAbreModal" data-bs-toggle="modal" data-bs-target="#modal"><i class="fas fa-search"></i></button>
+        }
+    </div>
+</div>
+
+
+<!-- CIDADES - ESTADOS - PAISES -->
+<div class="modal fade" tabindex="-1" id="modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloModal">Lista Cidades</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!--Cidade-->
+            <div class="modal-body SelecionaCidade" style="display: none">
+                <partial name="~/Views/Shared/Cidades/SelecionaCidade.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaCidade" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModal">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddCidade">Adicionar Cidade</button>
+            </div>
+
+            <div class="modal-body AddCidades" style="display: none">
+                <partial name="~/Views/Shared/Cidades/AddCidades.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddCidades" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddCidade">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddCidade">Salvar</button>
+            </div>
+
+
+            <!--Estado-->
+            <div class="modal-body SelecionaEstado" style="display: none">
+                <partial name="~/Views/Shared/Estados/SelecionaEstado.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaEstado" style="display: none">
+                <button type="button" class="btn btn-secondary" id="bntEscondeSelecionaEstado">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddEstado">Adicionar Estado</button>
+            </div>
+
+            <div class="modal-body AddEstados" style="display: none">
+                <partial name="~/Views/Shared/Estados/AddEstados.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddEstados" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddEstado">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddEstado">Salvar</button>
+            </div>
+
+            <!--País-->
+            <div class="modal-body SelecionaPais" style="display: none">
+                <partial name="~/Views/Shared/Paises/SelecionaPais.cshtml"></partial>
+            </div>
+            <div class="modal-footer SelecionaPais" style="display: none">
+                <button type="button" class="btn btn-secondary" id="bntEscondeSelecionaPais">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnAddPais">Adicionar País</button>
+            </div>
+
+            <div class="modal-body AddPais" style="display: none">
+                <partial name="~/Views/Shared/Paises/AddPaises.cshtml"></partial>
+            </div>
+            <div class="modal-footer AddPais" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnEscondeAddPais">Fechar</button>
+                <button type="button" class="btn btn-success" id="btnSalvarAddPais">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+﻿<div class="col-md-6">
+    @Html.Label("dsProduto", "Produto", new { @class = "form-label" })
+    <input id="dsProduto" class="form-control" maxlenght="150" />
+</div>
+
+<div class="col-md-3">
+    @Html.Label("nmMarca", "Marca", new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @Html.DropDownList("idMarca", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
+        <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarMarcas"><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<div class="col-md-3">
+    @Html.Label("dsUnidade", "Unidade", new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @Html.DropDownList("idUnidade", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
+        <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarUnidades"><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<div class="col-md-4">
+    @Html.Label("nmCategoria", "Categoria", new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @Html.DropDownList("idCategoria", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
+        <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarCategorias"><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<div class="col-md-4">
+    @Html.Label("vlVenda", "Venda", new { @class = "form-label" })
+    <input id="vlVenda" style="text-align: right" class="form-control" maxlenght="150" />
+</div>
+
+<div class="col-md-4">
+    @Html.Label("cdNCM", "NCM", new { @class = "form-label" })
+    <input id="cdNCM" class="form-control" maxlenght="150" />
+</div>
+
+<div class="col-md-12">
+    @Html.Label("nmFornecedor", "Fornecedor", new { @class = "form-label" })
+    <div class="input-group mb-3">
+        @Html.DropDownList("idFornecedor", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
+        <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarFornecedor"><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<div class="col-md-12">
+    @Html.Label("observacao", "Observação", new { @class = "form-label" })
+    <input id="observacao" class="form-control" maxlenght="150" />
+</div>
+
+<!-- MARCAS -->
+<div class="modal fade" tabindex="-1" id="modalMarca">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloMarca"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- SELECIONAR -->
+            <div class="modal-body SelecionaMarca" style="display: none">
+                <partial name="~/Views/Shared/Marcas/SelecionaMarca.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaMarca" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalMarca">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddMarca">Adicionar Marca</button>
+            </div>
+
+            <!-- ADICIONAR -->
+            <div class="modal-body AddMarca" style="display: none">
+                <partial name="~/Views/Shared/Marcas/AddMarcas.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer AddMarca" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharAddMarca">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnSalvarMarca">Adicionar Marca</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- UNIDADES -->
+<div class="modal fade" tabindex="-1" id="modalUnidade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloUnidade"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- SELECIONAR -->
+            <div class="modal-body SelecionaUnidade" style="display: none">
+                <partial name="~/Views/Shared/Unidades/SelecionaUnidade.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaUnidade" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalUnidade">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddUnidade">Adicionar Unidade</button>
+            </div>
+
+            <!-- ADICIONAR -->
+            <div class="modal-body AddUnidade" style="display: none">
+                <partial name="~/Views/Shared/Unidades/AddUnidades.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer AddUnidade" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharAddUnidade">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnSalvarUnidade">Adicionar Unidade</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CATEGORIAS -->
+<div class="modal fade" tabindex="-1" id="modalCategoria">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="txtTituloCategoria"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!--SELECIONAR-->
+            <div class="modal-body SelecionaCategoria" style="display: none">
+                <partial name="~/Views/Shared/Categorias/SelecionaCategoria.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer SelecionaCategoria" style="display: none">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnFecharModalCategoria">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnMostrarAddCategoria">Adicionar Categoria</button>
+            </div>
+
+            <!--ADICIONAR-->
+            <div class="modal-body AddCategoria" style="display: none">
+                <partial name="~/Views/Shared/Categorias/AddCategorias.cshtml"></partial>
+            </div>
+
+            <div class="modal-footer AddCategoria" style="display: none">
+                <button type="button" class="btn btn-secondary" id="btnFecharAddCategoria">Fechar</button>
+                <button type="button" class="btn btn-default" id="btnSalvarCategoria">Adicionar Categoria</button>
+            </div>
+        </div>
+    </div>
+</div>

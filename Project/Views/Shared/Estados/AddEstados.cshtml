@@ -1,0 +1,20 @@
+﻿
+<div>
+    <div class="col-md-8">
+        @Html.Label("nmEstado", "Estado", new { @class = "form-label" })
+        <input id="nmEstado" class="form-control" maxlenght="150" />
+    </div>
+
+    <div class="col-md-8">
+        @Html.Label("UF", "UF", new { @class = "form-label" })
+        <input id="UF" class="form-control" maxlenght="150" />
+    </div>
+
+    <div class="col-md-8">
+        @Html.Label("nmPais", "Pais", new { @class = "form-label" })
+        <div class="input-group mb-3">
+            @Html.DropDownList("idPais", Enumerable.Empty<SelectListItem>(), new { @class = "form-control" })
+            <button class="btn btn-outline-secondary" type="button" id="btnMostraSelecionarPaises" ><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+</div>
